@@ -4,4 +4,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(examples/simple)
 add_subdirectory(include/googletest)
