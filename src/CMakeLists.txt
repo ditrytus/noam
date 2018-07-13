@@ -1,5 +1,3 @@
 project(noam)
 
-set(CMAKE_CXX_STANDARD 17)
-
-add_library(noam SHARED library.cpp library.h)
+add_library(noam SHARED library.cpp library.h StringSymbol.cpp StringSymbol.h Symbol.cpp Symbol.h TerminalSymbol.cpp TerminalSymbol.h NonTerminalSymbol.cpp NonTerminalSymbol.h)
