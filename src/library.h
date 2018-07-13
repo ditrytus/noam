@@ -1,6 +1,3 @@
-#ifndef NOAM_LIBRARY_H
-#define NOAM_LIBRARY_H
+#pragma once
 
-void hello();
-
-#endif
+int one();

@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
-project(noam)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(noam SHARED src/library.cpp src/library.h)
+add_subdirectory(src)
+add_subdirectory(test)
+add_subdirectory(include/googletest)
