@@ -2,12 +2,24 @@
 
 #include "Symbol.h"
 #include <vector>
+#include <memory>
 
 
 class NonTerminalSymbol : public Symbol {
 
-private:
-    std::vector<std::unique_ptr<Symbol>> symbols;
+public:
+    NonTerminalSymbol(Symbol& symbol);
 
-    explicit NonTerminalSymbol(std::vector<std::unique_ptr<Symbol>>&& symbols);
+    bool contains(Symbol& sym);
+
+    NonTerminalSymbol&operator = (Symbol& symbol);
+
+    std::size_t hash() const override;
+
+    Symbol* clone() const override;
+
+private:
+    std::vector<std::shared_ptr<Symbol>> symbols;
+
+    void addSymbol(Symbol& symbol);
 };
