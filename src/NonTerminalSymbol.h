@@ -8,7 +8,7 @@
 class NonTerminalSymbol : public Symbol {
 
 public:
-    NonTerminalSymbol(Symbol& symbol);
+    NonTerminalSymbol(Symbol& symbol); // NOLINT
 
     bool contains(Symbol& sym);
 
