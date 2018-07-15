@@ -10,11 +10,11 @@ namespace noam {
     class NonTerminalSymbol : public Symbol {
 
     public:
-        NonTerminalSymbol(Symbol &symbol); // NOLINT
+        NonTerminalSymbol(const Symbol &symbol); // NOLINT
 
-        bool contains(Symbol &sym);
+        bool contains(const Symbol &sym);
 
-        NonTerminalSymbol &operator=(Symbol &symbol);
+        NonTerminalSymbol &operator=(const Symbol &symbol);
 
         std::size_t hash() const override;
 
@@ -23,7 +23,7 @@ namespace noam {
     private:
         std::vector<std::shared_ptr<Symbol>> symbols;
 
-        void addSymbol(Symbol &symbol);
+        void addSymbol(const Symbol &symbol);
     };
 
 }
