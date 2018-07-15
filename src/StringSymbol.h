@@ -4,18 +4,22 @@
 #include "TerminalSymbol.h"
 
 
-class StringSymbol : public TerminalSymbol {
+namespace noam {
 
-public:
-    StringSymbol(std::string value);
+    class StringSymbol : public TerminalSymbol {
 
-    const std::string &getValue() const;
+    public:
+        StringSymbol(std::string value);
 
-    std::size_t hash() const override;
+        const std::string &getValue() const;
 
-    Symbol* clone() const override;
+        std::size_t hash() const override;
 
-private:
-    std::string value;
+        Symbol* clone() const override;
 
-};
+    private:
+        std::string value;
+
+    };
+
+}

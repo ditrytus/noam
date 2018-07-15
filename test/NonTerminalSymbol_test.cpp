@@ -8,6 +8,7 @@
 #include <NonTerminalSymbol.h>
 
 using namespace std;
+using namespace noam;
 
 TEST(NonTerminalSymbolTest, ConstructingFromLValueStringSymbol) {
     StringSymbol sSym {"abc"};

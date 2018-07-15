@@ -3,6 +3,7 @@
 #include <string>
 
 using namespace std;
+using namespace noam;
 
 StringSymbol::StringSymbol(string value) : value(move(value)) {}
 

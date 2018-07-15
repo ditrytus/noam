@@ -3,13 +3,15 @@
 #include <string>
 
 
-class Symbol {
-public:
-    bool operator == (const Symbol& other);
+namespace noam {
 
-    virtual std::size_t hash() const = 0;
+    class Symbol {
+    public:
+        bool operator == (const Symbol& other);
 
-    virtual Symbol* clone() const = 0;
-};
+        virtual std::size_t hash() const = 0;
 
+        virtual Symbol* clone() const = 0;
+    };
 
+}

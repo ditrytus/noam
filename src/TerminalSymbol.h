@@ -3,8 +3,10 @@
 #include "Symbol.h"
 
 
-class TerminalSymbol : public Symbol {
+namespace noam {
 
-};
+    class TerminalSymbol : public Symbol {
 
+    };
 
+}

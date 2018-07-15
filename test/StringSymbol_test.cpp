@@ -4,6 +4,7 @@
 #include <memory>
 
 using namespace std::literals;
+using namespace noam;
 using std::unique_ptr;
 using std::make_unique;
 

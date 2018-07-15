@@ -5,21 +5,25 @@
 #include <memory>
 
 
-class NonTerminalSymbol : public Symbol {
+namespace noam {
 
-public:
-    NonTerminalSymbol(Symbol& symbol); // NOLINT
+    class NonTerminalSymbol : public Symbol {
 
-    bool contains(Symbol& sym);
+    public:
+        NonTerminalSymbol(Symbol &symbol); // NOLINT
 
-    NonTerminalSymbol&operator = (Symbol& symbol);
+        bool contains(Symbol &sym);
 
-    std::size_t hash() const override;
+        NonTerminalSymbol &operator=(Symbol &symbol);
 
-    Symbol* clone() const override;
+        std::size_t hash() const override;
 
-private:
-    std::vector<std::shared_ptr<Symbol>> symbols;
+        Symbol *clone() const override;
 
-    void addSymbol(Symbol& symbol);
-};
+    private:
+        std::vector<std::shared_ptr<Symbol>> symbols;
+
+        void addSymbol(Symbol &symbol);
+    };
+
+}

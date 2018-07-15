@@ -4,6 +4,7 @@
 #include "StringSymbol.h"
 
 using namespace std;
+using namespace noam;
 
 
 bool NonTerminalSymbol::contains(Symbol& sym) {
