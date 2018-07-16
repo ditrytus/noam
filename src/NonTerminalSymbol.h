@@ -14,11 +14,23 @@ namespace noam {
 
         bool contains(const Symbol &sym);
 
-        NonTerminalSymbol &operator=(const Symbol &symbol);
+        NonTerminalSymbol& operator=(const Symbol &symbol);
 
         std::size_t hash() const override;
 
         Symbol *clone() const override;
+
+        NonTerminalSymbol& operator|(const Symbol& other);
+
+#ifdef NDEBUG
+
+        ~NonTerminalSymbol() override = default;
+
+#else
+
+        ~NonTerminalSymbol() override;
+
+#endif
 
     private:
         std::vector<std::shared_ptr<Symbol>> symbols;
@@ -26,4 +38,6 @@ namespace noam {
         void addSymbol(const Symbol &symbol);
     };
 
+    NonTerminalSymbol operator | (const Symbol& a, const Symbol& b);
 }
+

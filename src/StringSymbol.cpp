@@ -1,6 +1,7 @@
 #include "StringSymbol.h"
 #include <utility>
 #include <string>
+#include <iostream>
 
 using namespace std;
 using namespace noam;
@@ -18,3 +19,11 @@ size_t StringSymbol::hash() const {
 Symbol* StringSymbol::clone() const {
     return new StringSymbol(*this);
 }
+
+#ifndef NDEBUG
+
+StringSymbol::~StringSymbol() {
+    cout << "Destructing StringSymbol " << value << endl;
+}
+
+#endif

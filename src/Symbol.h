@@ -12,6 +12,8 @@ namespace noam {
         virtual std::size_t hash() const = 0;
 
         virtual Symbol* clone() const = 0;
+
+        virtual ~Symbol() = default;
     };
 
 }

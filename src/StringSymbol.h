@@ -17,6 +17,16 @@ namespace noam {
 
         Symbol* clone() const override;
 
+#ifdef NDEBUG
+
+        ~StringSymbol() override = default;
+
+#else
+
+        ~StringSymbol() override;
+
+#endif
+
     private:
         std::string value;
 

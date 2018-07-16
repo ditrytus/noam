@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <numeric>
+#include <iostream>
 #include "NonTerminalSymbol.h"
 #include "StringSymbol.h"
 
@@ -33,3 +34,20 @@ void NonTerminalSymbol::addSymbol(const Symbol &symbol) {
 Symbol* NonTerminalSymbol::clone() const {
     return new NonTerminalSymbol(*this);
 }
+
+NonTerminalSymbol& NonTerminalSymbol::operator | (const Symbol &other) {
+    addSymbol(other);
+    return *this;
+}
+
+NonTerminalSymbol noam::operator | (const Symbol &a, const Symbol &b) {
+    return NonTerminalSymbol{a} | b;
+}
+
+#ifndef NDEBUG
+
+NonTerminalSymbol::~NonTerminalSymbol() {
+    cout << "Destructing NonTerminalSymbol " << hash() << endl;
+}
+
+#endif
