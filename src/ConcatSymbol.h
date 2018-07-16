@@ -1,11 +1,11 @@
 #pragma once
 
-#include "NonTerminalSymbol.h"
+#include "AggregateSymbol.h"
 
 
 namespace noam {
 
-    class ConcatSymbol : public noam::NonTerminalSymbol {
+    class ConcatSymbol : public noam::AggregateSymbol {
 
     public:
         ConcatSymbol(const Symbol &symbol);

@@ -5,7 +5,7 @@ using namespace noam;
 using namespace std;
 
 
-AlternativeSymbol::AlternativeSymbol(const Symbol &symbol) : NonTerminalSymbol(symbol) {}
+AlternativeSymbol::AlternativeSymbol(const Symbol &symbol) : AggregateSymbol(symbol) {}
 
 AlternativeSymbol& AlternativeSymbol::operator | (const Symbol &other) {
     addSymbol(other);

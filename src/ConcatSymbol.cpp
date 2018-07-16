@@ -5,7 +5,7 @@
 using namespace noam;
 
 
-ConcatSymbol::ConcatSymbol(const Symbol &symbol) : NonTerminalSymbol(symbol) {}
+ConcatSymbol::ConcatSymbol(const Symbol &symbol) : AggregateSymbol(symbol) {}
 
 ConcatSymbol& ConcatSymbol::operator + (const Symbol &other) {
     addSymbol(other);

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "NonTerminalSymbol.h"
+#include "AggregateSymbol.h"
 
 namespace noam {
 
-    class AlternativeSymbol : public noam::NonTerminalSymbol {
+    class AlternativeSymbol : public noam::AggregateSymbol {
 
     public:
         AlternativeSymbol(const Symbol &symbol);
