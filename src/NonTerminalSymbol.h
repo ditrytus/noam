@@ -10,8 +10,6 @@ namespace noam {
     class NonTerminalSymbol : public Symbol {
 
     public:
-        NonTerminalSymbol(const Symbol &symbol); // NOLINT
-
         bool contains(const Symbol &sym);
 
         NonTerminalSymbol& operator=(const Symbol &symbol);
@@ -19,8 +17,6 @@ namespace noam {
         std::size_t hash() const override;
 
         Symbol *clone() const override;
-
-        NonTerminalSymbol& operator|(const Symbol& other);
 
 #ifdef NDEBUG
 
@@ -32,12 +28,15 @@ namespace noam {
 
 #endif
 
-    private:
-        std::vector<std::shared_ptr<Symbol>> symbols;
+    protected:
+        NonTerminalSymbol(const Symbol &symbol);
 
         void addSymbol(const Symbol &symbol);
+
+    private:
+
+        std::vector<std::shared_ptr<Symbol>> symbols;
     };
 
-    NonTerminalSymbol operator | (const Symbol& a, const Symbol& b);
 }
 

@@ -5,94 +5,94 @@
 #include <include/gtest/gtest.h>
 
 #include <StringSymbol.h>
-#include <NonTerminalSymbol.h>
+#include <AlternativeSymbol.h>
 
 using namespace std;
 using namespace noam;
 
-TEST(NonTerminalSymbolTest, ConstructingFromLValueStringSymbol) {
+TEST(AlternativeSymbolTest, ConstructingFromLValueStringSymbol) {
     StringSymbol sSym {"abc"};
-    NonTerminalSymbol sut = sSym;
+    AlternativeSymbol sut = sSym;
 
     EXPECT_TRUE(sut.contains(sSym));
 }
 
-TEST(NonTerminalSymbolTest, HashIsEqualForEqualSymbols) {
+TEST(AlternativeSymbolTest, HashIsEqualForEqualSymbols) {
     StringSymbol sSym {"abc"};
-    NonTerminalSymbol sut1 = sSym;
-    NonTerminalSymbol sut2 = sSym;
+    AlternativeSymbol sut1 = sSym;
+    AlternativeSymbol sut2 = sSym;
 
     EXPECT_EQ(sut1.hash(), sut2.hash());
 }
 
-TEST(NonTerminalSymbolTest, HashIsNotEqualForDifferentSymbils) {
+TEST(AlternativeSymbolTest, HashIsNotEqualForDifferentSymbils) {
     StringSymbol sSym1 {"abc"};
     StringSymbol sSym2 {"def"};
-    NonTerminalSymbol sut1 = sSym1;
-    NonTerminalSymbol sut2 = sSym2;
+    AlternativeSymbol sut1 = sSym1;
+    AlternativeSymbol sut2 = sSym2;
 
     EXPECT_NE(sut1.hash(), sut2.hash());
 }
 
-TEST(NonTerminalSymbolTest, CloneReturnsSameArgument) {
+TEST(AlternativeSymbolTest, CloneReturnsSameArgument) {
     StringSymbol sSym {"abc"};
-    NonTerminalSymbol sut = sSym;
-    auto aClone = unique_ptr<NonTerminalSymbol>{(dynamic_cast<NonTerminalSymbol *>(sut.clone()))};
+    AlternativeSymbol sut = sSym;
+    auto aClone = unique_ptr<AlternativeSymbol>{(dynamic_cast<AlternativeSymbol *>(sut.clone()))};
 
     EXPECT_TRUE(sut == *aClone);
 }
 
-TEST(NonTerminalSymbolTest, EqualWithSameSymbols) {
+TEST(AlternativeSymbolTest, EqualWithSameSymbols) {
     StringSymbol sSym1 {"abc"};
     StringSymbol sSym2 {"abc"};
-    NonTerminalSymbol sut1 = sSym1;
-    NonTerminalSymbol sut2 = sSym2;
+    AlternativeSymbol sut1 = sSym1;
+    AlternativeSymbol sut2 = sSym2;
 
     EXPECT_TRUE(sut1 == sut2);
 }
 
-TEST(NonTerminalSymbolTest, NotEqualWithDifferentSymbols) {
+TEST(AlternativeSymbolTest, NotEqualWithDifferentSymbols) {
     StringSymbol sSym1 {"abc"};
     StringSymbol sSym2 {"def"};
-    NonTerminalSymbol sut1 = sSym1;
-    NonTerminalSymbol sut2 = sSym2;
+    AlternativeSymbol sut1 = sSym1;
+    AlternativeSymbol sut2 = sSym2;
 
     EXPECT_FALSE(sut1 == sut2);
 }
 
-TEST(NonTerminalSymbolTest, ContainsReturnsTrueForExistingSymbol) {
+TEST(AlternativeSymbolTest, ContainsReturnsTrueForExistingSymbol) {
     StringSymbol sSym {"abc"};
-    NonTerminalSymbol sut = sSym;
+    AlternativeSymbol sut = sSym;
 
     EXPECT_TRUE(sut.contains(sSym));
 }
 
-TEST(NonTerminalSymbolTest, ContainsReturnsFalseForNonExistingSymbol) {
+TEST(AlternativeSymbolTest, ContainsReturnsFalseForNonExistingSymbol) {
     StringSymbol sSym {"abc"};
     StringSymbol otherSym {"def"};
-    NonTerminalSymbol sut = sSym;
+    AlternativeSymbol sut = sSym;
 
     EXPECT_FALSE(sut.contains(otherSym));
 }
 
-TEST(NonTerminalSymbolTest, AlternativeOfSymbols) {
+TEST(AlternativeSymbolTest, AlternativeOfSymbols) {
     StringSymbol sSym1 {"abc"};
     StringSymbol sSym2 {"def"};
     StringSymbol sSym3 {"ghi"};
 
-    NonTerminalSymbol sut1 {sSym1 | sSym2};
+    AlternativeSymbol sut1 {sSym1 | sSym2};
 
     EXPECT_TRUE(sut1.contains(sSym1));
     EXPECT_TRUE(sut1.contains(sSym2));
     EXPECT_FALSE(sut1.contains(sSym3));
 
-    NonTerminalSymbol sut2 = sSym1 | sSym2 | sSym3;
+    AlternativeSymbol sut2 = sSym1 | sSym2 | sSym3;
 
     EXPECT_TRUE(sut2.contains(sSym1));
     EXPECT_TRUE(sut2.contains(sSym2));
     EXPECT_TRUE(sut2.contains(sSym3));
 
-    NonTerminalSymbol sut3 = (*sut1.clone()) | sut2 | sSym1;
+    AlternativeSymbol sut3 = (*sut1.clone()) | sut2 | sSym1;
 
     EXPECT_TRUE(sut3.contains(sut1));
     EXPECT_TRUE(sut3.contains(sut2));

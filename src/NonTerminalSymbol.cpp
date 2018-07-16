@@ -35,15 +35,6 @@ Symbol* NonTerminalSymbol::clone() const {
     return new NonTerminalSymbol(*this);
 }
 
-NonTerminalSymbol& NonTerminalSymbol::operator | (const Symbol &other) {
-    addSymbol(other);
-    return *this;
-}
-
-NonTerminalSymbol noam::operator | (const Symbol &a, const Symbol &b) {
-    return NonTerminalSymbol{a} | b;
-}
-
 #ifndef NDEBUG
 
 NonTerminalSymbol::~NonTerminalSymbol() {
