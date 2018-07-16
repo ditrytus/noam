@@ -80,7 +80,7 @@ TEST(AlternativeSymbolTest, AlternativeOfSymbols) {
     StringSymbol sSym2 {"def"};
     StringSymbol sSym3 {"ghi"};
 
-    AlternativeSymbol sut1 = sSym1 | sSym2;
+    AlternativeSymbol sut1 = "abc"_T | sSym2;
 
     EXPECT_TRUE(sut1.contains(sSym1));
     EXPECT_TRUE(sut1.contains(sSym2));
@@ -92,7 +92,6 @@ TEST(AlternativeSymbolTest, AlternativeOfSymbols) {
     EXPECT_TRUE(sut2.contains(sSym2));
     EXPECT_TRUE(sut2.contains(sSym3));
 
-    ;
     AlternativeSymbol sut3 = *sut1.clone() | sut2 | sSym1;
 
     EXPECT_TRUE(sut3.contains(sut1));

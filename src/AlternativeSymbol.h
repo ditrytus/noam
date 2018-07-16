@@ -17,4 +17,7 @@ namespace noam {
 
     AlternativeSymbol operator | (const Symbol& a, const Symbol& b);
 
+    AlternativeSymbol operator | (const Symbol& a, const std::string& b);
+
+    AlternativeSymbol operator | (const std::string& a, const Symbol& b);
 }

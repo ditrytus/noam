@@ -18,4 +18,8 @@ namespace noam {
 
     ConcatSymbol operator + (const Symbol& a, const Symbol& b);
 
+    ConcatSymbol operator + (const Symbol& a, const std::string& b);
+
+    ConcatSymbol operator + (const std::string& a, const Symbol& b);
+
 }

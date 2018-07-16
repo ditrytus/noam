@@ -1,4 +1,5 @@
 #include "AlternativeSymbol.h"
+#include "StringSymbol.h"
 
 using namespace noam;
 using namespace std;
@@ -13,6 +14,14 @@ AlternativeSymbol& AlternativeSymbol::operator | (const Symbol &other) {
 
 AlternativeSymbol noam::operator | (const Symbol &a, const Symbol &b) {
     return AlternativeSymbol{a} | b;
+}
+
+AlternativeSymbol noam::operator | (const Symbol &a, const std::string &b) {
+    return AlternativeSymbol{a} | StringSymbol{b};
+}
+
+AlternativeSymbol noam::operator|(const std::string &a, const Symbol &b) {
+    return StringSymbol{a} | AlternativeSymbol{b};
 }
 
 unique_ptr<Symbol> AlternativeSymbol::clone() const {

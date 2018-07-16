@@ -32,4 +32,8 @@ namespace noam {
 
     };
 
+    namespace literals {
+        StringSymbol operator "" _T(const char* val, std::size_t);
+    }
+
 }

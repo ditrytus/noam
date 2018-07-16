@@ -27,3 +27,7 @@ StringSymbol::~StringSymbol() {
 }
 
 #endif
+
+StringSymbol noam::literals::operator "" _T(const char * val, std::size_t) {
+    return StringSymbol{val};
+}

@@ -22,7 +22,11 @@ NonTerminalSymbol::NonTerminalSymbol(const Symbol &symbol) {
 }
 
 std::size_t NonTerminalSymbol::hash() const {
-    return std::accumulate(symbols.begin(), symbols.end(), 0, [](size_t a, shared_ptr<Symbol> ptr){return a ^ ptr->hash();});
+    return std::accumulate(
+        symbols.begin(),
+        symbols.end(),
+        0,
+        [](size_t a, shared_ptr<Symbol> ptr){return a ^ ptr->hash();});
 }
 
 void NonTerminalSymbol::addSymbol(const Symbol &symbol) {
