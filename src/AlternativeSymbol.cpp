@@ -10,6 +10,10 @@ AlternativeSymbol& AlternativeSymbol::operator | (const Symbol &other) {
     return *this;
 }
 
-AlternativeSymbol noam::operator|(const Symbol &a, const Symbol &b) {
+AlternativeSymbol noam::operator | (const Symbol &a, const Symbol &b) {
     return AlternativeSymbol{a} | b;
+}
+
+Symbol* AlternativeSymbol::clone() const {
+    return new AlternativeSymbol(*this);
 }

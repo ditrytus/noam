@@ -16,8 +16,6 @@ namespace noam {
 
         std::size_t hash() const override;
 
-        Symbol *clone() const override;
-
 #ifdef NDEBUG
 
         ~NonTerminalSymbol() override = default;

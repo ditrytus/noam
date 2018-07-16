@@ -31,10 +31,6 @@ void NonTerminalSymbol::addSymbol(const Symbol &symbol) {
     symbols.push_back(sharedPtr);
 }
 
-Symbol* NonTerminalSymbol::clone() const {
-    return new NonTerminalSymbol(*this);
-}
-
 #ifndef NDEBUG
 
 NonTerminalSymbol::~NonTerminalSymbol() {

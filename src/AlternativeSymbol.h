@@ -11,6 +11,8 @@ namespace noam {
 
         AlternativeSymbol& operator | (const Symbol& other);
 
+        Symbol *clone() const override;
+
     };
 
     AlternativeSymbol operator | (const Symbol& a, const Symbol& b);
