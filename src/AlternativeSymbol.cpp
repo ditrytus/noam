@@ -1,6 +1,7 @@
 #include "AlternativeSymbol.h"
 
 using namespace noam;
+using namespace std;
 
 
 AlternativeSymbol::AlternativeSymbol(const Symbol &symbol) : NonTerminalSymbol(symbol) {}
@@ -14,6 +15,6 @@ AlternativeSymbol noam::operator | (const Symbol &a, const Symbol &b) {
     return AlternativeSymbol{a} | b;
 }
 
-Symbol* AlternativeSymbol::clone() const {
-    return new AlternativeSymbol(*this);
+unique_ptr<Symbol> AlternativeSymbol::clone() const {
+    return unique_ptr<Symbol>{new AlternativeSymbol{*this}};
 }

@@ -12,7 +12,7 @@ namespace noam {
 
         ConcatSymbol& operator + (const Symbol& other);
 
-        Symbol *clone() const override;
+        std::unique_ptr<Symbol> clone() const override;
 
     };
 

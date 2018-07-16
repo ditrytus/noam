@@ -37,7 +37,7 @@ TEST(ConcatSymbolTest, HashIsNotEqualForDifferentSymbils) {
 TEST(ConcatSymbolTest, CloneReturnsSameArgument) {
     StringSymbol sSym {"abc"};
     ConcatSymbol sut = sSym;
-    auto aClone = unique_ptr<ConcatSymbol>{(dynamic_cast<ConcatSymbol *>(sut.clone()))};
+    auto aClone = sut.clone();
 
     EXPECT_TRUE(sut == *aClone);
 }
@@ -92,7 +92,7 @@ TEST(ConcatSymbolTest, ConcatOfSymbols) {
     EXPECT_TRUE(sut2.contains(sSym2));
     EXPECT_TRUE(sut2.contains(sSym3));
 
-    ConcatSymbol sut3 = (*sut1.clone()) + sut2 + sSym1;
+    ConcatSymbol sut3 = *sut1.clone() + sut2 + sSym1;
 
     EXPECT_TRUE(sut3.contains(sut1));
     EXPECT_TRUE(sut3.contains(sut2));

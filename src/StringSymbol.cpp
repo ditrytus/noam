@@ -16,8 +16,8 @@ size_t StringSymbol::hash() const {
     return std::hash<string>()(value);
 }
 
-Symbol* StringSymbol::clone() const {
-    return new StringSymbol(*this);
+std::unique_ptr<Symbol> StringSymbol::clone() const {
+    return std::unique_ptr<Symbol>(new StringSymbol(*this));
 }
 
 #ifndef NDEBUG

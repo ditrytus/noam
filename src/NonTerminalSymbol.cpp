@@ -26,9 +26,7 @@ std::size_t NonTerminalSymbol::hash() const {
 }
 
 void NonTerminalSymbol::addSymbol(const Symbol &symbol) {
-    shared_ptr<Symbol> sharedPtr;
-    sharedPtr.reset(symbol.clone());
-    symbols.push_back(sharedPtr);
+    symbols.push_back(symbol.clone());
 }
 
 #ifndef NDEBUG

@@ -15,7 +15,7 @@ namespace noam {
 
         std::size_t hash() const override;
 
-        Symbol* clone() const override;
+        std::unique_ptr<Symbol> clone() const override;
 
 #ifdef NDEBUG
 

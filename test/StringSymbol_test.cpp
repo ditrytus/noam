@@ -46,7 +46,7 @@ TEST(StringSymbolTest, NotEqualForDifferentString) {
 
 TEST(StringSymbolTest, CloneReturnsIdentical) {
     StringSymbol sut1{"abc"s};
-    auto aClone = unique_ptr<StringSymbol>{(dynamic_cast<StringSymbol *>(sut1.clone()))};
+    auto aClone = sut1.clone();
 
     EXPECT_TRUE(sut1 == *aClone);
 }
