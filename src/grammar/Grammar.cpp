@@ -2,6 +2,8 @@
 
 using namespace noam;
 
-Grammar::Grammar(std::initializer_list<AlternativeRule> init_rules) : rules(init_rules) {
+Grammar::Grammar(std::initializer_list<AlternativeRule> init_rules) : rules(init_rules) {}
 
+const std::vector<AlternativeRule> &Grammar::getRules() const {
+    return rules;
 }

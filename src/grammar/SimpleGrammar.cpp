@@ -1,0 +1,12 @@
+#include "SimpleGrammar.h"
+
+using namespace noam;
+
+SimpleGrammar::SimpleGrammar(std::initializer_list<SimpleRule> init_rules) : rules(init_rules) {}
+
+SimpleGrammar::SimpleGrammar(const Grammar &grammar) {
+    for(auto altRule : grammar.getRules()) {
+        auto simRules = altRule.simplify();
+        rules.insert(rules.end(), simRules.begin(), simRules.end());
+    }
+}

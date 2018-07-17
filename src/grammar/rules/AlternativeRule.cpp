@@ -16,6 +16,14 @@ std::unique_ptr<Rule> AlternativeRule::clone() const {
     return unique_ptr<Rule>{new AlternativeRule{*this}};
 }
 
+vector<SimpleRule> AlternativeRule::simplify() {
+    vector<SimpleRule> result;
+    for(auto alt : alternatives) {
+        result.emplace_back(getHead(), alt);
+    }
+    return result;
+}
+
 AlternativeRule noam::operator | (const SimpleRule &simpleRule, const Substitution &substitution) {
     return AlternativeRule(simpleRule) | substitution;
 }

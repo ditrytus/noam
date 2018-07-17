@@ -15,6 +15,8 @@ namespace noam {
 
         AlternativeRule& operator | (const Substitution& substitution);
 
+        std::vector<SimpleRule> simplify();
+
     private:
         std::unique_ptr<Rule> clone() const override;
 

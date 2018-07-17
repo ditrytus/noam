@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <grammar/Grammar.h>
+#include <grammar/SimpleGrammar.h>
 
 #include "grammar/symbols/NonTerminal.h"
 #include "grammar/symbols/Terminal.h"
@@ -32,4 +33,5 @@ int main() {
         R(X >> a+b | a+X | b+X | "sim"_T)
     };
 
+    SimpleGrammar sg {g};
 }
