@@ -13,6 +13,8 @@ namespace noam {
 
         SimpleGrammar(const Grammar &grammar);
 
+        const std::vector<SimpleRule> &getRules() const;
+
     private:
         std::vector<SimpleRule> rules;
 

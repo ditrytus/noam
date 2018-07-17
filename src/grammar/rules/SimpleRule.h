@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <set>
 #include "Rule.h"
 #include "Substitution.h"
 
@@ -16,10 +16,18 @@ namespace noam {
     private:
         std::unique_ptr<Rule> clone() const override;
 
-    private:
         Substitution substitution;
 
     };
+
+    template<typename T>
+    std::set<T> getSymbolsOfType(const SimpleRule& rule) {
+        auto sub = rule.getSubstitution();
+        return getSymbolsOfType<T>(sub);
+    }
+
+    template<>
+    std::set<NonTerminal> getSymbolsOfType(const SimpleRule& rule);
 
     SimpleRule operator >> (NonTerminal nonTerminal, Substitution substitution);
 

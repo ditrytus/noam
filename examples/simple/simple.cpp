@@ -34,4 +34,27 @@ int main() {
     };
 
     SimpleGrammar sg {g};
+
+    auto sub = a + b + X + S;
+
+    auto terminals = getSymbolsOfType<Terminal>(sub);
+    for(auto t : terminals) {
+        cout << t.getName() << endl;
+    }
+
+    auto nonTerminals = getSymbolsOfType<NonTerminal>(sub);
+    for(auto t : nonTerminals) {
+        cout << t.getName() << endl;
+    }
+
+    auto t1 = getSymbolsOfType<Terminal>(X >> a + b + X + S);
+    for(auto t : t1) {
+        cout << t.getName() << endl;
+    }
+
+    auto n1 = getSymbolsOfType<NonTerminal>(X >> a + b + X + S);
+    for(auto t : n1) {
+        cout << t.getName() << endl;
+    }
+
 }

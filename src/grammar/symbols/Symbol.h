@@ -5,8 +5,20 @@
 
 namespace noam {
 
-    class Symbol: public Clonable<Symbol> {
-
+    enum class SymbolType {
+        Terminal,
+        NonTerminal
     };
 
+    class Symbol: public Clonable<Symbol> {
+
+    public:
+        Symbol(SymbolType type);
+
+        SymbolType getType() const;
+
+    private:
+        SymbolType type;
+
+    };
 }

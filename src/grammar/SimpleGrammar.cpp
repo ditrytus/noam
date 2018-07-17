@@ -10,3 +10,7 @@ SimpleGrammar::SimpleGrammar(const Grammar &grammar) {
         rules.insert(rules.end(), simRules.begin(), simRules.end());
     }
 }
+
+const std::vector<SimpleRule> &SimpleGrammar::getRules() const {
+    return rules;
+}

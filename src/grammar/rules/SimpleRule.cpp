@@ -10,10 +10,18 @@ const Substitution &SimpleRule::getSubstitution() const {
     return substitution;
 }
 
-std::unique_ptr<Rule> SimpleRule::clone() const {
+unique_ptr<Rule> SimpleRule::clone() const {
     return unique_ptr<Rule>{new SimpleRule{*this}};
 }
 
 SimpleRule noam::operator>>(NonTerminal nonTerminal, Substitution substitution) {
     return SimpleRule(nonTerminal, substitution);
+}
+
+template<>
+std::set<NonTerminal> noam::getSymbolsOfType(const SimpleRule& rule) {
+    auto sub = rule.getSubstitution();
+    auto result = getSymbolsOfType<NonTerminal>(sub);
+    result.insert(rule.getHead());
+    return result;
 }
