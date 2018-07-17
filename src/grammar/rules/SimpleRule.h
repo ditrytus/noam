@@ -14,6 +14,9 @@ namespace noam {
         const Substitution &getSubstitution() const;
 
     private:
+        std::unique_ptr<Rule> clone() const override;
+
+    private:
         Substitution substitution;
 
     };

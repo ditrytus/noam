@@ -1,11 +1,12 @@
 #include <string>
 #include <iostream>
+#include <grammar/Grammar.h>
 
-#include "symbols/NonTerminal.h"
-#include "symbols/Terminal.h"
-#include "rules/Substitution.h"
-#include "rules/SimpleRule.h"
-#include "rules/AlternativeRule.h"
+#include "grammar/symbols/NonTerminal.h"
+#include "grammar/symbols/Terminal.h"
+#include "grammar/rules/Substitution.h"
+#include "grammar/rules/SimpleRule.h"
+#include "grammar/rules/AlternativeRule.h"
 
 using namespace noam;
 using namespace noam::literals;
@@ -13,13 +14,22 @@ using namespace std;
 
 
 int main() {
-    auto a = "a"_T;
-    auto b = "b"_T;
-    auto X = "X"_N;
-    auto sub = a + X;
-    auto s_rule = X >> sub;
+    Terminal a = "a"_T,
+             b = "b"_T;
+
+    NonTerminal X = "X"_N,
+                S = "S"_N;
+
     auto s_rule_2 = X >> a;
     auto s_rule_3 = X >> a + X;
     auto a_rule = X >> a | b + a;
     auto a_rule_2 = X >> a+b | a+X | b+X | "sim"_T;
+
+    Grammar g = {
+        R(X >> a),
+        R(X >> a + X),
+        R(X >> a | b + a),
+        R(X >> a+b | a+X | b+X | "sim"_T)
+    };
+
 }

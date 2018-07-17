@@ -5,7 +5,7 @@
 
 namespace noam {
 
-    class Rule {
+    class Rule : Clonable<Rule> {
 
     public:
         Rule(const NonTerminal &head);

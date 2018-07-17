@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Symbol.h"
-#include "../Named.h"
+#include "Named.h"
 
 namespace noam {
 
