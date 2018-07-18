@@ -72,9 +72,7 @@ void insertSymbolsToFirstSet(
         map<NonTerminal, set<Terminal>>& firstSets,
         set<Terminal> &firstSet,
         Terminal *firstSymbol) {
-    cout << "Adding " << firstSymbol->getName() << endl;
     auto pos = firstSet.insert(*firstSymbol);
-    cout << "First set: " << utils::toString(firstSet) << endl;
 }
 
 template <>
@@ -83,7 +81,5 @@ void insertSymbolsToFirstSet(
         set<Terminal> &firstSet,
         NonTerminal *firstSymbol) {
     auto& firstFirstSet = firstSets[*firstSymbol];
-    cout << "Adding " << utils::toString(firstSet) << endl;
     firstSet.insert(firstFirstSet.begin(), firstFirstSet.end());
-    cout << "First set: " << utils::toString(firstSet) << endl;
 }
