@@ -1,4 +1,5 @@
 #include "LLParser.h"
+#include "../../utilities/StringUtilities.h"
 
 #include <iostream>
 
@@ -29,6 +30,8 @@ map<NonTerminal, set<Terminal>> LLParser::generateFirstSets(const SimpleGrammar 
     while(setsChanged) {
         setsChanged = false;
         for (auto const& rule : grammar.getRules()) {
+            cout << rule.toString() << endl;
+
             auto sub = rule.getSubstitution();
             auto firstSymbol = sub.getFirst();
 
@@ -49,7 +52,6 @@ void LLParser::updateFirstSet(map<NonTerminal, set<Terminal>> &firstSets,
                               const SimpleRule &rule,
                               const shared_ptr<Symbol> &first,
                               bool *setsChanged) const {
-    cout << rule.toString() << endl;
     auto firstTer = dynamic_cast<T*>(first.get());
     if (firstTer != nullptr) {
         auto& firstSet = firstSets[rule.getHead()];
@@ -69,14 +71,18 @@ void insertSymbolsToFirstSet(
         map<NonTerminal, set<Terminal>>& firstSets,
         set<Terminal> &firstSet,
         Terminal *firstSymbol) {
+    cout << "Adding " << firstSymbol->getName() << endl;
     auto pos = firstSet.insert(*firstSymbol);
+    cout << "First set: " << noam::utils::join(firstSet, ", ", [](const Named& t){return t.getName();}) << endl;
 }
 
 template <>
-void insertSymbolsToFirstSet(map<NonTerminal, set<Terminal>>& firstSets,
-                          set<Terminal> &firstSet,
-                          NonTerminal *firstSymbol) {
+void insertSymbolsToFirstSet(
+        map<NonTerminal, set<Terminal>>& firstSets,
+        set<Terminal> &firstSet,
+        NonTerminal *firstSymbol) {
     auto& firstFirstSet = firstSets[*firstSymbol];
-    cout << firstSymbol->getName() << endl;
-    firstSet.insert(firstFirstSet.begin(), firstFirstSet.begin());
+    cout << "Adding " << noam::utils::join(firstFirstSet, ", ", [](const Named& t){return t.getName();}) << endl;
+    firstSet.insert(firstFirstSet.begin(), firstFirstSet.end());
+    cout << "First set: " << noam::utils::join(firstSet, ", ", [](const Named& t){return t.getName();}) << endl;
 }

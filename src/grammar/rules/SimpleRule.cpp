@@ -19,7 +19,10 @@ std::string SimpleRule::toString() const {
     stringstream ss;
     ss << getHead().getName() << " >> ";
     for(auto symbol : substitution.getSymbols()) {
-        //ss << symbol->getName();
+        auto namedSymbol = dynamic_cast<Named*>(symbol.get());
+        if (namedSymbol != nullptr) {
+            ss << namedSymbol->getName();
+        }
     }
     return ss.str();
 }
