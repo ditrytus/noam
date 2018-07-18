@@ -24,6 +24,10 @@ vector<SimpleRule> AlternativeRule::simplify() {
     return result;
 }
 
+const vector<Substitution> &AlternativeRule::getAlternatives() const {
+    return alternatives;
+}
+
 AlternativeRule noam::operator | (const SimpleRule &simpleRule, const Substitution &substitution) {
     return AlternativeRule(simpleRule) | substitution;
 }

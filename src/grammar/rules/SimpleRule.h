@@ -13,6 +13,8 @@ namespace noam {
 
         const Substitution &getSubstitution() const;
 
+        std::string toString() const;
+
     private:
         std::unique_ptr<Rule> clone() const override;
 

@@ -26,6 +26,14 @@ const vector<shared_ptr<Symbol>> &Substitution::getSymbols() const {
     return symbols;
 }
 
+shared_ptr<Symbol> Substitution::getFirst() {
+    return *symbols.begin();
+}
+
+Substitution &Substitution::operator+(const string & other) {
+    return (*this) + Terminal{other};
+}
+
 Substitution noam::operator + (const Symbol &a, const Symbol &b) {
     return Substitution{a} + b;
 }

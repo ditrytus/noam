@@ -1,3 +1,4 @@
+#include <sstream>
 #include "SimpleRule.h"
 
 using namespace noam;
@@ -12,6 +13,15 @@ const Substitution &SimpleRule::getSubstitution() const {
 
 unique_ptr<Rule> SimpleRule::clone() const {
     return unique_ptr<Rule>{new SimpleRule{*this}};
+}
+
+std::string SimpleRule::toString() const {
+    stringstream ss;
+    ss << getHead().getName() << " >> ";
+    for(auto symbol : substitution.getSymbols()) {
+        //ss << symbol->getName();
+    }
+    return ss.str();
 }
 
 SimpleRule noam::operator>>(NonTerminal nonTerminal, Substitution substitution) {

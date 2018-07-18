@@ -20,4 +20,13 @@ namespace noam {
 
     };
 
+    template<typename T>
+    std::set<T> getSymbolsOfType(const SimpleGrammar& grammar) {
+        std::set<T> result;
+        for (auto rule : grammar.getRules()) {
+            auto symbols = getSymbolsOfType<T>(rule);
+            result.insert(symbols.begin(), symbols.end());
+        }
+        return result;
+    }
 }

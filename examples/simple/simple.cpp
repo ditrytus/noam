@@ -2,6 +2,7 @@
 #include <iostream>
 #include <grammar/Grammar.h>
 #include <grammar/SimpleGrammar.h>
+#include <parsers/ll/LLParser.h>
 
 #include "grammar/symbols/NonTerminal.h"
 #include "grammar/symbols/Terminal.h"
@@ -57,4 +58,12 @@ int main() {
         cout << t.getName() << endl;
     }
 
+    auto F = "F"_N;
+
+    Grammar grammar = {
+        R(S >> F | "("_T + S + "+" + F + ")"),
+        R(F >> a)
+    };
+
+    LLParser parser {grammar};
 }

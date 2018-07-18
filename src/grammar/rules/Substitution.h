@@ -17,7 +17,11 @@ namespace noam {
 
         Substitution& operator + (const Symbol& other);
 
+        Substitution& operator + (const std::string& other);
+
         const std::vector<std::shared_ptr<Symbol>> &getSymbols() const;
+
+        std::shared_ptr<Symbol> getFirst();
 
     private:
         void addSymbol(const Symbol &symbol);
