@@ -12,8 +12,9 @@ namespace noam {
 
         const std::string &getName() const;
 
+        static const std::string& toString(const Named& named);
+
     private:
         std::string name;
     };
-
 }

@@ -23,4 +23,9 @@ namespace noam::utils {
         return ss.str();
     }
 
+    template <typename T>
+    std::string toString(const T& container, const std::string &separator = ", ") {
+        return join(container, separator, T::value_type::toString);
+    }
+
 }
