@@ -11,6 +11,6 @@ SimpleGrammar::SimpleGrammar(const Grammar &grammar) {
     }
 }
 
-const std::vector<SimpleRule> &SimpleGrammar::getRules() const {
+const std::vector<SimpleRule>& SimpleGrammar::getRules() const {
     return rules;
 }

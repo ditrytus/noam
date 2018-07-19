@@ -9,6 +9,8 @@
 
 namespace noam {
 
+    using ParsinTable = std::map<std::pair<NonTerminal, Terminal>, std::unique_ptr<SimpleRule>>;
+
     class LLParser {
 
     public:
@@ -17,14 +19,15 @@ namespace noam {
     private:
         SimpleGrammar grammar;
 
-        std::map<std::pair<NonTerminal, Terminal>, SimpleRule> table;
+        ParsinTable parsingTable;
 
-        std::map<NonTerminal, std::set<Terminal>> generateFirstSets(const SimpleGrammar &grammar);
+        std::map<NonTerminal, std::map<Substitution, std::set<Terminal>>> generateFirstSets(const SimpleGrammar &grammar);
+
+        ParsinTable generateParsingTable(const SimpleGrammar &grammar, std::map<NonTerminal, std::map<Substitution, std::set<Terminal>>> firstSets);
 
         template<typename T>
-        void updateFirstSet(std::map<NonTerminal, std::set<Terminal>> &firstSets,
+        void updateFirstSet(std::map<NonTerminal, std::map<Substitution, std::set<Terminal>>> &firstSets,
                             const SimpleRule &rule,
-                            const std::shared_ptr<Symbol> &first,
                             bool *setsChanged) const;
     };
 

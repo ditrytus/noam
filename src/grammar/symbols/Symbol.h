@@ -17,8 +17,12 @@ namespace noam {
 
         SymbolType getType() const;
 
+        virtual bool operator < (const Symbol& other) = 0;
+
     private:
         SymbolType type;
 
     };
+
+    int precedense(SymbolType type);
 }

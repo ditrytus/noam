@@ -21,7 +21,9 @@ namespace noam {
 
         const std::vector<std::shared_ptr<Symbol>> &getSymbols() const;
 
-        std::shared_ptr<Symbol> getFirst();
+        std::shared_ptr<Symbol> getFirst() const;
+
+        std::string toString() const;
 
     private:
         void addSymbol(const Symbol &symbol);
@@ -33,6 +35,8 @@ namespace noam {
     Substitution operator + (const Symbol& a, const Symbol& b);
 
     Substitution operator + (const Symbol& a, const std::string& b);
+
+    bool operator < (const Substitution& a, const Substitution& b);
 
     template<typename T>
     std::set<T> getSymbolsOfType(const Substitution& sub) {

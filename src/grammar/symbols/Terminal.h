@@ -11,6 +11,8 @@ namespace noam {
         Terminal(const std::string &name);
 
         std::unique_ptr<Symbol> clone() const override;
+
+        bool operator < (const Symbol &other) override;
     };
 
     bool operator < (const Terminal& a, const Terminal& b);

@@ -1,5 +1,6 @@
 #include "LLParser.h"
 #include "../../utilities/StringUtilities.h"
+#include "../../utilities/ContainerUtilities.h"
 
 #include <iostream>
 
@@ -9,22 +10,57 @@ using namespace noam::utils;
 
 
 LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
-    auto terminals = getSymbolsOfType<Terminal>(grammar);
-    auto nonTerminals = getSymbolsOfType<NonTerminal>(grammar);
+    auto firstSets = generateFirstSets(grammar);
 
-    map<NonTerminal, set<Terminal>> firstSets = generateFirstSets(grammar);
-
-    for(auto const& firstSet : firstSets) {
-        cout << firstSet.first.getName();
-        for (auto const& term : firstSet.second) {
-            cout << " " << term.getName();
+    for(auto& keyVal : firstSets) {
+        cout << Named::toString(keyVal.first)
+             << " : "
+             << endl;
+        for(auto& firstSet : keyVal.second) {
+            cout << "\t"
+                 << firstSet.first.toString()
+                 << " : "
+                 << toString(firstSet.second)
+                 << endl;
         }
-        cout << endl;
+    }
+
+    parsingTable = generateParsingTable(grammar, firstSets);
+
+    for(auto& keyVal : parsingTable) {
+        cout << Named::toString(keyVal.first.first)
+             << " "
+             << Named::toString(keyVal.first.second)
+             << " : "
+             << keyVal.second->toString()
+             << endl;
     }
 }
 
-map<NonTerminal, set<Terminal>> LLParser::generateFirstSets(const SimpleGrammar &grammar) {
-    map<NonTerminal, set<Terminal>> firstSets;
+ParsinTable LLParser::generateParsingTable(const SimpleGrammar &grammar, map<NonTerminal, std::map<Substitution, std::set<Terminal>>> firstSets) {
+    ParsinTable parsingTable;
+
+    auto terminals = getSymbolsOfType<Terminal>(grammar);
+    auto nonTerminals = getSymbolsOfType<NonTerminal>(grammar);
+
+    for(auto const& terminal : terminals) {
+        for (auto const &nonTerminal : nonTerminals) {
+            auto rules = grammar.getRules();
+            auto pos = find_if(rules.begin(), rules.end(), [&](SimpleRule rule) {
+                auto symbols = firstSets[nonTerminal][rule.getSubstitution()];
+                return rule.getHead() == nonTerminal && contains(symbols, terminal);
+            });
+            if (pos != rules.end()) {
+                parsingTable[make_pair(nonTerminal, terminal)] = make_unique<SimpleRule>(*pos);
+            }
+        }
+    }
+
+    return parsingTable;
+}
+
+map<NonTerminal, std::map<Substitution, std::set<Terminal>>> LLParser::generateFirstSets(const SimpleGrammar &grammar) {
+    map<NonTerminal, std::map<Substitution, std::set<Terminal>>> firstSets;
 
     bool setsChanged = true;
 
@@ -32,33 +68,33 @@ map<NonTerminal, set<Terminal>> LLParser::generateFirstSets(const SimpleGrammar 
         setsChanged = false;
         for (auto const& rule : grammar.getRules()) {
             cout << rule.toString() << endl;
-
-            auto sub = rule.getSubstitution();
-            auto firstSymbol = sub.getFirst();
-
-            updateFirstSet<Terminal>(firstSets, rule, firstSymbol, &setsChanged);
-            updateFirstSet<NonTerminal>(firstSets, rule, firstSymbol, &setsChanged);
+            updateFirstSet<Terminal>(firstSets, rule, &setsChanged);
+            updateFirstSet<NonTerminal>(firstSets, rule, &setsChanged);
+            cout << toString(firstSets[rule.getHead()][rule.getSubstitution()]) << endl;
         }
     }
     return firstSets;
 }
 
 template<typename T>
-void insertSymbolsToFirstSet(map<NonTerminal, set<Terminal>> &firstSets,
+void insertSymbolsToFirstSet(map<NonTerminal, std::map<Substitution, std::set<Terminal>>> &firstSets,
+                             Substitution sub,
                              std::set<Terminal> &firstSet,
                              T *firstSymbol);
 
 template<typename T>
-void LLParser::updateFirstSet(map<NonTerminal, set<Terminal>> &firstSets,
+void LLParser::updateFirstSet(map<NonTerminal, std::map<Substitution, std::set<Terminal>>> &firstSets,
                               const SimpleRule &rule,
-                              const shared_ptr<Symbol> &first,
                               bool *setsChanged) const {
-    auto firstTer = dynamic_cast<T*>(first.get());
-    if (firstTer != nullptr) {
-        auto& firstSet = firstSets[rule.getHead()];
+    auto sub = rule.getSubstitution();
+    auto firstSymbol = sub.getFirst();
+
+    auto firstSymbolT = dynamic_cast<T*>(firstSymbol.get());
+    if (firstSymbolT != nullptr) {
+        auto& firstSet = firstSets[rule.getHead()][sub];
         auto countBefore = firstSet.size();
 
-        insertSymbolsToFirstSet<T>(firstSets, firstSet, firstTer);
+        insertSymbolsToFirstSet<T>(firstSets, sub, firstSet, firstSymbolT);
 
         auto countAfter = firstSet.size();
         if (countBefore != countAfter) {
@@ -69,7 +105,8 @@ void LLParser::updateFirstSet(map<NonTerminal, set<Terminal>> &firstSets,
 
 template <>
 void insertSymbolsToFirstSet(
-        map<NonTerminal, set<Terminal>>& firstSets,
+        map<NonTerminal, std::map<Substitution, std::set<Terminal>>>& firstSets,
+        Substitution sub,
         set<Terminal> &firstSet,
         Terminal *firstSymbol) {
     auto pos = firstSet.insert(*firstSymbol);
@@ -77,9 +114,10 @@ void insertSymbolsToFirstSet(
 
 template <>
 void insertSymbolsToFirstSet(
-        map<NonTerminal, set<Terminal>>& firstSets,
+        map<NonTerminal, std::map<Substitution, std::set<Terminal>>>& firstSets,
+        Substitution sub,
         set<Terminal> &firstSet,
         NonTerminal *firstSymbol) {
-    auto& firstFirstSet = firstSets[*firstSymbol];
+    auto& firstFirstSet = firstSets[*firstSymbol][sub];
     firstSet.insert(firstFirstSet.begin(), firstFirstSet.end());
 }

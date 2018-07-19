@@ -18,12 +18,7 @@ unique_ptr<Rule> SimpleRule::clone() const {
 std::string SimpleRule::toString() const {
     stringstream ss;
     ss << getHead().getName() << " >> ";
-    for(auto symbol : substitution.getSymbols()) {
-        auto namedSymbol = dynamic_cast<Named*>(symbol.get());
-        if (namedSymbol != nullptr) {
-            ss << namedSymbol->getName();
-        }
-    }
+    ss << substitution.toString();
     return ss.str();
 }
 

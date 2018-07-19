@@ -13,6 +13,8 @@ namespace noam {
 
         std::unique_ptr<Symbol> clone() const override;
 
+        bool operator < (const Symbol &other) override;
+        
     };
 
     bool operator < (const NonTerminal& a, const NonTerminal& b);

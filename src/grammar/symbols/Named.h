@@ -14,6 +14,10 @@ namespace noam {
 
         static const std::string& toString(const Named& named);
 
+        bool operator==(const Named &rhs) const;
+
+        bool operator!=(const Named &rhs) const;
+
     private:
         std::string name;
     };
