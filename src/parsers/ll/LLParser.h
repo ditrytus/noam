@@ -21,14 +21,14 @@ namespace noam {
 
         ParsinTable parsingTable;
 
-        std::map<NonTerminal, std::map<Substitution, std::set<Terminal>>> generateFirstSets(const SimpleGrammar &grammar);
+        std::map<Substitution, std::set<Terminal>> generateFirstSets(const SimpleGrammar &grammar);
 
-        ParsinTable generateParsingTable(const SimpleGrammar &grammar, std::map<NonTerminal, std::map<Substitution, std::set<Terminal>>> firstSets);
+        ParsinTable generateParsingTable(const SimpleGrammar &grammar, std::map<Substitution, std::set<Terminal>> firstSets);
 
         template<typename T>
-        void updateFirstSet(std::map<NonTerminal, std::map<Substitution, std::set<Terminal>>> &firstSets,
-                            const SimpleRule &rule,
-                            bool *setsChanged) const;
+        void updateFirstSet(std::set<Terminal>& firstSets,
+                            std::map<NonTerminal, std::set<Terminal>>& nonTerFirstSets,
+                            const SimpleRule &rule) const;
     };
 
 }
