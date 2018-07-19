@@ -14,6 +14,6 @@ bool noam::Named::operator!=(const noam::Named &rhs) const {
     return !(rhs == *this);
 }
 
-const std::string& noam::Named::toString(const noam::Named &named) {
-    return named.getName();
+const std::string &noam::Named::toString() const {
+    return name;
 }

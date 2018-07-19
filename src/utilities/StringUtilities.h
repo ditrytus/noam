@@ -25,7 +25,7 @@ namespace noam::utils {
 
     template <typename T>
     std::string toString(const T& container, const std::string &separator = ", ") {
-        return join(container, separator, T::value_type::toString);
+        return join(container, separator, [](typename T::value_type item){return item.toString();});
     }
 
 }

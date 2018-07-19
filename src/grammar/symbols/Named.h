@@ -12,7 +12,7 @@ namespace noam {
 
         const std::string &getName() const;
 
-        static const std::string& toString(const Named& named);
+        const std::string& toString() const;
 
         bool operator==(const Named &rhs) const;
 

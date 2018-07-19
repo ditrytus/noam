@@ -24,9 +24,9 @@ LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
 
     cout << "PARSING TABLE:" << endl;
     for(auto& keyVal : parsingTable) {
-        cout << Named::toString(keyVal.first.first)
+        cout << keyVal.first.first.toString()
              << " "
-             << Named::toString(keyVal.first.second)
+             << keyVal.first.second.toString()
              << " : "
              << keyVal.second->toString()
              << endl;
@@ -90,7 +90,7 @@ std::map<Substitution, std::set<Terminal>> LLParser::generateFirstSets(const Sim
 
     cout << "NON TERMINAL SETS:" << endl;
     for(auto& firstSet : nonTerFirstSets) {
-        cout << Named::toString(firstSet.first)
+        cout << firstSet.first.toString()
              << " : "
              << toString(firstSet.second)
              << endl;
