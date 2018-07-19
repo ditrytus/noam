@@ -14,8 +14,8 @@ LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
     parsingTable = generateParsingTable(grammar, substitutionsFirstSets);
 }
 
-ParsinTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& firstSets) {
-    ParsinTable parsingTable;
+ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& firstSets) {
+    ParsingTable parsingTable;
 
     auto terminals = getSymbolsOfType<Terminal>(grammar);
     auto nonTerminals = getSymbolsOfType<NonTerminal>(grammar);
@@ -112,6 +112,6 @@ const FirstSets<noam::NonTerminal> &LLParser::getNonTerminalFirstSets() const {
     return nonTerminalFirstSets;
 }
 
-const ParsinTable &LLParser::getParsingTable() const {
+const ParsingTable &LLParser::getParsingTable() const {
     return parsingTable;
 }
