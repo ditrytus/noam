@@ -8,7 +8,7 @@ SymbolType Symbol::getType() const {
     return type;
 }
 
-int noam::precedense(SymbolType type) {
+int noam::precedence(SymbolType type) {
     switch (type) {
         case SymbolType::NonTerminal: return 0;
         case SymbolType::Terminal: return 1;

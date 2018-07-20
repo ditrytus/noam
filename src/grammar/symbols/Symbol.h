@@ -24,5 +24,5 @@ namespace noam {
 
     };
 
-    int precedense(SymbolType type);
+    int precedence(SymbolType type);
 }
