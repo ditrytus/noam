@@ -17,15 +17,15 @@ namespace noam {
     class LLParser {
 
     public:
-        LLParser(const SimpleGrammar &grammar);
+        explicit LLParser(const SimpleGrammar &grammar);
 
         static std::pair<FirstSets<Substitution>, FirstSets<NonTerminal>> generateFirstSets(const SimpleGrammar &grammar);
 
         static ParsingTable generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& subFs);
 
-        const FirstSets<noam::NonTerminal> &getNonTerminalFirstSets() const;
+        const FirstSets<NonTerminal> &getNonTerminalFirstSets() const;
 
-        const FirstSets<noam::Substitution> &getSubstitutionsFirstSets() const;
+        const FirstSets<Substitution> &getSubstitutionsFirstSets() const;
 
         const ParsingTable &getParsingTable() const;
 
