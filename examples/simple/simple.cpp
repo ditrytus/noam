@@ -3,6 +3,8 @@
 #include <grammar/Grammar.h>
 #include <grammar/SimpleGrammar.h>
 #include <parsers/ll/LLParser.h>
+#include <parsers/Parsing.h>
+#include <lexers/TerminalsLexer.h>
 
 #include "grammar/symbols/NonTerminal.h"
 #include "grammar/symbols/Terminal.h"
@@ -67,7 +69,9 @@ int main() {
         R(F >> a)
     };
 
-    LLParser parser {grammar};
+    SimpleGrammar s_grammar {grammar};
+
+    LLParser parser {s_grammar};
 
     cout << "NON TERMINAL SETS:" << endl;
     for(auto& firstSet : parser.getNonTerminalFirstSets()) {
@@ -94,4 +98,10 @@ int main() {
              << keyVal.second->toString()
              << endl;
     }
+
+    auto terms = getSymbolsOfType<Terminal>(s_grammar);
+    TerminalsLexer lexer {terms};
+
+    auto derivation = noam::parse(parser, lexer, "(a+a)");
+    cout << toString(derivation) << endl;
 }

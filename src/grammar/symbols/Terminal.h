@@ -17,9 +17,24 @@ namespace noam {
 
         bool operator < (const Symbol &other) override;
 
-        int match(const std::string::iterator& begin,
-                  const std::string::iterator& end,
-                  std::stringstream& matchOutput);
+        template <typename InputIterator, typename OutputIterator>
+        int match(InputIterator begin,
+                  InputIterator end,
+                  OutputIterator matchOutput) const {
+            int result = 0;
+            auto inputCursor = begin;
+            auto tokenCursor = getName().begin();
+
+            while (inputCursor != end && tokenCursor != getName().end()) {
+                if (*inputCursor != *tokenCursor) {
+                    break;
+                }
+                *(matchOutput++) = *tokenCursor;
+                ++result; ++inputCursor; ++tokenCursor;
+            }
+
+            return result;
+        };
     };
 
     bool operator < (const Terminal& a, const Terminal& b);

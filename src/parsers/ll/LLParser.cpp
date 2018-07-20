@@ -118,40 +118,41 @@ const ParsingTable &LLParser::getParsingTable() const {
     return parsingTable;
 }
 
-void LLParser::derivation(const std::vector<Token>::iterator& begin,
-                          const std::vector<Token>::iterator& end,
-                          std::vector<SimpleRule>::iterator& derivation) {
 
-    stack<shared_ptr<Symbol>> symbolStack;
-    symbolStack.push(shared_ptr<Symbol>{new NonTerminal{grammar.getStartSymbol()}});
-
-    std::vector<Token>::iterator cursor = begin;
-    while (cursor != end && !symbolStack.empty()) {
-        auto topSymbol = symbolStack.top();
-        auto topTerminal = dynamic_pointer_cast<Terminal>(topSymbol);
-        if (topTerminal) {
-            if (*topTerminal != (*cursor).symbol) {
-                //TODO: Throw parsing error (unexpected symbol)
-            }
-            ++cursor;
-            symbolStack.pop();
-        }
-
-        auto topNonTerminal = dynamic_pointer_cast<NonTerminal>(topSymbol);
-        if (topNonTerminal) {
-            auto rule = parsingTable.find(make_pair(*topNonTerminal, (*cursor).symbol));
-            if (rule == parsingTable.end()) {
-                //TODO: Throw parsing error (unexpected symbol)
-            }
-            auto nextRule = (*rule).second;
-            *(++derivation) = *nextRule;
-            ++cursor;
-            symbolStack.pop();
-            auto newSymbols = nextRule->getSubstitution().getSymbols();
-            for(auto rit = newSymbols.rbegin(); rit != newSymbols.rend(); ++rit) {
-                symbolStack.push(*rit);
-            }
-        }
-    }
-    //TODO: Implement error ending conditions;
-}
+//void LLParser::derivation(const std::vector<Token>::iterator& begin,
+//                          const std::vector<Token>::iterator& end,
+//                          std::vector<SimpleRule>::iterator& derivation) {
+//
+//    stack<shared_ptr<Symbol>> symbolStack;
+//    symbolStack.push(shared_ptr<Symbol>{new NonTerminal{grammar.getStartSymbol()}});
+//
+//    std::vector<Token>::iterator cursor = begin;
+//    while (cursor != end && !symbolStack.empty()) {
+//        auto topSymbol = symbolStack.top();
+//        auto topTerminal = dynamic_pointer_cast<Terminal>(topSymbol);
+//        if (topTerminal) {
+//            if (*topTerminal != (*cursor).symbol) {
+//                //TODO: Throw parsing error (unexpected symbol)
+//            }
+//            ++cursor;
+//            symbolStack.pop();
+//        }
+//
+//        auto topNonTerminal = dynamic_pointer_cast<NonTerminal>(topSymbol);
+//        if (topNonTerminal) {
+//            auto rule = parsingTable.find(make_pair(*topNonTerminal, (*cursor).symbol));
+//            if (rule == parsingTable.end()) {
+//                //TODO: Throw parsing error (unexpected symbol)
+//            }
+//            auto nextRule = (*rule).second;
+//            *(++derivation) = *nextRule;
+//            ++cursor;
+//            symbolStack.pop();
+//            auto newSymbols = nextRule->getSubstitution().getSymbols();
+//            for(auto rit = newSymbols.rbegin(); rit != newSymbols.rend(); ++rit) {
+//                symbolStack.push(*rit);
+//            }
+//        }
+//    }
+//    //TODO: Implement error ending conditions;
+//}
