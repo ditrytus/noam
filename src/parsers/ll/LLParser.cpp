@@ -58,7 +58,7 @@ void updateFirstSet(std::set<Terminal> &firstSet,
 }
 
 template <>
-void insertSymbolsToFirstSet(
+void __unused insertSymbolsToFirstSet(
         std::set<Terminal> &firstSet,
         FirstSets<NonTerminal>& nonTerFirstSets,
         Terminal* firstSymbol) {
@@ -66,7 +66,7 @@ void insertSymbolsToFirstSet(
 }
 
 template <>
-void insertSymbolsToFirstSet(
+void __unused insertSymbolsToFirstSet(
         std::set<Terminal> &firstSet,
         FirstSets<NonTerminal>& nonTerFirstSets,
         NonTerminal* firstSymbol) {

@@ -28,7 +28,7 @@ SimpleRule noam::operator>>(NonTerminal nonTerminal, Substitution substitution) 
 
 template<>
 std::set<NonTerminal> noam::getSymbolsOfType(const SimpleRule& rule) {
-    auto sub = rule.getSubstitution();
+    const auto &sub = rule.getSubstitution();
     auto result = getSymbolsOfType<NonTerminal>(sub);
     result.insert(rule.getHead());
     return result;

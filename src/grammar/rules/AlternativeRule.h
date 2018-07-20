@@ -33,7 +33,7 @@ namespace noam {
     AlternativeRule R(const AlternativeRule& simpleRule);
 
     template<typename T>
-    std::set<T> getSymbolsOfType(const AlternativeRule& rule) {
+    std::set<T>  __unused getSymbolsOfType(const AlternativeRule& rule) {
         std::set<T> result;
         for(auto sub : rule.getAlternatives()) {
             auto symbols = getSymbolsOfType<T>(sub);

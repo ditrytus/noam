@@ -6,7 +6,6 @@
 #include "../symbols/Symbol.h"
 #include "../symbols/NonTerminal.h"
 #include "../symbols/Terminal.h"
-#include "../../utilities/TypeUtilities.h"
 
 namespace noam {
 
@@ -41,7 +40,7 @@ namespace noam {
     template<typename T>
     std::set<T> getSymbolsOfType(const Substitution& sub) {
         std::set<T> result;
-        for(auto s : sub.getSymbols()) {
+        for(const auto &s : sub.getSymbols()) {
             auto sym = dynamic_cast<T*>(s.get());
             if (sym != nullptr) {
                 result.insert(*sym);

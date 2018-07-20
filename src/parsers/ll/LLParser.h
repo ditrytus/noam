@@ -52,7 +52,6 @@ namespace noam {
                     auto currentInputSymbol = (*cursor).symbol;
                     if (*topTerminal != currentInputSymbol) {
                         //TODO: Throw parsing error (unexpected symbol)
-                        throw "";
                     }
                     ++cursor;
                     symbolStack.pop();
@@ -63,7 +62,6 @@ namespace noam {
                     auto rule = parsingTable.find(make_pair(*topNonTerminal, (*cursor).symbol));
                     if (rule == parsingTable.end()) {
                         //TODO: Throw parsing error (unexpected symbol)
-                        throw "";
                     }
                     auto nextRule = (*rule).second;
                     *(derivation++) = SimpleRule(*nextRule);

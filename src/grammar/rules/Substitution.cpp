@@ -4,7 +4,6 @@
 #include "Substitution.h"
 
 using namespace noam;
-using namespace noam::utils;
 using namespace std;
 
 Substitution::Substitution(const Symbol &symbol) {
@@ -34,7 +33,7 @@ Substitution &Substitution::operator+(const string & other) {
 
 std::string Substitution::toString() const{
     stringstream ss;
-    for(auto symbol : getSymbols()) {
+    for(const auto &symbol : getSymbols()) {
         auto namedSymbol = dynamic_cast<Named*>(symbol.get());
         if (namedSymbol != nullptr) {
             ss << namedSymbol->getName();
@@ -54,7 +53,7 @@ Substitution noam::operator + (const Symbol &a, const std::string &b) {
 bool noam::operator<(const Substitution &a, const Substitution &b) {
     auto& symbolsA = a.getSymbols();
     auto& symbolsB = b.getSymbols();
-    int minSize = min(symbolsA.size(), symbolsB.size());
+    auto minSize = min(symbolsA.size(), symbolsB.size());
     for(int i=0; i<minSize; ++i) {
         if ((*symbolsA[i]) < (*symbolsB[i])) {
             return true;

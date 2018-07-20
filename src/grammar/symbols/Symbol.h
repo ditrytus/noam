@@ -13,7 +13,7 @@ namespace noam {
     class Symbol: public Clonable<Symbol> {
 
     public:
-        Symbol(SymbolType type);
+        explicit Symbol(SymbolType type);
 
         SymbolType getType() const;
 
