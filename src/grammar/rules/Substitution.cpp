@@ -2,9 +2,6 @@
 #include <sstream>
 
 #include "Substitution.h"
-#include "../symbols/Terminal.h"
-#include "../../utilities/TypeUtilities.h"
-#include "../symbols/NonTerminal.h"
 
 using namespace noam;
 using namespace noam::utils;

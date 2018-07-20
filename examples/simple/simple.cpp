@@ -4,13 +4,7 @@
 #include <grammar/SimpleGrammar.h>
 #include <parsers/ll/LLParser.h>
 #include <parsers/Parsing.h>
-#include <lexers/TerminalsLexer.h>
 
-#include "grammar/symbols/NonTerminal.h"
-#include "grammar/symbols/Terminal.h"
-#include "grammar/rules/Substitution.h"
-#include "grammar/rules/SimpleRule.h"
-#include "grammar/rules/AlternativeRule.h"
 #include "utilities/StringUtilities.h"
 
 using namespace noam;
@@ -102,6 +96,6 @@ int main() {
     auto terms = getSymbolsOfType<Terminal>(s_grammar);
     TerminalsLexer lexer {terms};
 
-    auto derivation = noam::parse(parser, lexer, "(a+a)");
+    auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
     cout << toString(derivation) << endl;
 }

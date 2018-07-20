@@ -1,8 +1,6 @@
 #include "LLParser.h"
 #include "../../utilities/ContainerUtilities.h"
 
-#include <stack>
-
 using namespace std;
 using namespace noam;
 using namespace noam::utils;
