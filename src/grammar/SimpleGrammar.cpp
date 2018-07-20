@@ -2,7 +2,9 @@
 
 using namespace noam;
 
-SimpleGrammar::SimpleGrammar(std::initializer_list<SimpleRule> init_rules) : rules(init_rules) {}
+SimpleGrammar::SimpleGrammar(std::initializer_list<SimpleRule> init_rules) : rules(init_rules) {
+    //TODO: Assert empty grammar
+}
 
 SimpleGrammar::SimpleGrammar(const Grammar &grammar) {
     for(auto altRule : grammar.getRules()) {
@@ -13,4 +15,8 @@ SimpleGrammar::SimpleGrammar(const Grammar &grammar) {
 
 const std::vector<SimpleRule>& SimpleGrammar::getRules() const {
     return rules;
+}
+
+const NonTerminal &SimpleGrammar::getStartSymbol() const {
+    return rules.front().getHead();
 }

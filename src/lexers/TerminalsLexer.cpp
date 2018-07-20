@@ -19,6 +19,7 @@ void TerminalsLexer::getTokens(const std::string::iterator &begin,
                 *(++output) = Token{terminal, match.str()};
             }
         }
+        //TODO: add unrecognised token
     }
 }
 

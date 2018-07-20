@@ -15,6 +15,8 @@ namespace noam {
 
         const std::vector<SimpleRule> &getRules() const;
 
+        const NonTerminal &getStartSymbol() const;
+
     private:
         std::vector<SimpleRule> rules;
 

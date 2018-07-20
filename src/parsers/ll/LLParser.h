@@ -6,13 +6,16 @@
 
 #include "../../grammar/SimpleGrammar.h"
 #include "../../grammar/symbols/Terminal.h"
+#include "../../lexers/Token.h"
 
 namespace noam {
 
     template <typename T>
     using FirstSets = std::map<T, std::set<Terminal>>;
 
-    using ParsingTable = std::map<std::pair<NonTerminal, Terminal>, std::unique_ptr<SimpleRule>>;
+    using ParsingTable = std::map<std::pair<NonTerminal, Terminal>, std::shared_ptr<SimpleRule>>;
+
+    using Derivation = std::vector<SimpleRule>;
 
     class LLParser {
 
@@ -28,6 +31,10 @@ namespace noam {
         const FirstSets<Substitution> &getSubstitutionsFirstSets() const;
 
         const ParsingTable &getParsingTable() const;
+
+        void derivation(const std::vector<Token>::iterator& begin,
+                        const std::vector<Token>::iterator& end,
+                        std::vector<SimpleRule>::iterator& derivation);
 
     private:
 

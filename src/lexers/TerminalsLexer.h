@@ -2,14 +2,10 @@
 
 #include <vector>
 #include "../grammar/symbols/Terminal.h"
+#include "Token.h"
 
 
 namespace noam {
-
-    struct Token {
-        Terminal symbol;
-        std::string exactValue;
-    };
 
     class TerminalsLexer {
 

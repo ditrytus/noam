@@ -14,6 +14,8 @@ namespace noam {
 
         const std::vector<AlternativeRule> &getRules() const;
 
+        const NonTerminal &getStartSymbol() const;
+
     private:
         std::vector<AlternativeRule> rules;
 
