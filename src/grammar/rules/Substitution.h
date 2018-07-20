@@ -24,6 +24,8 @@ namespace noam {
 
         std::string toString() const;
 
+        unsigned long size() const;
+
     private:
         void addSymbol(const Symbol &symbol);
 

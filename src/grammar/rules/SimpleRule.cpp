@@ -1,11 +1,19 @@
 #include <sstream>
 #include "SimpleRule.h"
+#include "IdentityRuleException.h"
 
 using namespace noam;
 using namespace std;
 
 SimpleRule::SimpleRule(const NonTerminal &head, const Substitution &substitution)
-        : Rule(head), substitution(substitution) {}
+        : Rule(head), substitution(substitution) {
+    if (substitution.size() == 1) {
+        auto nonTerminal = dynamic_pointer_cast<NonTerminal>(substitution.getFirst());
+        if (nonTerminal && *nonTerminal == head) {
+            throw IdentityRuleException();
+        }
+    }
+}
 
 const Substitution &SimpleRule::getSubstitution() const {
     return substitution;

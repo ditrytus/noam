@@ -4,9 +4,7 @@
 using namespace noam;
 using namespace std;
 
-Terminal::Terminal(const string &name) : Symbol(SymbolType::Terminal), Named(name) {
-    //TODO: Forbid empty terminals.
-}
+Terminal::Terminal(const string &name) : Symbol(SymbolType::Terminal), Named(name) {}
 
 unique_ptr<Symbol> Terminal::clone() const {
     return std::unique_ptr<Symbol>(new Terminal(*this));

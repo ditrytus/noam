@@ -42,6 +42,10 @@ std::string Substitution::toString() const{
     return ss.str();
 }
 
+unsigned long Substitution::size() const {
+    return symbols.size();
+}
+
 Substitution noam::operator + (const Symbol &a, const Symbol &b) {
     return Substitution{a} + b;
 }
