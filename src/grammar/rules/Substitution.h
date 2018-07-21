@@ -6,6 +6,7 @@
 #include "../symbols/Symbol.h"
 #include "../symbols/NonTerminal.h"
 #include "../symbols/Terminal.h"
+#include "../../utilities/visitors/Invoke.h"
 
 namespace noam {
 
@@ -26,6 +27,14 @@ namespace noam {
 
         unsigned long size() const;
 
+        template<typename Visitor>
+        void accept(Visitor& visitor) const {
+            visitor.visit(*this);
+            for(auto& symbolPtr : getSymbols()) {
+                noam::utils::dynamic_accept<Visitor, Symbol, Terminal, NonTerminal>(symbolPtr.get(), visitor);
+            }
+        }
+
     private:
         void addSymbol(const Symbol &symbol);
 
@@ -40,16 +49,4 @@ namespace noam {
     bool operator < (const Substitution& a, const Substitution& b);
 
     bool operator == (const Substitution& a, const Substitution& b);
-
-    template<typename T>
-    std::set<T> getSymbolsOfType(const Substitution& sub) {
-        std::set<T> result;
-        for(const auto &s : sub.getSymbols()) {
-            auto sym = dynamic_cast<T*>(s.get());
-            if (sym != nullptr) {
-                result.insert(*sym);
-            }
-        }
-        return result;
-    }
 }

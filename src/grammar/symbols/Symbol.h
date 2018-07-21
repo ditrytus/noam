@@ -21,6 +21,11 @@ namespace noam {
 
         virtual bool operator == (const Symbol& other) = 0;
 
+        template<typename Visitor>
+        void accept(Visitor& visitor) const {
+            visitor.visit(*this);
+        }
+
     private:
         SymbolType type;
 

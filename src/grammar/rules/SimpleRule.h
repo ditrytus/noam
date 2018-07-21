@@ -15,21 +15,19 @@ namespace noam {
 
         std::string toString() const;
 
+        template<typename Visitor>
+        void accept(Visitor& visitor) const {
+            visitor.visit(*this);
+            getHead().accept(visitor);
+            getSubstitution().accept(visitor);
+        }
+
     private:
         std::unique_ptr<Rule> clone() const override;
 
         Substitution substitution;
 
     };
-
-    template<typename T>
-    std::set<T> getSymbolsOfType(const SimpleRule& rule) {
-        auto sub = rule.getSubstitution();
-        return getSymbolsOfType<T>(sub);
-    }
-
-    template<>
-    std::set<NonTerminal> getSymbolsOfType(const SimpleRule& rule);
 
     SimpleRule operator >> (NonTerminal nonTerminal, Substitution substitution);
 

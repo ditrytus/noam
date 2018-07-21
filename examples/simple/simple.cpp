@@ -4,6 +4,8 @@
 #include <grammar/SimpleGrammar.h>
 #include <parsers/ll/LLParser.h>
 #include <parsers/Parsing.h>
+#include <utilities/visitors/ElementsOfType.h>
+#include <utilities/visitors/Invoke.h>
 
 #include "utilities/StringUtilities.h"
 
@@ -36,22 +38,24 @@ int main() {
 
     auto sub = a + b + X + S;
 
-    auto terminals = getSymbolsOfType<Terminal>(sub);
+    auto terminals = get<ElementsOfType<Terminal>>(sub);
     for(auto t : terminals) {
         cout << t.getName() << endl;
     }
 
-    auto nonTerminals = getSymbolsOfType<NonTerminal>(sub);
+    auto nonTerminals = get<ElementsOfType<NonTerminal>>(sub);
     for(auto t : nonTerminals) {
         cout << t.getName() << endl;
     }
 
-    auto t1 = getSymbolsOfType<Terminal>(X >> a + b + X + S);
+    auto sub101 = X >> a + b + X + S;
+    auto t1 = get<ElementsOfType<Terminal>>(sub101);
     for(auto t : t1) {
         cout << t.getName() << endl;
     }
 
-    auto n1 = getSymbolsOfType<NonTerminal>(X >> a + b + X + S);
+    auto sub102 = X >> a + b + X + S;
+    auto n1 = get<ElementsOfType<NonTerminal>>(sub102);
     for(auto t : n1) {
         cout << t.getName() << endl;
     }
@@ -93,7 +97,7 @@ int main() {
              << endl;
     }
 
-    auto terms = getSymbolsOfType<Terminal>(s_grammar);
+    auto terms = get<ElementsOfType<Terminal>>(s_grammar);
     TerminalsLexer lexer {terms};
 
     auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
@@ -101,4 +105,7 @@ int main() {
 
     auto rule = S >> X;
     cout << rule.toString() << endl;
+
+    cout << toString(get<ElementsOfType<Terminal>>(grammar)) << endl;
+    cout << toString(get<ElementsOfType<NonTerminal>>(grammar)) << endl;
 }

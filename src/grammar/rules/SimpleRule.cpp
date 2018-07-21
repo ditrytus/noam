@@ -34,11 +34,3 @@ SimpleRule noam::operator>>(NonTerminal nonTerminal, Substitution substitution) 
 bool noam::isLeftRecursive(const SimpleRule &rule) {
     return rule.getHead() == *rule.getSubstitution().getFirst();
 }
-
-template<>
-std::set<NonTerminal> noam::getSymbolsOfType(const SimpleRule& rule) {
-    const auto &sub = rule.getSubstitution();
-    auto result = getSymbolsOfType<NonTerminal>(sub);
-    result.insert(rule.getHead());
-    return result;
-}

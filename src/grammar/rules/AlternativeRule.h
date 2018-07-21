@@ -19,6 +19,15 @@ namespace noam {
 
         const std::vector<Substitution> &getAlternatives() const;
 
+        template<typename Visitor>
+        void accept(Visitor& visitor) const {
+            visitor.visit(*this);
+            getHead().accept(visitor);
+            for(auto& rule : this->getAlternatives()) {
+                rule.accept(visitor);
+            }
+        }
+
     private:
         std::unique_ptr<Rule> clone() const override;
 
@@ -31,14 +40,4 @@ namespace noam {
     AlternativeRule R(const SimpleRule& simpleRule);
 
     AlternativeRule R(const AlternativeRule& simpleRule);
-
-    template<typename T>
-    std::set<T>  __unused getSymbolsOfType(const AlternativeRule& rule) {
-        std::set<T> result;
-        for(auto sub : rule.getAlternatives()) {
-            auto symbols = getSymbolsOfType<T>(sub);
-            result.insert(symbols.begin(), symbols.end());
-        }
-        return result;
-    }
 }

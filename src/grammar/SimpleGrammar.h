@@ -17,18 +17,17 @@ namespace noam {
 
         const NonTerminal &getStartSymbol() const;
 
+        template<typename Visitor>
+        void accept(Visitor& visitor) const {
+            visitor.visit(*this);
+            for(auto& rule : this->getRules()) {
+                rule.accept(visitor);
+            }
+        }
+
     private:
         std::vector<SimpleRule> rules;
 
     };
 
-    template<typename T>
-    std::set<T> getSymbolsOfType(const SimpleGrammar& grammar) {
-        std::set<T> result;
-        for (auto rule : grammar.getRules()) {
-            auto symbols = getSymbolsOfType<T>(rule);
-            result.insert(symbols.begin(), symbols.end());
-        }
-        return result;
-    }
 }

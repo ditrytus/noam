@@ -37,6 +37,11 @@ namespace noam {
 
             return result;
         };
+
+        template<typename Visitor>
+        void accept(Visitor& visitor) const {
+            visitor.visit(*this);
+        }
     };
 
     bool operator < (const Terminal& a, const Terminal& b);

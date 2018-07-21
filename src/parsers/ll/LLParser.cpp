@@ -1,5 +1,7 @@
 #include "LLParser.h"
 #include "../../utilities/ContainerUtilities.h"
+#include "../../utilities/visitors/ElementsOfType.h"
+#include "../../utilities/visitors/Invoke.h"
 
 using namespace std;
 using namespace noam;
@@ -17,8 +19,8 @@ LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
 ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& firstSets) {
     ParsingTable parsingTable;
 
-    auto terminals = getSymbolsOfType<Terminal>(grammar);
-    auto nonTerminals = getSymbolsOfType<NonTerminal>(grammar);
+    auto terminals = get<ElementsOfType<Terminal>>(grammar);
+    auto nonTerminals = get<ElementsOfType<NonTerminal>>(grammar);
 
     for(auto const& terminal : terminals) {
         for (auto const &nonTerminal : nonTerminals) {
