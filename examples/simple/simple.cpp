@@ -98,4 +98,7 @@ int main() {
 
     auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
     cout << toString(derivation) << endl;
+
+    auto rule = S >> X;
+    cout << rule.toString() << endl;
 }

@@ -33,4 +33,6 @@ namespace noam {
 
     SimpleRule operator >> (NonTerminal nonTerminal, Substitution substitution);
 
+    bool isLeftRecursive(const SimpleRule& rule);
+
 }

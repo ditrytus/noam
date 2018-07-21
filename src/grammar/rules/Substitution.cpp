@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "Substitution.h"
+#include "../../utilities/SharedPointerUtilities.h"
 
 using namespace noam;
 using namespace std;
@@ -55,7 +56,7 @@ Substitution noam::operator + (const Symbol &a, const std::string &b) {
 }
 
 bool noam::operator<(const Substitution &a, const Substitution &b) {
-    auto& symbolsA = a.getSymbols();
+auto& symbolsA = a.getSymbols();
     auto& symbolsB = b.getSymbols();
     auto minSize = min(symbolsA.size(), symbolsB.size());
     for(int i=0; i<minSize; ++i) {
@@ -66,4 +67,11 @@ bool noam::operator<(const Substitution &a, const Substitution &b) {
         };
     }
     return symbolsA.size() < symbolsB.size();
+}
+
+bool noam::operator==(const Substitution &a, const Substitution &b) {
+    auto aSymbols = a.getSymbols();
+    auto bSymbols = b.getSymbols();
+    auto miss = mismatch(aSymbols.begin(), aSymbols.end(), bSymbols.begin(), bSymbols.end(), SharedPointerObjectsComparer<Symbol>{});
+    return miss.first == aSymbols.end() && miss.second == bSymbols.end();
 }

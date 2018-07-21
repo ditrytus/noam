@@ -39,6 +39,8 @@ namespace noam {
 
     bool operator < (const Substitution& a, const Substitution& b);
 
+    bool operator == (const Substitution& a, const Substitution& b);
+
     template<typename T>
     std::set<T> getSymbolsOfType(const Substitution& sub) {
         std::set<T> result;

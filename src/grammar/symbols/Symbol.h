@@ -19,6 +19,8 @@ namespace noam {
 
         virtual bool operator < (const Symbol& other) = 0;
 
+        virtual bool operator == (const Symbol& other) = 0;
+
     private:
         SymbolType type;
 

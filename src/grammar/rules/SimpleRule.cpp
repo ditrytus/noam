@@ -7,11 +7,8 @@ using namespace std;
 
 SimpleRule::SimpleRule(const NonTerminal &head, const Substitution &substitution)
         : Rule(head), substitution(substitution) {
-    if (substitution.size() == 1) {
-        auto nonTerminal = dynamic_pointer_cast<NonTerminal>(substitution.getFirst());
-        if (nonTerminal && *nonTerminal == head) {
-            throw IdentityRuleException();
-        }
+    if  (substitution == head) {
+        throw IdentityRuleException{};
     }
 }
 
@@ -32,6 +29,10 @@ std::string SimpleRule::toString() const {
 
 SimpleRule noam::operator>>(NonTerminal nonTerminal, Substitution substitution) {
     return SimpleRule(nonTerminal, substitution);
+}
+
+bool noam::isLeftRecursive(const SimpleRule &rule) {
+    return rule.getHead() == *rule.getSubstitution().getFirst();
 }
 
 template<>
