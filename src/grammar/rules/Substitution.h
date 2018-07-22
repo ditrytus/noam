@@ -27,14 +27,7 @@ namespace noam {
 
         unsigned long size() const;
 
-        template<typename Visitor>
-        void accept(Visitor& visitor) const {
-            visitor.visit(*this);
-            for(auto& symbolPtr : getSymbols()) {
-                noam::utils::dynamic_accept<Visitor, Symbol, Terminal, NonTerminal>(symbolPtr.get(), visitor);
-            }
-        }
-
+        virtual ~Substitution() = default;
     private:
         void addSymbol(const Symbol &symbol);
 

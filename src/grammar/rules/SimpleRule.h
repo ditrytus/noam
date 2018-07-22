@@ -15,13 +15,6 @@ namespace noam {
 
         std::string toString() const;
 
-        template<typename Visitor>
-        void accept(Visitor& visitor) const {
-            visitor.visit(*this);
-            getHead().accept(visitor);
-            getSubstitution().accept(visitor);
-        }
-
     private:
         std::unique_ptr<Rule> clone() const override;
 

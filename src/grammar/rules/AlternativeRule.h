@@ -19,15 +19,6 @@ namespace noam {
 
         const std::vector<Substitution> &getAlternatives() const;
 
-        template<typename Visitor>
-        void accept(Visitor& visitor) const {
-            visitor.visit(*this);
-            getHead().accept(visitor);
-            for(auto& rule : this->getAlternatives()) {
-                rule.accept(visitor);
-            }
-        }
-
     private:
         std::unique_ptr<Rule> clone() const override;
 

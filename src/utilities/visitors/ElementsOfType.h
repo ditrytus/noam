@@ -12,10 +12,12 @@ namespace noam {
 
         typedef std::set<T> resultType;
 
-        void visit(const T& symbol) { result.insert(symbol); }
-
         template <typename U>
-        void visit(const U& symbol) {}
+        void visit(const U& element) {
+            if(const auto * tElement = dynamic_cast<const T*>(&element) ) {
+                result.insert(*tElement);
+            }
+        }
 
         const std::set<T> &getResult() const { return result; }
 

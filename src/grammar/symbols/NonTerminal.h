@@ -17,10 +17,6 @@ namespace noam {
 
         bool operator==(const Symbol &other) override;
 
-        template<typename Visitor>
-        void accept(Visitor& visitor) const {
-            visitor.visit(*this);
-        }
     };
 
     bool operator < (const NonTerminal& a, const NonTerminal& b);

@@ -16,13 +16,7 @@ namespace noam {
 
         const NonTerminal &getStartSymbol() const;
 
-        template<typename Visitor>
-        void accept(Visitor& visitor) const {
-            visitor.visit(*this);
-            for(auto& rule : this->getRules()) {
-                rule.accept(visitor);
-            }
-        }
+        virtual ~Grammar() = default;
 
     private:
         std::vector<AlternativeRule> rules;

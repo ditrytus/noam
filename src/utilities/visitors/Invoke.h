@@ -24,17 +24,17 @@ namespace noam::utils {
     }
 
     template<typename Visitor, typename Base>
-    void dynamic_accept(Base* base, Visitor visitor) {
-        base->accept(visitor);
+    void dynamic_visit(Base* base, Visitor visitor) {
+        visitor.visit(*base);
     };
 
     template<typename Visitor, typename Base, typename Derived, typename... Args>
-    void dynamic_accept(Base* base, Visitor& visitor) {
+    void dynamic_visit(Base* base, Visitor& visitor) {
         auto casted = dynamic_cast<Derived*>(base);
         if (casted) {
-            casted->accept(visitor);
+            visitor.visit(*base);
             return;
         }
-        dynamic_accept<Visitor, Base, Args...>(base, visitor);
+        dynamic_visit<Visitor, Base, Args...>(base, visitor);
     };
 }
