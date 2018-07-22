@@ -15,13 +15,12 @@ namespace noam::utils {
     typename Visitor::resultType get_in_order(const Root& root, std::function<void(const Root&, Visitor&)> acceptor) {
         Visitor visitor;
         acceptor(root, visitor);
-        //root.accept(visitor);
         return visitor.getResult();
     };
 
-    template <typename Visitor, typename TreeAdapter, typename Root>
+    template <typename Visitor, typename TreeAdapter, typename AcceptorAdapter, typename Root>
     typename Visitor::resultType get_ls(const Root& root) {
-        return get_in_order<Visitor, Root>(root, noam::trees::depthFirstPreOrder<Visitor, Root, TreeAdapter>);
+        return get_in_order<Visitor, Root>(root, noam::trees::depthFirstPreOrder<Visitor, Root, TreeAdapter, AcceptorAdapter>);
     }
 
     template<typename Visitor, typename Base>

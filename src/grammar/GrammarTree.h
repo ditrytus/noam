@@ -10,13 +10,12 @@ namespace noam::trees {
     class GrammarTree {
 
     public:
-        //template<>
-        static const std::vector<noam::AlternativeRule> &getChildren(const Grammar &grammar) {
+
+        const std::vector<noam::AlternativeRule> &getChildren(const Grammar &grammar) const {
             return grammar.getRules();
         }
 
-        //template<>
-        static std::vector<std::shared_ptr<Symbol>> getChildren(const AlternativeRule &rule) {
+        const std::vector<std::shared_ptr<Symbol>> getChildren(const AlternativeRule &rule) const {
             std::vector<std::shared_ptr<Symbol>> children;
 
             children.push_back(rule.getHead().clone());
@@ -28,13 +27,11 @@ namespace noam::trees {
             return children;
         }
 
-        //template<>
-        static const std::vector<noam::SimpleRule> &getChildren(const SimpleGrammar &grammar) {
+        const std::vector<noam::SimpleRule> &getChildren(const SimpleGrammar &grammar) const {
             return grammar.getRules();
         }
 
-        //template<>
-        static std::vector<std::shared_ptr<Symbol>> getChildren(const SimpleRule &rule) {
+        const std::vector<std::shared_ptr<Symbol>> getChildren(const SimpleRule &rule) const {
             std::vector<std::shared_ptr<Symbol>> children;
 
             children.push_back(rule.getHead().clone());
@@ -44,13 +41,11 @@ namespace noam::trees {
             return children;
         }
 
-        //template<>
-        static const std::vector<std::shared_ptr<Symbol>> &getChildren(const Substitution &sub) {
+        const std::vector<std::shared_ptr<Symbol>> &getChildren(const Substitution &sub) const {
             return sub.getSymbols();
         }
 
-        //template<>
-        static std::vector<std::shared_ptr<Symbol>> getChildren(std::shared_ptr<Symbol>) {
+        const std::vector<std::shared_ptr<Symbol>> getChildren(std::shared_ptr<Symbol>) const {
             return std::vector<std::shared_ptr<Symbol>>{};
         }
 

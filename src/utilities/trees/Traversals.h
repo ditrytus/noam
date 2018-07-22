@@ -5,17 +5,20 @@ namespace noam::trees {
     //template <typename Root, typename Children>
     //Children getChildren(Root grammar);
 
-    template <typename Visitor, typename Root, typename TreeAdapter>
-    void depthFirstPreOrderTree(const Root& root, Visitor& visitor, const TreeAdapter& tree) {
-        visitor.visit(root);
-        for(auto& child : TreeAdapter::getChildren(root)) {
-            depthFirstPreOrderTree(child, visitor, tree);
+    template <typename Visitor, typename Root, typename TreeAdapter, typename AcceptorAdapter>
+    void depthFirstPreOrderTree(const Root& root, Visitor& visitor,
+                                const TreeAdapter& tree,
+                                const AcceptorAdapter& acceptor) {
+        acceptor(visitor, root);
+        for(auto& child : tree.getChildren(root)) {
+            depthFirstPreOrderTree(child, visitor, tree, acceptor);
         }
     }
 
-    template <typename Visitor, typename Root, typename TreeAdapter>
+    template <typename Visitor, typename Root, typename TreeAdapter, typename AcceptorAdapter>
     void depthFirstPreOrder(const Root& root, Visitor& visitor) {
         const TreeAdapter tree;
-        depthFirstPreOrderTree(root, visitor, tree);
+        const AcceptorAdapter acceptor;
+        depthFirstPreOrderTree(root, visitor, tree, acceptor);
     }
 }
