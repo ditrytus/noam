@@ -31,3 +31,7 @@ namespace noam {
     };
 
 }
+
+namespace noam::trees {
+
+}

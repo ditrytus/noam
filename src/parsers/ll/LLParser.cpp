@@ -2,10 +2,12 @@
 #include "../../utilities/ContainerUtilities.h"
 #include "../../utilities/visitors/ElementsOfType.h"
 #include "../../utilities/visitors/Invoke.h"
+#include "../../grammar/GrammarTree.h"
 
 using namespace std;
 using namespace noam;
 using namespace noam::utils;
+using namespace noam::trees;
 
 
 LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
@@ -19,8 +21,8 @@ LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
 ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& firstSets) {
     ParsingTable parsingTable;
 
-    auto terminals = get<ElementsOfType<Terminal>>(grammar);
-    auto nonTerminals = get<ElementsOfType<NonTerminal>>(grammar);
+    auto terminals = get_ls<ElementsOfType<Terminal>, GrammarTree, SimpleGrammar>(grammar);
+    auto nonTerminals = get_ls<ElementsOfType<NonTerminal>, GrammarTree, SimpleGrammar>(grammar);
 
     for(auto const& terminal : terminals) {
         for (auto const &nonTerminal : nonTerminals) {

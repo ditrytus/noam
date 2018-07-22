@@ -6,12 +6,14 @@
 #include <parsers/Parsing.h>
 #include <utilities/visitors/ElementsOfType.h>
 #include <utilities/visitors/Invoke.h>
+#include <grammar/GrammarTree.h>
 
 #include "utilities/StringUtilities.h"
 
 using namespace noam;
 using namespace noam::literals;
 using namespace noam::utils;
+using namespace noam::trees;
 using namespace std;
 
 
@@ -38,24 +40,24 @@ int main() {
 
     auto sub = a + b + X + S;
 
-    auto terminals = get<ElementsOfType<Terminal>>(sub);
+    auto terminals = get_ls<ElementsOfType<Terminal>, GrammarTree>(sub);
     for(auto t : terminals) {
         cout << t.getName() << endl;
     }
 
-    auto nonTerminals = get<ElementsOfType<NonTerminal>>(sub);
+    auto nonTerminals = get_ls<ElementsOfType<NonTerminal>, GrammarTree>(sub);
     for(auto t : nonTerminals) {
         cout << t.getName() << endl;
     }
 
     auto sub101 = X >> a + b + X + S;
-    auto t1 = get<ElementsOfType<Terminal>>(sub101);
+    auto t1 = get_ls<ElementsOfType<Terminal>, GrammarTree>(sub101);
     for(auto t : t1) {
         cout << t.getName() << endl;
     }
 
     auto sub102 = X >> a + b + X + S;
-    auto n1 = get<ElementsOfType<NonTerminal>>(sub102);
+    auto n1 = get_ls<ElementsOfType<NonTerminal>, GrammarTree>(sub102);
     for(auto t : n1) {
         cout << t.getName() << endl;
     }
@@ -97,7 +99,7 @@ int main() {
              << endl;
     }
 
-    auto terms = get<ElementsOfType<Terminal>>(s_grammar);
+    auto terms = get_ls<ElementsOfType<Terminal>, GrammarTree>(s_grammar);
     TerminalsLexer lexer {terms};
 
     auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
@@ -106,6 +108,6 @@ int main() {
     auto rule = S >> X;
     cout << rule.toString() << endl;
 
-    cout << toString(get<ElementsOfType<Terminal>>(grammar)) << endl;
-    cout << toString(get<ElementsOfType<NonTerminal>>(grammar)) << endl;
+    cout << toString(get_ls<ElementsOfType<Terminal>, GrammarTree>(grammar)) << endl;
+    cout << toString(get_ls<ElementsOfType<NonTerminal>, GrammarTree>(grammar)) << endl;
 }
