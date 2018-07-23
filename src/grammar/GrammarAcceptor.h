@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "../utilities/visitors/VisitorUtilities.h"
+#include "../visitors/VisitorUtilities.h"
 #include "symbols/Symbol.h"
 #include "symbols/Terminal.h"
 #include "symbols/NonTerminal.h"

@@ -1,7 +1,7 @@
 #include "LLParser.h"
 #include "../../utilities/ContainerUtilities.h"
-#include "../../utilities/visitors/ElementsOfType.h"
-#include "../../utilities/visitors/VisitorUtilities.h"
+#include "../../visitors/ElementsOfType.h"
+#include "../../visitors/VisitorUtilities.h"
 #include "../../grammar/GrammarTree.h"
 #include "../../grammar/GrammarAcceptor.h"
 
