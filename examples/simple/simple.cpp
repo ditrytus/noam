@@ -76,27 +76,27 @@ int main() {
 
     cout << "NON TERMINAL SETS:" << endl;
     for(auto& firstSet : parser.getNonTerminalFirstSets()) {
-        cout << firstSet.first.toString()
+        cout << toString(firstSet.first)
              << " : "
-             << toString(firstSet.second)
+             << noam::utils::join(firstSet.second, ", ")
              << endl;
     }
 
     cout << "FIRST SETS:" << endl;
     for(auto& firstSet : parser.getSubstitutionsFirstSets()) {
-        cout << firstSet.first.toString()
+        cout << toString(firstSet.first)
              << " : "
-             << toString(firstSet.second)
+             << join(firstSet.second, ", ")
              << endl;
     }
 
     cout << "PARSING TABLE:" << endl;
     for(auto& keyVal : parser.getParsingTable()) {
-        cout << keyVal.first.first.toString()
+        cout << toString(keyVal.first.first, ToStringOptions{})
              << " "
-             << keyVal.first.second.toString()
+             << toString(keyVal.first.second)
              << " : "
-             << keyVal.second->toString()
+             << toString(*keyVal.second)
              << endl;
     }
 
@@ -104,12 +104,12 @@ int main() {
     TerminalsLexer lexer {terms};
 
     auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
-    cout << toString(derivation) << endl;
+    cout << join(derivation, ", ", ToStringOptions::oneLine()) << endl;
 
     auto rule = S >> X;
-    cout << rule.toString() << endl;
+    cout << toString(rule) << endl;
 
-    cout << toString(getSymbolsOfType<Terminal>(grammar)) << endl;
-    cout << toString(getSymbolsOfType<NonTerminal>(grammar)) << endl;
-    cout << noam::buildString<Grammar>(grammar) << endl;
+    cout << join(getSymbolsOfType<Terminal>(grammar), ", ") << endl;
+    cout << join(getSymbolsOfType<NonTerminal>(grammar), ", ") << endl;
+    cout << toString(grammar) << endl;
 }

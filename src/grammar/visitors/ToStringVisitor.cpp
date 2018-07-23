@@ -4,33 +4,51 @@ using namespace noam;
 using namespace std;
 
 void ToStringVisitor::preVisit(const AlternativeRule &rule) {
-    alternativeSeparator = "";
+    currentAltSeparator = "";
 }
 
 void ToStringVisitor::visit(const AlternativeRule &rule) {
-    ss <<  " ::= " ;
+    ss <<  opt.ruleHeadSeparator;
 }
 
 void ToStringVisitor::postVisit(const AlternativeRule &rule) {
-    ss << endl;
+    ss << opt.ruleSeparator;
 }
 
 void ToStringVisitor::visit(const SimpleRule &rule) {
-    ss <<  " ::= " ;
+    ss <<  opt.ruleHeadSeparator;
 }
 
 void ToStringVisitor::postVisit(const SimpleRule &rule) {
-    ss << endl;
+    ss << opt.ruleSeparator;
 }
 void ToStringVisitor::preVisit(const Substitution &sub) {
-    ss << alternativeSeparator;
-    alternativeSeparator = " | ";
+    ss << currentAltSeparator;
+    currentAltSeparator = opt.alternativeSeparator;
 }
 
 void ToStringVisitor::visit(const Terminal &symbol) {
-    ss << symbol.getName();
+    ss << opt.terminalPrefix << symbol.getName() << opt.terminalPostfix;
 }
 
 void ToStringVisitor::visit(const NonTerminal &symbol) {
-    ss << "<" << symbol.getName() <<  ">";
+    ss << opt.nonTerminalPrefix << symbol.getName() << opt.nonTerminalPostfix;
+}
+
+ToStringVisitor::ToStringVisitor(const ToStringOptions &options) : opt(options) {}
+
+ToStringOptions::ToStringOptions()
+        : ruleHeadSeparator(" ::= ")
+        , alternativeSeparator(" | ")
+        , terminalPrefix("")
+        , terminalPostfix("")
+        , nonTerminalPrefix("<")
+        , nonTerminalPostfix(">")
+        , ruleSeparator("\n") {
+}
+
+ToStringOptions ToStringOptions::oneLine() {
+    ToStringOptions opt;
+    opt.ruleSeparator = "";
+    return opt;
 }

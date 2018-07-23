@@ -15,7 +15,12 @@ namespace noam {
     };
 
     template <typename Element>
-    std::string buildString(Element element) {
+    std::string toString(Element element) {
         return visit<ToStringVisitor, GrammarTraversal<ToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element);
+    }
+
+    template <typename Element>
+    std::string toString(Element element, const ToStringOptions& options) {
+        return visit<ToStringVisitor, GrammarTraversal<ToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element, options);
     }
 }

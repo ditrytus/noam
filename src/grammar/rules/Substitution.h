@@ -23,8 +23,6 @@ namespace noam {
 
         std::shared_ptr<Symbol> getFirst() const;
 
-        std::string toString() const;
-
         unsigned long size() const;
 
         virtual ~Substitution() = default;
@@ -42,6 +40,4 @@ namespace noam {
     bool operator < (const Substitution& a, const Substitution& b);
 
     bool operator == (const Substitution& a, const Substitution& b);
-
-    Substitution S(const Symbol &symbol);
 }

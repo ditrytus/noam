@@ -20,13 +20,6 @@ unique_ptr<Rule> SimpleRule::clone() const {
     return unique_ptr<Rule>{new SimpleRule{*this}};
 }
 
-std::string SimpleRule::toString() const {
-    stringstream ss;
-    ss << getHead().getName() << " >> ";
-    ss << substitution.toString();
-    return ss.str();
-}
-
 SimpleRule noam::operator>>(NonTerminal nonTerminal, Substitution substitution) {
     return SimpleRule(nonTerminal, substitution);
 }

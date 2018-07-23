@@ -20,10 +20,6 @@ bool noam::Named::operator!=(const noam::Named &rhs) const {
     return !(rhs == *this);
 }
 
-const std::string &noam::Named::toString() const {
-    return name;
-}
-
 bool noam::Named::operator==(const Symbol &rhs) const {
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCDFAInspection"

@@ -4,9 +4,9 @@
 
 namespace noam {
 
-    template <typename Visitor, typename Traversal, typename Acceptor, typename Element>
-    typename Visitor::resultType visit(const Element &element) {
-        auto visitor = std::make_shared<Visitor>();
+    template <typename Visitor, typename Traversal, typename Acceptor, typename Element, typename... Args>
+    typename Visitor::resultType visit(const Element &element, Args... args) {
+        auto visitor = std::make_shared<Visitor>(std::forward<Args>(args)...);
         auto acceptor = std::make_shared<Acceptor>();
         Traversal traversal {visitor, acceptor};
         traversal.traverse(element);

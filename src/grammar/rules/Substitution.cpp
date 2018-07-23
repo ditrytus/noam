@@ -32,17 +32,6 @@ Substitution &Substitution::operator+(const string & other) {
     return (*this) + Terminal{other};
 }
 
-std::string Substitution::toString() const{
-    stringstream ss;
-    for(const auto &symbol : getSymbols()) {
-        auto namedSymbol = dynamic_cast<Named*>(symbol.get());
-        if (namedSymbol != nullptr) {
-            ss << namedSymbol->getName();
-        }
-    }
-    return ss.str();
-}
-
 unsigned long Substitution::size() const {
     return symbols.size();
 }
@@ -74,8 +63,4 @@ bool noam::operator==(const Substitution &a, const Substitution &b) {
     auto bSymbols = b.getSymbols();
     auto miss = mismatch(aSymbols.begin(), aSymbols.end(), bSymbols.begin(), bSymbols.end(), SharedPointerObjectsComparer<Symbol>{});
     return miss.first == aSymbols.end() && miss.second == bSymbols.end();
-}
-
-Substitution S(const Symbol &symbol) {
-    return Substitution(symbol);
 }

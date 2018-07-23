@@ -13,8 +13,6 @@ namespace noam {
 
         const std::string &getName() const;
 
-        const std::string& toString() const;
-
         bool operator==(const Named &rhs) const;
 
         bool operator!=(const Named &rhs) const;

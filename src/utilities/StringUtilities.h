@@ -7,25 +7,15 @@
 
 namespace noam::utils {
 
-    template <typename T>
-    std::string join(const T& container, const std::string &separator, std::function<std::string(typename T::value_type)> toStringFunc) {
+    template <typename T, typename... Args>
+    std::string join(const T& container, const std::string &separator, Args... args) {
         std::stringstream ss;
-        bool omitSeparator = true;
+        std::string currentSeparator;
         for (auto& item : container) {
-            if (!omitSeparator) {
-                ss << separator;
-            }
-            ss << toStringFunc(item);
-            if (omitSeparator) {
-                omitSeparator = false;
-            }
+            ss << currentSeparator << toString(item, args...);
+            currentSeparator = separator;
         }
         return ss.str();
-    }
-
-    template <typename T>
-    std::string toString(const T& container, const std::string &separator = ", ") {
-        return join(container, separator, [](typename T::value_type item){return item.toString();});
     }
 
 }
