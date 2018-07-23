@@ -6,7 +6,7 @@
 namespace noam {
 
     template <typename T>
-    class ElementsOfType {
+    class GetElementsOfTypeVisitor {
 
     public:
 

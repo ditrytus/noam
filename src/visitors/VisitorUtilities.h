@@ -2,7 +2,7 @@
 
 #include <functional>
 
-namespace noam::utils {
+namespace noam {
 
     template <typename Visitor, typename Root, typename TreeAdapter, typename AcceptorAdapter>
     void depthFirstPreOrderTree(const Root& root,

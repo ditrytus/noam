@@ -4,10 +4,11 @@
 #include <grammar/SimpleGrammar.h>
 #include <parsers/ll/LLParser.h>
 #include <parsers/Parsing.h>
-#include <visitors/ElementsOfType.h>
+#include <visitors/GetElementsOfTypeVisitor.h>
 #include <visitors/VisitorUtilities.h>
-#include <grammar/GrammarTree.h>
-#include <grammar/GrammarAcceptor.h>
+#include <grammar/visitors/GrammarTree.h>
+#include <grammar/visitors/GrammarAcceptor.h>
+#include <grammar/visitors/Operations.h>
 
 #include "utilities/StringUtilities.h"
 
@@ -41,24 +42,24 @@ int main() {
 
     auto sub = a + b + X + S;
 
-    auto terminals = visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(sub);
+    auto terminals = getSymbolsOfType<Terminal>(sub);
     for(auto t : terminals) {
         cout << t.getName() << endl;
     }
 
-    auto nonTerminals = visit<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(sub);
+    auto nonTerminals = getSymbolsOfType<NonTerminal>(sub);
     for(auto t : nonTerminals) {
         cout << t.getName() << endl;
     }
 
     auto sub101 = X >> a + b + X + S;
-    auto t1 = visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(sub101);
+    auto t1 = getSymbolsOfType<Terminal>(sub101);
     for(auto t : t1) {
         cout << t.getName() << endl;
     }
 
     auto sub102 = X >> a + b + X + S;
-    auto n1 = visit<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(sub102);
+    auto n1 = getSymbolsOfType<NonTerminal>(sub102);
     for(auto t : n1) {
         cout << t.getName() << endl;
     }
@@ -100,7 +101,7 @@ int main() {
              << endl;
     }
 
-    auto terms = visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(s_grammar);
+    auto terms = getSymbolsOfType<Terminal>(s_grammar);
     TerminalsLexer lexer {terms};
 
     auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
@@ -109,6 +110,6 @@ int main() {
     auto rule = S >> X;
     cout << rule.toString() << endl;
 
-    cout << toString(visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(grammar)) << endl;
-    cout << toString(visit<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(grammar)) << endl;
+    cout << toString(getSymbolsOfType<Terminal>(grammar)) << endl;
+    cout << toString(getSymbolsOfType<NonTerminal>(grammar)) << endl;
 }

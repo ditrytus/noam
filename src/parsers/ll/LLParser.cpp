@@ -1,9 +1,10 @@
 #include "LLParser.h"
 #include "../../utilities/ContainerUtilities.h"
-#include "../../visitors/ElementsOfType.h"
+#include "../../visitors/GetElementsOfTypeVisitor.h"
 #include "../../visitors/VisitorUtilities.h"
-#include "../../grammar/GrammarTree.h"
-#include "../../grammar/GrammarAcceptor.h"
+#include "../../grammar/visitors/GrammarTree.h"
+#include "../../grammar/visitors/GrammarAcceptor.h"
+#include "../../grammar/visitors/Operations.h"
 
 using namespace std;
 using namespace noam;
@@ -22,8 +23,8 @@ LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
 ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& firstSets) {
     ParsingTable parsingTable;
 
-    auto terminals = visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor, SimpleGrammar>(grammar);
-    auto nonTerminals = visit<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor, SimpleGrammar>(grammar);
+    auto terminals = getSymbolsOfType<Terminal>(grammar);
+    auto nonTerminals = getSymbolsOfType<NonTerminal>(grammar);
 
     for(auto const& terminal : terminals) {
         for (auto const &nonTerminal : nonTerminals) {

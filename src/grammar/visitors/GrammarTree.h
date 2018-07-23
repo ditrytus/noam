@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <memory>
-#include "SimpleGrammar.h"
+#include "../SimpleGrammar.h"
 
 namespace noam {
 
