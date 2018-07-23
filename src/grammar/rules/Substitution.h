@@ -6,7 +6,7 @@
 #include "../symbols/Symbol.h"
 #include "../symbols/NonTerminal.h"
 #include "../symbols/Terminal.h"
-#include "../../utilities/visitors/Invoke.h"
+#include "../../utilities/visitors/VisitorUtilities.h"
 
 namespace noam {
 

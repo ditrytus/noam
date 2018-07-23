@@ -4,7 +4,7 @@
 #include <memory>
 #include "SimpleGrammar.h"
 
-namespace noam::trees {
+namespace noam {
 
     class GrammarTree {
 

@@ -23,7 +23,7 @@ namespace noam::utils {
     }
 
     template <typename Visitor, typename Root>
-    typename Visitor::resultType get_in_order(const Root& root, std::function<void(const Root&, Visitor&)> acceptor) {
+    typename Visitor::resultType visit(const Root &root, std::function<void(const Root &, Visitor &)> acceptor) {
         Visitor visitor;
         acceptor(root, visitor);
         return visitor.getResult();
@@ -31,7 +31,7 @@ namespace noam::utils {
 
     template <typename Visitor, typename TreeAdapter, typename AcceptorAdapter, typename Root>
     typename Visitor::resultType visit(const Root &root) {
-        return get_in_order<Visitor, Root>(root, depthFirstPreOrder<Visitor, Root, TreeAdapter, AcceptorAdapter>);
+        return visit<Visitor, Root>(root, depthFirstPreOrder<Visitor, Root, TreeAdapter, AcceptorAdapter>);
     }
 
     template<typename Visitor, typename Base>
@@ -47,5 +47,15 @@ namespace noam::utils {
             return;
         }
         dynamicVisit<Visitor, Base, Args...>(base, visitor);
+    };
+
+    class AcceptorAdapter {
+
+    public:
+        template <typename Visitor, typename Element>
+        void operator ()(Visitor& visitor, const Element& element) const {
+            visitor.visit(element);
+        }
+
     };
 }

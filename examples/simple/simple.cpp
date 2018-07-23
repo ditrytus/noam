@@ -5,9 +5,8 @@
 #include <parsers/ll/LLParser.h>
 #include <parsers/Parsing.h>
 #include <utilities/visitors/ElementsOfType.h>
-#include <utilities/visitors/Invoke.h>
+#include <utilities/visitors/VisitorUtilities.h>
 #include <grammar/GrammarTree.h>
-#include <utilities/visitors/AcceptorAdapter.h>
 #include <grammar/GrammarAcceptor.h>
 
 #include "utilities/StringUtilities.h"
