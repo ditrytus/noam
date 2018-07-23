@@ -42,4 +42,6 @@ namespace noam {
     bool operator < (const Substitution& a, const Substitution& b);
 
     bool operator == (const Substitution& a, const Substitution& b);
+
+    Substitution S(const Symbol &symbol);
 }

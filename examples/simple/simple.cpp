@@ -6,7 +6,6 @@
 #include <parsers/Parsing.h>
 #include <visitors/GetElementsOfTypeVisitor.h>
 #include <visitors/VisitorUtilities.h>
-#include <grammar/visitors/GrammarTree.h>
 #include <grammar/visitors/GrammarAcceptor.h>
 #include <grammar/visitors/Operations.h>
 
@@ -112,4 +111,5 @@ int main() {
 
     cout << toString(getSymbolsOfType<Terminal>(grammar)) << endl;
     cout << toString(getSymbolsOfType<NonTerminal>(grammar)) << endl;
+    cout << noam::buildString<Grammar>(grammar) << endl;
 }

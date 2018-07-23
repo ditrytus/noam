@@ -17,7 +17,7 @@ namespace noam {
 
         bool operator < (const Symbol &other) override;
 
-        bool operator == (const Symbol& other) override;
+        bool operator == (const Symbol& other) const override;
 
         template <typename InputIterator, typename OutputIterator>
         int match(InputIterator begin,

@@ -7,7 +7,7 @@ using namespace std;
 
 SimpleRule::SimpleRule(const NonTerminal &head, const Substitution &substitution)
         : Rule(head), substitution(substitution) {
-    if  (substitution == head) {
+    if  (substitution == Substitution{head}) {
         throw IdentityRuleException{};
     }
 }

@@ -21,7 +21,7 @@ bool NonTerminal::operator<(const Symbol &other) {
     return noam::operator<(*this, dynamic_cast<const NonTerminal&>(other));
 }
 
-bool NonTerminal::operator==(const Symbol &other) {
+bool NonTerminal::operator==(const Symbol &other) const {
     return static_cast<const Named&>(*this) == other;
 }
 

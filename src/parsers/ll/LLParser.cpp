@@ -2,7 +2,6 @@
 #include "../../utilities/ContainerUtilities.h"
 #include "../../visitors/GetElementsOfTypeVisitor.h"
 #include "../../visitors/VisitorUtilities.h"
-#include "../../grammar/visitors/GrammarTree.h"
 #include "../../grammar/visitors/GrammarAcceptor.h"
 #include "../../grammar/visitors/Operations.h"
 

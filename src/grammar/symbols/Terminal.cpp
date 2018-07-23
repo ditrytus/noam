@@ -17,7 +17,7 @@ bool Terminal::operator<(const Symbol &other) {
     return noam::operator<(*this, dynamic_cast<const Terminal&>(other));
 }
 
-bool Terminal::operator==(const Symbol& rls) {
+bool Terminal::operator==(const Symbol& rls) const {
     return static_cast<const Named&>(*this) == rls;
 }
 

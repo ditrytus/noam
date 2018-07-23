@@ -3,14 +3,19 @@
 #include <set>
 #include "../../visitors/VisitorUtilities.h"
 #include "../../visitors/GetElementsOfTypeVisitor.h"
-#include "GrammarTree.h"
 #include "GrammarAcceptor.h"
+#include "ToStringVisitor.h"
+#include "GrammarTraversal.h"
 
 namespace noam {
 
     template <typename T, typename Element>
     std::set<T> getSymbolsOfType(Element element) {
-        return visit<GetElementsOfTypeVisitor<T>, GrammarTree, GrammarAcceptor, Element>(element);
+        return visit<GetElementsOfTypeVisitor<T>, GrammarTraversal<GetElementsOfTypeVisitor<T>, GrammarAcceptor>, GrammarAcceptor, Element>(element);
     };
 
+    template <typename Element>
+    std::string buildString(Element element) {
+        return visit<ToStringVisitor, GrammarTraversal<ToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element);
+    }
 }
