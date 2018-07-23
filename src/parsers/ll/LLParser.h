@@ -17,8 +17,6 @@ namespace noam {
 
     using ParsingTable = std::map<std::pair<NonTerminal, Terminal>, std::shared_ptr<SimpleRule>>;
 
-    using Derivation = std::vector<SimpleRule>;
-
     class LLParser {
 
     public:

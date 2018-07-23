@@ -8,9 +8,20 @@
 
 namespace noam {
 
-    std::vector<SimpleRule> parse(LLParser parser,
-                                  TerminalsLexer lexer,
-                                  std::string input);
+    using Derivation = std::vector<SimpleRule>;
+
+    template<typename Parser, typename Lexer>
+    Derivation parse(Parser parser,
+                     Lexer lexer,
+                     std::string input) {
+        std::vector<Token> tokens;
+        lexer.getTokens(input.begin(), input.end(), back_inserter(tokens));
+
+        Derivation result;
+        parser.derivation(tokens.begin(), tokens.end(), back_inserter(result));
+
+        return result;
+    }
 
 }
 
