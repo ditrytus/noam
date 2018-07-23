@@ -42,24 +42,24 @@ int main() {
 
     auto sub = a + b + X + S;
 
-    auto terminals = get_ls<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(sub);
+    auto terminals = visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(sub);
     for(auto t : terminals) {
         cout << t.getName() << endl;
     }
 
-    auto nonTerminals = get_ls<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(sub);
+    auto nonTerminals = visit<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(sub);
     for(auto t : nonTerminals) {
         cout << t.getName() << endl;
     }
 
     auto sub101 = X >> a + b + X + S;
-    auto t1 = get_ls<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(sub101);
+    auto t1 = visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(sub101);
     for(auto t : t1) {
         cout << t.getName() << endl;
     }
 
     auto sub102 = X >> a + b + X + S;
-    auto n1 = get_ls<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(sub102);
+    auto n1 = visit<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(sub102);
     for(auto t : n1) {
         cout << t.getName() << endl;
     }
@@ -101,7 +101,7 @@ int main() {
              << endl;
     }
 
-    auto terms = get_ls<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(s_grammar);
+    auto terms = visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(s_grammar);
     TerminalsLexer lexer {terms};
 
     auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
@@ -110,6 +110,6 @@ int main() {
     auto rule = S >> X;
     cout << rule.toString() << endl;
 
-    cout << toString(get_ls<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(grammar)) << endl;
-    cout << toString(get_ls<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(grammar)) << endl;
+    cout << toString(visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor>(grammar)) << endl;
+    cout << toString(visit<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor>(grammar)) << endl;
 }

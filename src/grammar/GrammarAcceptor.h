@@ -20,7 +20,7 @@ namespace noam {
 
         template <typename Visitor>
         void operator ()(Visitor& visitor, const std::shared_ptr<Symbol>& element) const {
-            noam::utils::dynamic_visit<Visitor, Symbol, Terminal, NonTerminal>(element.get(), visitor);
+            noam::utils::dynamicVisit<Visitor, Symbol, Terminal, NonTerminal>(element.get(), visitor);
         }
     };
 

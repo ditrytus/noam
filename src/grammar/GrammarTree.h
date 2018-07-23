@@ -3,14 +3,12 @@
 #include <vector>
 #include <memory>
 #include "SimpleGrammar.h"
-#include "../utilities/trees/TreeNode.h"
 
 namespace noam::trees {
 
     class GrammarTree {
 
     public:
-
         const std::vector<noam::AlternativeRule> &getChildren(const Grammar &grammar) const {
             return grammar.getRules();
         }
@@ -50,17 +48,5 @@ namespace noam::trees {
         }
 
     };
-
-
-
-//    class SimpleGrammarTreeNode : TreeNode<SimpleGrammar, std::vector<noam::SimpleRule>> {
-//
-//    public:
-//        SimpleGrammarTreeNode(const SimpleGrammar &node);
-//
-//    private:
-//        std::vector<noam::SimpleRule> getChildren() override;
-//
-//    };
 
 }

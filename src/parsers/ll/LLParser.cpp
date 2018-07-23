@@ -23,8 +23,8 @@ LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
 ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& firstSets) {
     ParsingTable parsingTable;
 
-    auto terminals = get_ls<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor, SimpleGrammar>(grammar);
-    auto nonTerminals = get_ls<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor, SimpleGrammar>(grammar);
+    auto terminals = visit<ElementsOfType<Terminal>, GrammarTree, GrammarAcceptor, SimpleGrammar>(grammar);
+    auto nonTerminals = visit<ElementsOfType<NonTerminal>, GrammarTree, GrammarAcceptor, SimpleGrammar>(grammar);
 
     for(auto const& terminal : terminals) {
         for (auto const &nonTerminal : nonTerminals) {
