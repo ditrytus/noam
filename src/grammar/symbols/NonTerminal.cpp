@@ -25,6 +25,10 @@ bool NonTerminal::operator==(const Symbol &other) const {
     return static_cast<const Named&>(*this) == other;
 }
 
+bool NonTerminal::operator!=(const Symbol &other) const {
+    return !((*this) == other);
+}
+
 bool noam::operator<(const NonTerminal &a, const NonTerminal &b) {
     return a.getName() < b.getName();
 }

@@ -104,7 +104,7 @@ int main() {
     TerminalsLexer lexer {terms};
 
     auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
-    cout << join(derivation, ", ", ToStringOptions::oneLine()) << endl;
+    //cout << join(derivation, ", ", ToStringOptions::oneLine()) << endl;
 
     auto rule = S >> X;
     cout << toString(rule) << endl;

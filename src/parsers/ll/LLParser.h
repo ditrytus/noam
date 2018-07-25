@@ -6,6 +6,7 @@
 #include <stack>
 #include <iostream>
 
+#include "../../trees/AstBuilder.h"
 #include "../../grammar/SimpleGrammar.h"
 #include "../../grammar/symbols/Terminal.h"
 #include "../../lexers/Token.h"
@@ -32,10 +33,10 @@ namespace noam {
 
         const ParsingTable &getParsingTable() const;
 
-        template <typename InputIterator, typename OutputIterator>
+        template <typename InputIterator, typename AstBuilder>
         void derivation(InputIterator begin,
                         InputIterator end,
-                        OutputIterator derivation) {
+                        AstBuilder& astBuilder) {
 
             using namespace std;
 
@@ -51,6 +52,9 @@ namespace noam {
                     if (*topTerminal != currentInputSymbol) {
                         //TODO: Throw parsing error (unexpected symbol)
                     }
+
+                    astBuilder.addToken(*cursor);
+
                     ++cursor;
                     symbolStack.pop();
                 }
@@ -62,7 +66,9 @@ namespace noam {
                         //TODO: Throw parsing error (unexpected symbol)
                     }
                     auto nextRule = (*rule).second;
-                    *(derivation++) = SimpleRule(*nextRule);
+
+                    astBuilder.addRule(*nextRule);
+
                     symbolStack.pop();
                     auto newSymbols = nextRule->getSubstitution().getSymbols();
                     for(auto rit = newSymbols.rbegin(); rit != newSymbols.rend(); ++rit) {

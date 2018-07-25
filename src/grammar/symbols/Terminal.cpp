@@ -21,6 +21,10 @@ bool Terminal::operator==(const Symbol& rls) const {
     return static_cast<const Named&>(*this) == rls;
 }
 
+bool Terminal::operator!=(const Symbol &other) const {
+    return !((*this) == other);
+}
+
 Terminal noam::literals::operator "" _T(const char *val, size_t) {
     return Terminal(val);
 }

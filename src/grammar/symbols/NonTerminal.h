@@ -17,6 +17,8 @@ namespace noam {
 
         bool operator==(const Symbol &other) const override;
 
+        bool operator!=(const Symbol &other) const override;
+
     };
 
     bool operator < (const NonTerminal& a, const NonTerminal& b);

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <utility>
+#include "../grammar/symbols/Terminal.h"
 
 namespace noam {
 
