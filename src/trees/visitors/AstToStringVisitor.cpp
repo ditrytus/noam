@@ -10,11 +10,13 @@ string AstToStringVisitor::getResult() const {
 }
 
 void AstToStringVisitor::preVisit(const TokenNode& node) {
+    renderEmptyIndent(node);
     renderTreeIndent(node);
     ss << toString(node.getToken().symbol, GrammarToStringOptions::oneLine()) << " ~ \"" << node.getToken().exactValue << "\"" << endl;
 }
 
 void AstToStringVisitor::preVisit(const RuleNode &node) {
+    renderEmptyIndent(node);
     renderTreeIndent(node);
     ss << toString(node.getRule(), GrammarToStringOptions::oneLine()) << endl;
     increaseIndent(node);
@@ -35,10 +37,20 @@ void AstToStringVisitor::decreaseIndent() {
 void AstToStringVisitor::renderTreeIndent(const AstNode<RuleNode> &node) {
     for (int i=0; i < static_cast<int>(areLast.size()); ++i) {
         if (i < areLast.size() - 1) {
-            wchar_t l_char = 179;
-            ss << (areLast[i] ? ' ' : l_char);
+            ss << (areLast[i+1] ? "   " : "|  ");
         } else {
-            ss << (node.isLastSibling() ? static_cast<wchar_t>(192) : static_cast<wchar_t>(195));
+            ss << (node.isLastSibling() ? "+- " : "|- ");
         }
     }
+}
+
+void AstToStringVisitor::renderEmptyIndent(const AstNode<RuleNode> &node) {
+    for (int i=0; i < static_cast<int>(areLast.size()); ++i) {
+        if (i < areLast.size() - 1) {
+            ss << (areLast[i+1] ? "   " : "|  ");
+        } else {
+            ss << "|  ";
+        }
+    }
+    ss << endl;
 }

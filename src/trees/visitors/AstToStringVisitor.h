@@ -26,6 +26,8 @@ namespace noam {
 
         void renderTreeIndent(const AstNode<RuleNode> &node);
 
+        void renderEmptyIndent(const AstNode<RuleNode> &node);
+
         void increaseIndent(const AstNode <RuleNode> &node);
 
         void decreaseIndent();
