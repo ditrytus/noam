@@ -4,7 +4,7 @@
 #include "../../visitors/VisitorUtilities.h"
 #include "../../visitors/GetElementsOfTypeVisitor.h"
 #include "GrammarAcceptor.h"
-#include "ToStringVisitor.h"
+#include "GrammarToStringVisitor.h"
 #include "GrammarTraversal.h"
 
 namespace noam {
@@ -16,11 +16,11 @@ namespace noam {
 
     template <typename Element>
     std::string toString(Element element) {
-        return visit<ToStringVisitor, GrammarTraversal<ToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element);
+        return visit<GrammarToStringVisitor, GrammarTraversal<GrammarToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element);
     }
 
     template <typename Element>
-    std::string toString(Element element, const ToStringOptions& options) {
-        return visit<ToStringVisitor, GrammarTraversal<ToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element, options);
+    std::string toString(Element element, const GrammarToStringOptions& options) {
+        return visit<GrammarToStringVisitor, GrammarTraversal<GrammarToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element, options);
     }
 }

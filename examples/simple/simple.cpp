@@ -8,6 +8,7 @@
 #include <visitors/VisitorUtilities.h>
 #include <grammar/visitors/GrammarAcceptor.h>
 #include <grammar/visitors/Operations.h>
+#include <trees/visitors/Operations.h>
 
 #include "utilities/StringUtilities.h"
 
@@ -92,7 +93,7 @@ int main() {
 
     cout << "PARSING TABLE:" << endl;
     for(auto& keyVal : parser.getParsingTable()) {
-        cout << toString(keyVal.first.first, ToStringOptions{})
+        cout << toString(keyVal.first.first, GrammarToStringOptions{})
              << " "
              << toString(keyVal.first.second)
              << " : "
@@ -103,8 +104,8 @@ int main() {
     auto terms = getSymbolsOfType<Terminal>(s_grammar);
     TerminalsLexer lexer {terms};
 
-    auto derivation = noam::parse(parser, lexer, "(((a+a)+a)+a)");
-    //cout << join(derivation, ", ", ToStringOptions::oneLine()) << endl;
+    auto ast = noam::parse(parser, lexer, "(((a+a)+a)+a)");
+    cout << toString(ast) << endl;
 
     auto rule = S >> X;
     cout << toString(rule) << endl;

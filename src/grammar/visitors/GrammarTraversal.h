@@ -1,19 +1,23 @@
 #pragma once
 
 #include "../SimpleGrammar.h"
+#include "../../visitors/TraversalBase.h"
 #include <memory>
 
 
 namespace noam {
 
     template <typename Visitor, typename Acceptor>
-    class GrammarTraversal {
+    class GrammarTraversal : public TraversalBase<Visitor, Acceptor> {
 
     public:
-        GrammarTraversal(std::shared_ptr<Visitor> visitor, std::shared_ptr<Acceptor> acceptor)
-                : visitor(visitor)
-                , acceptor(acceptor)
-        {}
+
+        GrammarTraversal(const std::shared_ptr<Visitor> &visitor, const std::shared_ptr<Acceptor> &acceptor)
+                : TraversalBase<Visitor, Acceptor>(visitor, acceptor) {}
+
+        using TraversalBase<Visitor, Acceptor>::accept;
+        using TraversalBase<Visitor, Acceptor>::preAccept;
+        using TraversalBase<Visitor, Acceptor>::postAccept;
 
         void traverse(const Grammar &grammar) {
             preAccept(grammar);
@@ -77,26 +81,6 @@ namespace noam {
             preAccept(symbol);
             accept(symbol);
             postAccept(symbol);
-        }
-
-    private:
-        std::shared_ptr<Visitor> visitor;
-
-        std::shared_ptr<Acceptor> acceptor;
-
-        template<typename Element>
-        void preAccept(Element element) {
-            acceptor->preVisit(*visitor, element);
-        }
-
-        template<typename Element>
-        void postAccept(Element element) {
-            acceptor->postVisit(*visitor, element);
-        }
-
-        template<typename Element>
-        void accept(Element element) {
-            acceptor->visit(*visitor, element);
         }
 
     };

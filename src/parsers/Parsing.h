@@ -10,8 +10,8 @@ namespace noam {
 
     template<typename Parser, typename Lexer>
     RuleNode parse(Parser parser,
-                     Lexer lexer,
-                     std::string input) {
+                   Lexer lexer,
+                   std::string input) {
         std::vector<Token> tokens;
         lexer.getTokens(input.begin(), input.end(), back_inserter(tokens));
 

@@ -6,22 +6,17 @@
 
 namespace noam {
 
-    class RuleNode : public AstNode {
+    class RuleNode : public AstNode<RuleNode> {
 
     public:
-        RuleNode(const SimpleRule &rule);
+        RuleNode(const std::shared_ptr<RuleNode> &parent, const SimpleRule &rule);
 
-        void addChild(std::shared_ptr<AstNode> child);
+        const SimpleRule &getRule() const;
+
+        bool isLastChild(std::shared_ptr<const AstNode<RuleNode>> child) const;
 
     private:
         SimpleRule rule;
-    public:
-        const SimpleRule &getRule() const;
-
-        const std::vector<std::shared_ptr<AstNode>> &getChildren() const;
-
-    private:
-        std::vector<std::shared_ptr<AstNode>> children;
 
     };
 

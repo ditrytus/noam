@@ -3,16 +3,16 @@
 using namespace noam;
 using namespace std;
 
-void RuleNode::addChild(shared_ptr<AstNode> child) {
-    children.push_back(child);
-}
 
-RuleNode::RuleNode(const SimpleRule &rule) : rule(rule) {}
+RuleNode::RuleNode(const std::shared_ptr<RuleNode>& parent, const SimpleRule &rule)
+        : AstNode<RuleNode>(parent)
+        , rule(rule)
+{}
 
 const SimpleRule &RuleNode::getRule() const {
     return rule;
 }
 
-const vector<shared_ptr<AstNode>> &RuleNode::getChildren() const {
-    return children;
+bool RuleNode::isLastChild(std::shared_ptr<const AstNode<RuleNode>> child) const {
+    return getChildren().back() == child;
 }

@@ -3,12 +3,13 @@
 #include <sstream>
 #include "../Grammar.h"
 #include "../SimpleGrammar.h"
+#include "../../visitors/ResultVisitor.h"
 
 
 namespace noam {
 
-    struct ToStringOptions {
-        ToStringOptions();
+    struct GrammarToStringOptions {
+        GrammarToStringOptions();
 
         std::string ruleHeadSeparator;
         std::string alternativeSeparator;
@@ -18,21 +19,17 @@ namespace noam {
         std::string nonTerminalPostfix;
         std::string ruleSeparator;
 
-        static ToStringOptions oneLine();
+        static GrammarToStringOptions oneLine();
 
     };
 
-    class ToStringVisitor {
+    class GrammarToStringVisitor : public ResultVisitor<std::string> {
 
     public:
 
-        typedef std::string resultType;
+        GrammarToStringVisitor() = default;
 
-        ToStringVisitor() = default;
-
-        ToStringVisitor(const ToStringOptions &options);
-
-        std::string getResult() const { return ss.str(); }
+        GrammarToStringVisitor(const GrammarToStringOptions &options);
 
         void visit(const AlternativeRule &rule);
 
@@ -50,9 +47,11 @@ namespace noam {
 
         void visit(const Terminal &symbol);
 
+        std::string getResult() const override;
+
     private:
 
-        ToStringOptions opt;
+        GrammarToStringOptions opt;
         std::stringstream ss;
         std::string currentAltSeparator;
     };

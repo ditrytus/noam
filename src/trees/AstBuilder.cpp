@@ -11,7 +11,7 @@ using namespace std;
 void AstBuilder::addRule(SimpleRule rule) {
     assertNotCompleted();
 
-    auto nodePtr = make_shared<RuleNode>(rule);
+    auto nodePtr = make_shared<RuleNode>(ruleStack.empty() ? nullptr : ruleStack.top().first, rule);
 
     if (!ruleStack.empty()) {
         addNode(nodePtr);
@@ -34,7 +34,7 @@ void AstBuilder::addToken(Token token) {
         throw AstBuildException {"Token cannot be processed as first element."};
     }
 
-    auto nodePtr = make_shared<TokenNode>(token);
+    auto nodePtr = make_shared<TokenNode>(ruleStack.top().first, token);
     addNode(nodePtr);
 
     popStacks(token.symbol);
@@ -42,7 +42,7 @@ void AstBuilder::addToken(Token token) {
 
 template <typename Node>
 void AstBuilder::addNode(const shared_ptr<Node> &nodePtr) const {
-    ruleStack.top().first->addChild(dynamic_pointer_cast<AstNode>(nodePtr));
+    ruleStack.top().first->addChild(dynamic_pointer_cast<AstNode<RuleNode>>(nodePtr));
 }
 
 template<typename Symbol>
