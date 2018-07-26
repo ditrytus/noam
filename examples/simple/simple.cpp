@@ -1,14 +1,14 @@
 #include <string>
 #include <iostream>
-#include <grammar/Grammar.h>
-#include <grammar/SimpleGrammar.h>
+#include "grammars/Grammar.h"
+#include "grammars/SimpleGrammar.h"
 #include <parsers/ll/LLParser.h>
 #include <parsers/Parsing.h>
 #include <visitors/GetElementsOfTypeVisitor.h>
 #include <visitors/VisitorUtilities.h>
-#include <grammar/visitors/GrammarAcceptor.h>
-#include <grammar/visitors/Operations.h>
-#include <trees/visitors/Operations.h>
+#include "grammars/visitors/GrammarAcceptor.h"
+#include "grammars/visitors/Operations.h"
+#include "ast/visitors/Operations.h"
 
 #include "utilities/StringUtilities.h"
 

@@ -6,9 +6,9 @@
 #include <stack>
 #include <iostream>
 
-#include "../../trees/AstBuilder.h"
-#include "../../grammar/SimpleGrammar.h"
-#include "../../grammar/symbols/Terminal.h"
+#include "../../ast/AstBuilder.h"
+#include "../../grammars/SimpleGrammar.h"
+#include "../../grammars/symbols/Terminal.h"
 #include "../../lexers/Token.h"
 #include "../UnexpectedTokenException.h"
 

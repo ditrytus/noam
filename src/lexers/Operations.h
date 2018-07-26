@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Token.h"
-#include "../grammar/visitors/Operations.h"
+#include "../grammars/visitors/Operations.h"
 #include <sstream>
 
 namespace noam {

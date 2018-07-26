@@ -2,8 +2,8 @@
 
 #include <vector>
 #include <string>
-#include <trees/AstBuildException.h>
-#include "../grammar/rules/SimpleRule.h"
+#include "ast/AstBuildException.h"
+#include "../grammars/rules/SimpleRule.h"
 #include "ll/LLParser.h"
 #include "../lexers/TerminalsLexer.h"
 

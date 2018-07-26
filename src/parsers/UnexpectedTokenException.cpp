@@ -1,6 +1,6 @@
 #include "UnexpectedTokenException.h"
 #include "UnexpectedTokenException.h"
-#include "../grammar/visitors/Operations.h"
+#include "../grammars/visitors/Operations.h"
 #include "../lexers/Operations.h"
 #include <utility>
 #include <sstream>

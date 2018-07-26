@@ -1,7 +1,7 @@
 #include "AstBuilder.h"
 #include "TokenNode.h"
 #include "AstBuildException.h"
-#include "../grammar/visitors/Operations.h"
+#include "../grammars/visitors/Operations.h"
 #include "../utilities/StringUtilities.h"
 #include <iostream>
 

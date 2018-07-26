@@ -1,5 +1,5 @@
 #include "AstToStringVisitor.h"
-#include "../../grammar/visitors/Operations.h"
+#include "../../grammars/visitors/Operations.h"
 #include "../../lexers/Operations.h"
 #include <iostream>
 

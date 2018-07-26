@@ -2,7 +2,7 @@
 
 
 #include "../lexers/Token.h"
-#include "../grammar/rules/SimpleRule.h"
+#include "../grammars/rules/SimpleRule.h"
 #include "AstNode.h"
 #include "RuleNode.h"
 #include "TokenNode.h"

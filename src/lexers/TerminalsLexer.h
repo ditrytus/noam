@@ -1,7 +1,7 @@
 #pragma once
 
 #include <set>
-#include "../grammar/symbols/Terminal.h"
+#include "../grammars/symbols/Terminal.h"
 #include "Token.h"
 #include "LexerException.h"
 

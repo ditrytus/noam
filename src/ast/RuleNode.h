@@ -2,7 +2,7 @@
 
 
 #include "AstNode.h"
-#include "../grammar/rules/SimpleRule.h"
+#include "../grammars/rules/SimpleRule.h"
 
 namespace noam {
 
