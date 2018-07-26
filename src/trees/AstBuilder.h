@@ -30,9 +30,11 @@ namespace noam {
         void addNode(const std::shared_ptr<Node> &nodePtr) const;
 
         template <typename Symbol>
-        void popStacks(const Symbol& symbol);
+        void popTopSymbolStack(const Symbol &symbol);
 
         void assertNotCompleted();
+
+        void popRuleStack();
     };
 
 }

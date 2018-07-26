@@ -15,7 +15,7 @@ void AstBuilder::addRule(SimpleRule rule) {
 
     if (!ruleStack.empty()) {
         addNode(nodePtr);
-        popStacks(rule.getHead());
+        popTopSymbolStack(rule.getHead());
     }
 
     auto subSymbols = rule.getSubstitution().getSymbols();
@@ -37,7 +37,8 @@ void AstBuilder::addToken(Token token) {
     auto nodePtr = make_shared<TokenNode>(ruleStack.top().first, token);
     addNode(nodePtr);
 
-    popStacks(token.symbol);
+    popTopSymbolStack(token.symbol);
+    popRuleStack();
 }
 
 template <typename Node>
@@ -46,14 +47,16 @@ void AstBuilder::addNode(const shared_ptr<Node> &nodePtr) const {
 }
 
 template<typename Symbol>
-void AstBuilder::popStacks(const Symbol &symbol) {
+void AstBuilder::popTopSymbolStack(const Symbol &symbol) {
     auto& symbolStack = ruleStack.top().second;
     if (symbol != *(symbolStack.top())) {
         throw AstBuildException {"Unexpected symbol."};
     }
-
     symbolStack.pop();
-    if (symbolStack.empty()) {
+}
+
+void AstBuilder::popRuleStack() {
+    while (!ruleStack.empty() && ruleStack.top().second.empty()) {
         if (ruleStack.size() == 1) {
             result = ruleStack.top().first;
         }
