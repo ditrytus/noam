@@ -25,6 +25,8 @@ bool Terminal::operator!=(const Symbol &other) const {
     return !((*this) == other);
 }
 
+bool Terminal::matchedEntireToken(const std::string::const_iterator &tokenCursor) const { return tokenCursor >= getName().end(); }
+
 Terminal noam::literals::operator "" _T(const char *val, size_t) {
     return Terminal(val);
 }

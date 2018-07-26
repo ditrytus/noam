@@ -23,14 +23,15 @@ namespace noam {
                 //TODO: add sorting terminals for match
                 bool matched = false;
                 for(auto& terminal : terminals) {
-                   std::ostringstream match;
-                   std::ostream_iterator<char> match_it {match, ""};
+                    std::ostringstream match;
+                    std::ostream_iterator<char> match_it {match, ""};
                     int matchedCount = terminal.match(cursor, end, match_it);
                     position += matchedCount;
                     if (matchedCount > 0) {
                         cursor += matchedCount;
                         matched = true;
                         *(output++) = Token{terminal, match.str()};
+                        break;
                     }
                 }
                 if (!matched) {

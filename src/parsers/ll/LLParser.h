@@ -57,8 +57,8 @@ namespace noam {
 
                     astBuilder.addToken(*cursor);
 
-                    ++cursor;
                     position += (*cursor).exactValue.size();
+                    ++cursor;
                     symbolStack.pop();
                 }
 

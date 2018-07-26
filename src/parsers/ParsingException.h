@@ -13,6 +13,8 @@ namespace noam {
 
         const int &getPosition() const;
 
+        const char *what() const noexcept override;
+
     private:
         int position;
     };

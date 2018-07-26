@@ -29,7 +29,7 @@ namespace noam {
             auto inputCursor = begin;
             auto tokenCursor = getName().begin();
 
-            while (inputCursor != end && tokenCursor != getName().end()) {
+            while (inputCursor != end && !matchedEntireToken(tokenCursor)) {
                 if (*inputCursor != *tokenCursor) {
                     break;
                 }
@@ -37,8 +37,10 @@ namespace noam {
                 ++result; ++inputCursor; ++tokenCursor;
             }
 
-            return result;
-        };
+            return matchedEntireToken(tokenCursor) ? result : 0;
+        }
+
+        bool matchedEntireToken(const std::string::const_iterator &tokenCursor) const;
 
     };
 

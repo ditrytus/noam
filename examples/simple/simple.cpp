@@ -6,18 +6,23 @@
 #include <parsers/Parsing.h>
 #include <visitors/GetElementsOfTypeVisitor.h>
 #include <visitors/VisitorUtilities.h>
+#include <parsers/ParsingExceptionFormat.h>
 #include "grammars/visitors/GrammarAcceptor.h"
 #include "grammars/visitors/Operations.h"
 #include "ast/visitors/Operations.h"
 
 #include "utilities/StringUtilities.h"
+#include <functional>
 
 using namespace noam;
+
 using namespace noam::literals;
 using namespace noam::utils;
 using namespace noam::trees;
 using namespace std;
+using namespace std::placeholders;
 
+void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const std::string& input);
 
 int main() {
     Terminal a = "a"_T,
@@ -114,38 +119,39 @@ int main() {
     cout << join(getSymbolsOfType<NonTerminal>(grammar), ", ") << endl;
     cout << toString(grammar) << endl;
 
-    try {
-        noam::parse(parser, lexer, "(a+a");
-    } catch (ParsingException& ex) {
-        cout << ex.what() << endl;
-    }
+    auto printParse = std::bind(printParseError, parser, lexer, _1);
 
-    try {
-        noam::parse(parser, lexer, "a+a)");
-    } catch (ParsingException& ex) {
-        cout << ex.what() << endl;
-    }
+    printParse("(a+a");
+    printParse("a+a)");
+    printParse("(a+a))");
+    printParse("(aaa)");
+    printParse("(a-a)");
 
-    try {
-        noam::parse(parser, lexer, "(a+a))");
-    } catch (ParsingException& ex) {
-        cout << ex.what() << endl;
-    }
+    Grammar grammarN = {
+        R(S >> F | "- "_T + S + ";\n" + F),
+        R(F >> a)
+    };
 
-    try {
-        noam::parse(parser, lexer, "(aaa)");
-    } catch (ParsingException& ex) {
-        cout << ex.what() << endl;
-    }
+    LLParser parserN {grammarN};
 
+    SimpleGrammar s_parserN {grammarN};
+
+    auto termsN = getSymbolsOfType<Terminal>(s_parserN);
+    TerminalsLexer lexerN {termsN};
+
+    auto printParseN = std::bind(printParseError, parserN, lexerN, _1);
+
+    printParseN("a");
+    printParseN("- a;\na");
+    printParseN("- a;\n- a;\na");
+
+}
+
+void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const std::string& input) {
     try {
-        noam::parse(parser, lexer, "(a-a)");
+        auto ast = parse(parser, lexer, input);
+        cout << toString(ast) << endl;
     } catch (ParsingException& ex) {
-        try {
-            std::rethrow_if_nested(ex);
-        }
-        catch (std::exception& inner) {
-            cout << inner.what() << endl;
-        }
+        cout << pretty(ex, input) << endl;
     }
 }

@@ -31,4 +31,13 @@ namespace noam::utils {
         return ss.str();
     }
 
+    struct TextPosition {
+        unsigned long line;
+        unsigned long lineBegin;
+        unsigned long column;
+    };
+
+    TextPosition calculateTextPosition(const std::string& input, int position);
+
+    std::string getLineAt(const std::string& input, TextPosition pos);
 }
