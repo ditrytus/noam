@@ -40,4 +40,8 @@ namespace noam::utils {
     TextPosition calculateTextPosition(const std::string& input, int position);
 
     std::string getLineAt(const std::string& input, TextPosition pos);
+
+    std::string escapeWhiteSpace(std::string input);
+
+    std::string replaceAll(std::string& str, const std::string& from, const std::string& to);
 }

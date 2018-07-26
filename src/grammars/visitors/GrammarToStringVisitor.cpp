@@ -1,4 +1,5 @@
 #include "GrammarToStringVisitor.h"
+#include "../../utilities/StringUtilities.h"
 
 using namespace noam;
 using namespace std;
@@ -28,7 +29,7 @@ void GrammarToStringVisitor::preVisit(const Substitution &sub) {
 }
 
 void GrammarToStringVisitor::visit(const Terminal &symbol) {
-    ss << opt.terminalPrefix << symbol.getName() << opt.terminalPostfix;
+    ss << opt.terminalPrefix << utils::escapeWhiteSpace(symbol.getName()) << opt.terminalPostfix;
 }
 
 void GrammarToStringVisitor::visit(const NonTerminal &symbol) {

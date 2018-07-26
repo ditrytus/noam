@@ -143,7 +143,8 @@ int main() {
 
     printParseN("a");
     printParseN("- a;\na");
-    printParseN("- a;\n- a;\na");
+    printParseN("- - a;\na;\na");
+    printParseN("- - - a;\na;\n- aaa;\na");
 
 }
 
