@@ -1,29 +1,21 @@
 #pragma once
 
 #include <exception>
-#include "../lexers/Token.h"
 
 namespace noam {
 
-class ParsingException : public std::exception {
 
-public:
-    ParsingException(int position,
-                     std::shared_ptr<Token> found,
-                     std::shared_ptr<Symbol> expected);
+    class ParsingException
+            : public std::exception {
 
-    const char *what() const noexcept override;
+    public:
+        ParsingException(int position);
 
-    const int &getPosition() const;
+        const int &getPosition() const;
 
-    ParsingException(int position);
-
-private:
-    int position;
-    std::shared_ptr<Token> found;
-    std::shared_ptr<Symbol> expected;
-    std::string message;
-
-};
+    private:
+        int position;
+    };
 
 }
+

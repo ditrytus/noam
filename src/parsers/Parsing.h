@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <trees/AstBuildException.h>
 #include "../grammar/rules/SimpleRule.h"
 #include "ll/LLParser.h"
 #include "../lexers/TerminalsLexer.h"
@@ -12,13 +13,21 @@ namespace noam {
     RuleNode parse(Parser parser,
                    Lexer lexer,
                    std::string input) {
-        std::vector<Token> tokens;
-        lexer.getTokens(input.begin(), input.end(), back_inserter(tokens));
+        try {
+            std::vector<Token> tokens;
+            lexer.getTokens(input.begin(), input.end(), back_inserter(tokens));
 
-        AstBuilder builder;
-        parser.derivation(tokens.begin(), tokens.end(), builder);
+            AstBuilder builder;
+            parser.derivation(tokens.begin(), tokens.end(), builder);
 
-        return builder.getResult();
+            return builder.getResult();
+        }
+        catch(LexerException& ex) {
+            std::throw_with_nested(ParsingException(ex.getPosition()));
+        }
+        catch(AstBuildException& ex) {
+            std::throw_with_nested(ParsingException(static_cast<int>(input.size())));
+        }
     }
 
 }

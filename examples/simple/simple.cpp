@@ -116,14 +116,36 @@ int main() {
 
     try {
         noam::parse(parser, lexer, "(a+a");
-    } catch (ParsingException ex) {
+    } catch (ParsingException& ex) {
         cout << ex.what() << endl;
     }
 
     try {
-        noam::parse(parser, lexer, "a");
-    } catch (ParsingException ex) {
+        noam::parse(parser, lexer, "a+a)");
+    } catch (ParsingException& ex) {
         cout << ex.what() << endl;
     }
 
+    try {
+        noam::parse(parser, lexer, "(a+a))");
+    } catch (ParsingException& ex) {
+        cout << ex.what() << endl;
+    }
+
+    try {
+        noam::parse(parser, lexer, "(aaa)");
+    } catch (ParsingException& ex) {
+        cout << ex.what() << endl;
+    }
+
+    try {
+        noam::parse(parser, lexer, "(a-a)");
+    } catch (ParsingException& ex) {
+        try {
+            std::rethrow_if_nested(ex);
+        }
+        catch (std::exception& inner) {
+            cout << inner.what() << endl;
+        }
+    }
 }

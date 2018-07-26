@@ -10,7 +10,7 @@
 #include "../../grammar/SimpleGrammar.h"
 #include "../../grammar/symbols/Terminal.h"
 #include "../../lexers/Token.h"
-#include "../ParsingException.h"
+#include "../UnexpectedTokenException.h"
 
 namespace noam {
 
@@ -52,7 +52,7 @@ namespace noam {
                 if (topTerminal) {
                     auto currentInputSymbol = (*cursor).symbol;
                     if (*topTerminal != currentInputSymbol) {
-                        throw ParsingException {position, make_shared<Token>(*cursor), topTerminal};
+                        throw UnexpectedTokenException {position, make_shared<Token>(*cursor), topTerminal};
                     }
 
                     astBuilder.addToken(*cursor);
@@ -66,7 +66,7 @@ namespace noam {
                 if (topNonTerminal) {
                     auto rule = parsingTable.find(make_pair(*topNonTerminal, (*cursor).symbol));
                     if (rule == parsingTable.end()) {
-                        throw ParsingException {position, make_shared<Token>(*cursor), nullptr};
+                        throw UnexpectedTokenException {position, make_shared<Token>(*cursor), nullptr};
                     }
                     auto nextRule = (*rule).second;
 
@@ -80,9 +80,9 @@ namespace noam {
                 }
             }
             if (cursor == end && !symbolStack.empty()) {
-                throw ParsingException {position, nullptr, symbolStack.top()};
+                throw UnexpectedTokenException {position, nullptr, symbolStack.top()};
             } else if (cursor != end && symbolStack.empty()) {
-                throw ParsingException {position, make_shared<Token>(*cursor), nullptr};
+                throw UnexpectedTokenException {position, make_shared<Token>(*cursor), nullptr};
             }
         }
 
