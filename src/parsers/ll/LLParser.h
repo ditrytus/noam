@@ -10,6 +10,7 @@
 #include "../../grammar/SimpleGrammar.h"
 #include "../../grammar/symbols/Terminal.h"
 #include "../../lexers/Token.h"
+#include "../ParsingException.h"
 
 namespace noam {
 
@@ -43,6 +44,7 @@ namespace noam {
             stack<shared_ptr<Symbol>> symbolStack;
             symbolStack.push(shared_ptr<Symbol>{new NonTerminal{grammar.getStartSymbol()}});
 
+            int position = 0;
             auto cursor = begin;
             while (cursor != end && !symbolStack.empty()) {
                 auto topSymbol = symbolStack.top();
@@ -50,12 +52,13 @@ namespace noam {
                 if (topTerminal) {
                     auto currentInputSymbol = (*cursor).symbol;
                     if (*topTerminal != currentInputSymbol) {
-                        //TODO: Throw parsing error (unexpected symbol)
+                        throw ParsingException {position, make_shared<Token>(*cursor), topTerminal};
                     }
 
                     astBuilder.addToken(*cursor);
 
                     ++cursor;
+                    position += (*cursor).exactValue.size();
                     symbolStack.pop();
                 }
 
@@ -63,7 +66,7 @@ namespace noam {
                 if (topNonTerminal) {
                     auto rule = parsingTable.find(make_pair(*topNonTerminal, (*cursor).symbol));
                     if (rule == parsingTable.end()) {
-                        //TODO: Throw parsing error (unexpected symbol)
+                        throw ParsingException {position, make_shared<Token>(*cursor), nullptr};
                     }
                     auto nextRule = (*rule).second;
 
@@ -76,7 +79,11 @@ namespace noam {
                     }
                 }
             }
-            //TODO: Implement error ending conditions;
+            if (cursor == end && !symbolStack.empty()) {
+                throw ParsingException {position, nullptr, symbolStack.top()};
+            } else if (cursor != end && symbolStack.empty()) {
+                throw ParsingException {position, make_shared<Token>(*cursor), nullptr};
+            }
         }
 
     private:

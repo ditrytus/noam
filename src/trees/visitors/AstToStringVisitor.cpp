@@ -1,5 +1,6 @@
 #include "AstToStringVisitor.h"
 #include "../../grammar/visitors/Operations.h"
+#include "../../lexers/Operations.h"
 #include <iostream>
 
 using namespace noam;
@@ -12,7 +13,7 @@ string AstToStringVisitor::getResult() const {
 void AstToStringVisitor::preVisit(const TokenNode& node) {
     renderEmptyIndent(node);
     renderTreeIndent(node);
-    ss << toString(node.getToken().symbol, GrammarToStringOptions::oneLine()) << " ~ \"" << node.getToken().exactValue << "\"" << endl;
+    ss << toString(node.getToken()) << endl;
 }
 
 void AstToStringVisitor::preVisit(const RuleNode &node) {

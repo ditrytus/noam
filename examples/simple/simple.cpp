@@ -113,4 +113,17 @@ int main() {
     cout << join(getSymbolsOfType<Terminal>(grammar), ", ") << endl;
     cout << join(getSymbolsOfType<NonTerminal>(grammar), ", ") << endl;
     cout << toString(grammar) << endl;
+
+    try {
+        noam::parse(parser, lexer, "(a+a");
+    } catch (ParsingException ex) {
+        cout << ex.what() << endl;
+    }
+
+    try {
+        noam::parse(parser, lexer, "a");
+    } catch (ParsingException ex) {
+        cout << ex.what() << endl;
+    }
+
 }
