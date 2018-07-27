@@ -11,6 +11,11 @@ namespace noam {
 
         Terminal symbol;
         std::string exactValue;
+
+        static const Token &empty();
+
+    private:
+        static Token _empty;
     };
 
 }

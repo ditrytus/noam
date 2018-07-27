@@ -68,11 +68,11 @@ namespace noam {
                             position += (*cursor).exactValue.size();
                             ++cursor;
                         } else {
-                            astBuilder.addToken(Token{Terminal::empty(), ""});
+                            astBuilder.addToken(Token::empty());
                         }
                         symbolStack.pop();
                     } else if (*topTerminal == Terminal::empty()) {
-                        astBuilder.addToken(Token{Terminal::empty(), ""});
+                        astBuilder.addToken(Token::empty());
                         symbolStack.pop();
                     } else {
                         throw UnexpectedTokenException {position, nullptr, symbolStack.top()};
@@ -81,7 +81,7 @@ namespace noam {
 
                 auto topNonTerminal = dynamic_pointer_cast<NonTerminal>(topSymbol);
                 if (topNonTerminal) {
-                    Token currentToken = cursor != end ? *cursor : Token{Terminal::empty(), ""};
+                    Token currentToken = cursor != end ? *cursor : Token::empty();
 
                     auto rule = parsingTable.find(make_pair(*topNonTerminal, currentToken.symbol));
                     if (rule == parsingTable.end()) {

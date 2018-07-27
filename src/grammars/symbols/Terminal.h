@@ -44,6 +44,9 @@ namespace noam {
         bool matchedEntireToken(const std::string::const_iterator &tokenCursor) const;
 
         static Terminal empty();
+
+    private:
+        static Terminal _empty;
     };
 
     bool operator < (const Terminal& a, const Terminal& b);
