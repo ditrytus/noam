@@ -11,47 +11,45 @@ string AstToStringVisitor::getResult() const {
 }
 
 void AstToStringVisitor::preVisit(const TokenNode& node) {
+    --siblingCount.back();
     renderEmptyIndent(node);
     renderTreeIndent(node);
     ss << toString(node.getToken()) << endl;
 }
 
 void AstToStringVisitor::preVisit(const RuleNode &node) {
+    --siblingCount.back();
     renderEmptyIndent(node);
     renderTreeIndent(node);
     ss << toString(node.getRule(), GrammarToStringOptions::oneLine()) << endl;
-    increaseIndent(node);
+    siblingCount.push_back(node.getChildren().size());
 }
 
 void AstToStringVisitor::postVisit(const RuleNode &node) {
-    decreaseIndent();
+    siblingCount.pop_back();
 }
 
-void AstToStringVisitor::increaseIndent(const AstNode<RuleNode> &node) {
-    areLast.push_back(node.isLastSibling());
-}
-
-void AstToStringVisitor::decreaseIndent() {
-    areLast.pop_back();
-}
-
-void AstToStringVisitor::renderTreeIndent(const AstNode<RuleNode> &node) {
-    for (int i=0; i < static_cast<int>(areLast.size()); ++i) {
-        if (i < areLast.size() - 1) {
-            ss << (areLast[i+1] ? "   " : "|  ");
+void AstToStringVisitor::renderTreeIndent(const AstNode &node) {
+    for (size_t i=1; i < siblingCount.size(); ++i) {
+        if (i < siblingCount.size() - 1) {
+            ss << (siblingCount[i] == 0 ? "   " : "|  ");
         } else {
-            ss << (node.isLastSibling() ? "+- " : "|- ");
+            ss << (siblingCount.back() == 0 ? "+- " : "|- ");
         }
     }
 }
 
-void AstToStringVisitor::renderEmptyIndent(const AstNode<RuleNode> &node) {
-    for (int i=0; i < static_cast<int>(areLast.size()); ++i) {
-        if (i < areLast.size() - 1) {
-            ss << (areLast[i+1] ? "   " : "|  ");
+void AstToStringVisitor::renderEmptyIndent(const AstNode &node) {
+    for (size_t i=1; i < siblingCount.size(); ++i) {
+        if (i < siblingCount.size() - 1) {
+            ss << (siblingCount[i] == 0 ? "   " : "|  ");
         } else {
             ss << "|  ";
         }
     }
     ss << endl;
+}
+
+AstToStringVisitor::AstToStringVisitor() {
+    siblingCount.push_back(1);
 }

@@ -7,7 +7,7 @@
 
 namespace noam {
 
-    class TokenNode : public AstNode<RuleNode> {
+    class TokenNode : public AstNode {
 
     public:
         TokenNode(const std::shared_ptr<RuleNode> &parent, Token token);
