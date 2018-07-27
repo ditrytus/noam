@@ -6,7 +6,7 @@
 #include <parsers/Parsing.h>
 #include <visitors/GetElementsOfTypeVisitor.h>
 #include <visitors/VisitorUtilities.h>
-#include <parsers/ParsingExceptionFormat.h>
+#include <parsers/exceptions/ParsingExceptionFormat.h>
 #include "grammars/visitors/GrammarAcceptor.h"
 #include "grammars/visitors/Operations.h"
 #include "ast/visitors/Operations.h"

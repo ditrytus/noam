@@ -10,7 +10,7 @@
 #include "../../grammars/SimpleGrammar.h"
 #include "../../grammars/symbols/Terminal.h"
 #include "../../lexers/Token.h"
-#include "../UnexpectedTokenException.h"
+#include "../exceptions/UnexpectedTokenException.h"
 
 namespace noam {
 

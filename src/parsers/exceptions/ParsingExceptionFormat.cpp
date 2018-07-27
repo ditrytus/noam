@@ -1,5 +1,5 @@
 #include "ParsingExceptionFormat.h"
-#include "../utilities/StringUtilities.h"
+#include "../../utilities/StringUtilities.h"
 #include <sstream>
 
 using namespace noam;
