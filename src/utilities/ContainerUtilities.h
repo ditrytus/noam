@@ -10,4 +10,9 @@ namespace noam::utils {
         return find(container.begin(), container.end(), item) != container.end();
     }
 
+    template <typename T, typename U>
+    void insert_all(T& setA, const U& setB) {
+        setA.insert(setB.begin(), setB.end());
+    }
+
 }

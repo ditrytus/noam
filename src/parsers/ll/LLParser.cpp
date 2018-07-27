@@ -15,11 +15,15 @@ LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
     auto firstSetsPair = generateFirstSets(grammar);
 
     substitutionsFirstSets = firstSetsPair.first;
-    nonTerminalFirstSets = firstSetsPair.second;
-    parsingTable = generateParsingTable(grammar, substitutionsFirstSets);
+
+    auto followSets = generateFollowSets(grammar, substitutionsFirstSets);
+
+    parsingTable = generateParsingTable(grammar, substitutionsFirstSets, followSets);
 }
 
-ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& firstSets) {
+ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar,
+                                            FirstSets<Substitution>& firstSets,
+                                            FollowSets<NonTerminal>& followSets) {
     ParsingTable parsingTable;
 
     auto terminals = getSymbolsOfType<Terminal>(grammar);
@@ -31,7 +35,8 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstS
             auto rules = grammar.getRules();
             auto pos = find_if(rules.begin(), rules.end(), [&](SimpleRule rule) {
                 auto symbols = firstSets[rule.getSubstitution()];
-                return rule.getHead() == nonTerminal && contains(symbols, terminal);
+                return (rule.getHead() == nonTerminal && contains(symbols, terminal))
+                       || (contains(symbols, Terminal::empty()) && contains(followSets[nonTerminal], terminal));
             });
 
             if (pos != rules.end()) {
@@ -76,7 +81,7 @@ void __unused insertSymbolsToFirstSet(
         FirstSets<Substitution>&,
         const Substitution&,
         Terminal* firstSymbol) {
-    auto pos = firstSet.insert(*firstSymbol);
+    firstSet.insert(*firstSymbol);
 }
 
 template <>
@@ -100,11 +105,11 @@ void __unused insertSymbolsToFirstSet(
                       tailFirstSet.begin(), tailFirstSet.end(),
                       inserter(firstSet, firstSet.end()));
         } else {
-            firstSet.insert(withoutEmptySet.begin(), withoutEmptySet.end());
+            insert_all(firstSet, withoutEmptySet);
         }
     }
     else {
-        firstSet.insert(nonTerFirstSet.begin(), nonTerFirstSet.end());
+        insert_all(firstSet, nonTerFirstSet);
     }
 }
 
@@ -125,7 +130,7 @@ std::pair<FirstSets<Substitution>, FirstSets<NonTerminal>> LLParser::generateFir
             auto& nonTerFirstSet = nonTerFirstSets[rule.getHead()];
             auto countBefore = nonTerFirstSet.size();
 
-            nonTerFirstSet.insert(firstSet.begin(), firstSet.end());
+            insert_all(nonTerFirstSet, firstSet);
 
             auto countAfter = nonTerFirstSet.size();
 
@@ -148,4 +153,50 @@ const FirstSets<noam::NonTerminal> &LLParser::getNonTerminalFirstSets() const {
 
 const ParsingTable &LLParser::getParsingTable() const {
     return parsingTable;
+}
+
+FollowSets<NonTerminal>
+LLParser::generateFollowSets(const SimpleGrammar &grammar,
+                             FirstSets<Substitution> &subFirstSets) {
+    FollowSets<NonTerminal> followSets;
+
+    bool setsChanged = true;
+    while(setsChanged) {
+        setsChanged = false;
+        for (auto const& rule : grammar.getRules()) {
+            int subSymbolIndex=0;
+            for (auto const& subSymbol : rule.getSubstitution().getSymbols()) {
+                ++subSymbolIndex;
+
+                auto nonTerSubSymbol = dynamic_cast<NonTerminal*>(subSymbol.get());
+                if (nonTerSubSymbol == nullptr) {
+                    continue;
+                }
+
+                auto nonTerSubFollowSet = followSets[*nonTerSubSymbol];
+                auto headFollowSet = followSets[rule.getHead()];
+
+                auto countBefore = nonTerSubFollowSet.size();
+
+                if (subSymbolIndex < rule.getSubstitution().size()) {
+                    auto afterSymbolTail = rule.getSubstitution().subSubstitution(subSymbolIndex);
+                    auto tailFirstSet = subFirstSets[afterSymbolTail];
+                    insert_all(nonTerSubFollowSet, tailFirstSet);
+
+                    if (contains(tailFirstSet, Terminal::empty())) {
+                        insert_all(nonTerSubFollowSet, headFollowSet);
+                    }
+                } else {
+                    insert_all(nonTerSubFollowSet, headFollowSet);
+                }
+
+                auto countAfter = nonTerSubFollowSet.size();
+                if (countBefore != countAfter) {
+                    setsChanged = true;
+                }
+            }
+        }
+    }
+
+    return followSets;
 }

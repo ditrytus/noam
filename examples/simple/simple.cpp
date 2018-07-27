@@ -24,6 +24,15 @@ using namespace std::placeholders;
 
 void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const std::string& input);
 
+auto parseGrammar(SimpleGrammar grammar) {
+    LLParser parser {grammar};
+
+    auto terms = getSymbolsOfType<Terminal>(grammar);
+    TerminalsLexer lexer {terms};
+
+    return bind(printParseError, parser, lexer, _1);
+}
+
 int main() {
     Terminal a = "a"_T,
              b = "b"_T;
@@ -132,20 +141,42 @@ int main() {
         R(F >> a)
     };
 
-    LLParser parserN {grammarN};
-
-    SimpleGrammar s_parserN {grammarN};
-
-    auto termsN = getSymbolsOfType<Terminal>(s_parserN);
-    TerminalsLexer lexerN {termsN};
-
-    auto printParseN = std::bind(printParseError, parserN, lexerN, _1);
+    auto printParseN = parseGrammar(grammarN);
 
     printParseN("a");
     printParseN("- a;\na");
     printParseN("- - a;\na;\na");
     printParseN("- - - a;\na;\n- aaa;\na");
 
+    auto one = "one"_T, two = "two"_T, three = "three"_T, EMPTY = Terminal::empty();
+
+    auto line = "LINE"_N, line_post = "LINE'"_N, S_post = "S'"_N, word = "WORD"_N;
+
+    Grammar g123 = {
+        R(S >> line + S_post),
+        R(S_post >> EMPTY | "\n"_T + S),
+        R(line >> word + line_post),
+        R(line_post >> EMPTY | " "_T + line),
+        R(word >> one | two | three)
+    };
+
+    auto printParse123 = parseGrammar(g123);
+
+    printParse123("one");
+
+    LLParser parser123 {g123};
+    cout << "PARSING TABLE:" << endl;
+    for(auto& keyVal : parser123.getParsingTable()) {
+        cout << toString(keyVal.first.first, GrammarToStringOptions::oneLine())
+             << " \""
+             << toString(keyVal.first.second)
+             << "\" : "
+             << toString(*keyVal.second, GrammarToStringOptions::oneLine())
+             << endl;
+    }
+    printParse123("one two three one two three");
+    printParse123("one\ntwo");
+    printParse123("one\none two\none two three\none two three one two three");
 }
 
 void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const std::string& input) {

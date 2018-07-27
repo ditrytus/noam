@@ -29,7 +29,6 @@ namespace noam {
             std::throw_with_nested(ParsingException(static_cast<int>(input.size())));
         }
     }
-
 }
 
 

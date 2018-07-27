@@ -29,8 +29,6 @@ namespace noam {
 
         Substitution subSubstitution(int count) const;
 
-        bool isSingle() const;
-
     private:
         Substitution(std::vector<std::shared_ptr<Symbol>> symbols);
 

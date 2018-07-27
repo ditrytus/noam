@@ -29,7 +29,11 @@ void GrammarToStringVisitor::preVisit(const Substitution &sub) {
 }
 
 void GrammarToStringVisitor::visit(const Terminal &symbol) {
-    ss << opt.terminalPrefix << utils::escapeWhiteSpace(symbol.getName()) << opt.terminalPostfix;
+    if (symbol != Terminal::empty()) {
+        ss << opt.terminalPrefix << utils::escapeWhiteSpace(symbol.getName()) << opt.terminalPostfix;
+    } else {
+        ss << "EMPTY";
+    }
 }
 
 void GrammarToStringVisitor::visit(const NonTerminal &symbol) {

@@ -48,10 +48,6 @@ Substitution Substitution::subSubstitution(int index) const {
     return Substitution(newSymbols);
 }
 
-bool Substitution::isSingle() const {
-    return symbols.size() == 1;
-}
-
 Substitution noam::operator + (const Symbol &a, const Symbol &b) {
     return Substitution{a} + b;
 }

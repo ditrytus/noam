@@ -17,6 +17,9 @@ namespace noam {
     template <typename T>
     using FirstSets = std::map<T, std::set<Terminal>>;
 
+    template <typename T>
+    using FollowSets = FirstSets<T>;
+
     using ParsingTable = std::map<std::pair<NonTerminal, Terminal>, std::shared_ptr<SimpleRule>>;
 
     class LLParser {
@@ -26,7 +29,11 @@ namespace noam {
 
         static std::pair<FirstSets<Substitution>, FirstSets<NonTerminal>> generateFirstSets(const SimpleGrammar &grammar);
 
-        static ParsingTable generateParsingTable(const SimpleGrammar &grammar, FirstSets<Substitution>& subFs);
+        static FollowSets<NonTerminal> generateFollowSets(const SimpleGrammar& grammar, FirstSets<Substitution>& subFirstSets);
+
+        static ParsingTable generateParsingTable(const SimpleGrammar &grammar,
+                                                 FirstSets<Substitution>& subFs,
+                                                 FollowSets<NonTerminal>& followSets);
 
         const FirstSets<NonTerminal> &getNonTerminalFirstSets() const;
 
@@ -46,27 +53,42 @@ namespace noam {
 
             int position = 0;
             auto cursor = begin;
-            while (cursor != end && !symbolStack.empty()) {
+            while (!symbolStack.empty()) {
                 auto topSymbol = symbolStack.top();
                 auto topTerminal = dynamic_pointer_cast<Terminal>(topSymbol);
                 if (topTerminal) {
-                    auto currentInputSymbol = (*cursor).symbol;
-                    if (*topTerminal != currentInputSymbol) {
-                        throw UnexpectedTokenException {position, make_shared<Token>(*cursor), topTerminal};
+                    if (cursor != end) {
+                        if (*topTerminal != Terminal::empty()) {
+                            auto currentInputSymbol = (*cursor).symbol;
+                            if (*topTerminal != currentInputSymbol) {
+                                throw UnexpectedTokenException{position, make_shared<Token>(*cursor), topTerminal};
+                            }
+
+                            astBuilder.addToken(*cursor);
+                            position += (*cursor).exactValue.size();
+                            ++cursor;
+                        } else {
+                            astBuilder.addToken(Token{Terminal::empty(), ""});
+                        }
+                        symbolStack.pop();
+                    } else if (*topTerminal == Terminal::empty()) {
+                        astBuilder.addToken(Token{Terminal::empty(), ""});
+                        symbolStack.pop();
+                    } else {
+                        throw UnexpectedTokenException {position, nullptr, symbolStack.top()};
                     }
-
-                    astBuilder.addToken(*cursor);
-
-                    position += (*cursor).exactValue.size();
-                    ++cursor;
-                    symbolStack.pop();
                 }
 
                 auto topNonTerminal = dynamic_pointer_cast<NonTerminal>(topSymbol);
                 if (topNonTerminal) {
-                    auto rule = parsingTable.find(make_pair(*topNonTerminal, (*cursor).symbol));
+                    Token currentToken = cursor != end ? *cursor : Token{Terminal::empty(), ""};
+
+                    auto rule = parsingTable.find(make_pair(*topNonTerminal, currentToken.symbol));
                     if (rule == parsingTable.end()) {
-                        throw UnexpectedTokenException {position, make_shared<Token>(*cursor), nullptr};
+                        rule = parsingTable.find(make_pair(*topNonTerminal, Terminal::empty()));
+                    }
+                    if (rule == parsingTable.end()) {
+                        throw UnexpectedTokenException{position, make_shared<Token>(currentToken), nullptr};
                     }
                     auto nextRule = (*rule).second;
 
@@ -74,14 +96,12 @@ namespace noam {
 
                     symbolStack.pop();
                     auto newSymbols = nextRule->getSubstitution().getSymbols();
-                    for(auto rit = newSymbols.rbegin(); rit != newSymbols.rend(); ++rit) {
+                    for (auto rit = newSymbols.rbegin(); rit != newSymbols.rend(); ++rit) {
                         symbolStack.push(*rit);
                     }
                 }
             }
-            if (cursor == end && !symbolStack.empty()) {
-                throw UnexpectedTokenException {position, nullptr, symbolStack.top()};
-            } else if (cursor != end && symbolStack.empty()) {
+            if (cursor != end) {
                 throw UnexpectedTokenException {position, make_shared<Token>(*cursor), nullptr};
             }
         }
