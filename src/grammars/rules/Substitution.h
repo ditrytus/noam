@@ -26,7 +26,14 @@ namespace noam {
         unsigned long size() const;
 
         virtual ~Substitution() = default;
+
+        Substitution subSubstitution(int count) const;
+
+        bool isSingle() const;
+
     private:
+        Substitution(std::vector<std::shared_ptr<Symbol>> symbols);
+
         void addSymbol(const Symbol &symbol);
 
         std::vector<std::shared_ptr<Symbol>> symbols;

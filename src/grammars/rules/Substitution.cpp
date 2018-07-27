@@ -36,6 +36,22 @@ unsigned long Substitution::size() const {
     return symbols.size();
 }
 
+Substitution::Substitution(std::vector<std::shared_ptr<Symbol>> symbols) : symbols(symbols) {}
+
+Substitution Substitution::subSubstitution(int index) const {
+    std::vector<std::shared_ptr<Symbol>> newSymbols;
+    auto newBegin = symbols.begin() + index;
+    if (newBegin >= symbols.end()) {
+        throw out_of_range("index out of range");
+    }
+    copy(newBegin, symbols.end(), back_inserter(newSymbols));
+    return Substitution(newSymbols);
+}
+
+bool Substitution::isSingle() const {
+    return symbols.size() == 1;
+}
+
 Substitution noam::operator + (const Symbol &a, const Symbol &b) {
     return Substitution{a} + b;
 }

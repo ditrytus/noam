@@ -46,26 +46,35 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar, FirstS
 template<typename T>
 void insertSymbolsToFirstSet(std::set<Terminal> &firstSet,
                              FirstSets<NonTerminal> &nonTerFirstSets,
+                             FirstSets<Substitution> &subFirstSets,
+                             const Substitution& sub,
                              T *firstSymbol);
 
 template<typename T>
 void updateFirstSet(std::set<Terminal> &firstSet,
                     FirstSets<NonTerminal>& nonTerFirstSets,
+                    FirstSets<Substitution> &subFirstSets,
                     const SimpleRule &rule) {
     auto& sub = rule.getSubstitution();
     auto firstSymbol = sub.getFirst();
+
     auto firstSymbolT = dynamic_cast<T*>(firstSymbol.get());
 
     if (firstSymbolT != nullptr) {
-
-        insertSymbolsToFirstSet<T>(firstSet, nonTerFirstSets, firstSymbolT);
+        insertSymbolsToFirstSet<T>(firstSet,
+                                   nonTerFirstSets,
+                                   subFirstSets,
+                                   sub,
+                                   firstSymbolT);
     }
 }
 
 template <>
 void __unused insertSymbolsToFirstSet(
         std::set<Terminal> &firstSet,
-        FirstSets<NonTerminal>& nonTerFirstSets,
+        FirstSets<NonTerminal>&,
+        FirstSets<Substitution>&,
+        const Substitution&,
         Terminal* firstSymbol) {
     auto pos = firstSet.insert(*firstSymbol);
 }
@@ -74,9 +83,29 @@ template <>
 void __unused insertSymbolsToFirstSet(
         std::set<Terminal> &firstSet,
         FirstSets<NonTerminal>& nonTerFirstSets,
+        FirstSets<Substitution> &subFirstSets,
+        const Substitution& sub,
         NonTerminal* firstSymbol) {
     auto& nonTerFirstSet = nonTerFirstSets[*firstSymbol];
-    firstSet.insert(nonTerFirstSet.begin(), nonTerFirstSet.end());
+    if (contains(nonTerFirstSet, Terminal::empty())) {
+
+        set<Terminal> emptySet = {Terminal::empty()};
+        set<Terminal> withoutEmptySet;
+        set_difference(nonTerFirstSet.begin(), nonTerFirstSet.end(),
+                       emptySet.begin(), emptySet.end(),
+                       inserter(withoutEmptySet, withoutEmptySet.begin()));
+        if (sub.size() > 1) {
+            auto& tailFirstSet = subFirstSets[sub.subSubstitution(1)];
+            set_union(withoutEmptySet.begin(), withoutEmptySet.end(),
+                      tailFirstSet.begin(), tailFirstSet.end(),
+                      inserter(firstSet, firstSet.end()));
+        } else {
+            firstSet.insert(withoutEmptySet.begin(), withoutEmptySet.end());
+        }
+    }
+    else {
+        firstSet.insert(nonTerFirstSet.begin(), nonTerFirstSet.end());
+    }
 }
 
 std::pair<FirstSets<Substitution>, FirstSets<NonTerminal>> LLParser::generateFirstSets(const SimpleGrammar &grammar) {
@@ -90,8 +119,8 @@ std::pair<FirstSets<Substitution>, FirstSets<NonTerminal>> LLParser::generateFir
         for (auto const& rule : grammar.getRules()) {
             auto& firstSet = subFirstSets[rule.getSubstitution()];
 
-            updateFirstSet<Terminal>(firstSet, nonTerFirstSets, rule);
-            updateFirstSet<NonTerminal>(firstSet, nonTerFirstSets, rule);
+            updateFirstSet<Terminal>(firstSet, nonTerFirstSets, subFirstSets, rule);
+            updateFirstSet<NonTerminal>(firstSet, nonTerFirstSets, subFirstSets, rule);
 
             auto& nonTerFirstSet = nonTerFirstSets[rule.getHead()];
             auto countBefore = nonTerFirstSet.size();

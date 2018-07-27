@@ -1,5 +1,4 @@
 #include "Named.h"
-#include "EmptySymbolException.h"
 #include "Symbol.h"
 
 const std::string &noam::Named::getName() const {
@@ -7,9 +6,7 @@ const std::string &noam::Named::getName() const {
 }
 
 noam::Named::Named(const std::string &name) : name(name) {
-    if (name.empty()) {
-        throw EmptySymbolException();
-    }
+
 }
 
 bool noam::Named::operator==(const noam::Named &rhs) const {

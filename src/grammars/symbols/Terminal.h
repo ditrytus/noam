@@ -5,6 +5,7 @@
 
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 namespace noam {
 
@@ -42,6 +43,7 @@ namespace noam {
 
         bool matchedEntireToken(const std::string::const_iterator &tokenCursor) const;
 
+        static Terminal empty();
     };
 
     bool operator < (const Terminal& a, const Terminal& b);
