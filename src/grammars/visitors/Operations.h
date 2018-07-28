@@ -10,17 +10,17 @@
 namespace noam {
 
     template <typename T, typename Element>
-    std::set<T> getSymbolsOfType(Element element) {
-        return visit<GetElementsOfTypeVisitor<T>, GrammarTraversal<GetElementsOfTypeVisitor<T>, GrammarAcceptor>, GrammarAcceptor, Element>(element);
+    std::set<T> getSymbolsOfType(const Element& element) {
+        return visitResult<GetElementsOfTypeVisitor<T>, GrammarTraversal<GetElementsOfTypeVisitor<T>, GrammarAcceptor>, GrammarAcceptor, Element>(element);
     };
 
     template <typename Element>
-    std::string toString(Element element) {
-        return visit<GrammarToStringVisitor, GrammarTraversal<GrammarToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element);
+    std::string toString(const Element& element) {
+        return visitResult<GrammarToStringVisitor, GrammarTraversal<GrammarToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element);
     }
 
     template <typename Element>
-    std::string toString(Element element, const GrammarToStringOptions& options) {
-        return visit<GrammarToStringVisitor, GrammarTraversal<GrammarToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element, options);
+    std::string toString(const Element& element, const GrammarToStringOptions& options) {
+        return visitResult<GrammarToStringVisitor, GrammarTraversal<GrammarToStringVisitor, GrammarAcceptor>, GrammarAcceptor, Element>(element, options);
     }
 }

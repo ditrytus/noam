@@ -7,6 +7,6 @@
 namespace noam {
 
     template <>
-    std::string toString(Token element);
+    std::string toString(const Token& element);
 
 }
