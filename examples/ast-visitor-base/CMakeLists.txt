@@ -1,4 +1,4 @@
-project(example_simple)
+project(ast_visitor_base)
 
 include_directories(../../src)
 
