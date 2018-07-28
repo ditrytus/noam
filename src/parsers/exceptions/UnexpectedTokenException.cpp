@@ -1,9 +1,4 @@
 #include "UnexpectedTokenException.h"
-#include "UnexpectedTokenException.h"
-#include "../../grammars/visitors/Operations.h"
-#include "../../lexers/Operations.h"
-#include <utility>
-#include <sstream>
 
 using namespace noam;
 using namespace std;

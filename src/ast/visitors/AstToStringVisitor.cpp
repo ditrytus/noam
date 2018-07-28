@@ -1,7 +1,4 @@
 #include "AstToStringVisitor.h"
-#include "../../grammars/visitors/Operations.h"
-#include "../../lexers/Operations.h"
-#include <iostream>
 
 using namespace noam;
 using namespace std;

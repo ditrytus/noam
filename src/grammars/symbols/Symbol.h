@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Clonable.h"
 
 namespace noam {

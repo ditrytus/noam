@@ -1,8 +1,9 @@
 #include <algorithm>
 #include <sstream>
 
+#include "noam-utilities.h"
+
 #include "Substitution.h"
-#include "../../utilities/SharedPointerUtilities.h"
 
 using namespace noam;
 using namespace std;

@@ -1,5 +1,4 @@
 #include "Named.h"
-#include "Symbol.h"
 
 const std::string &noam::Named::getName() const {
     return name;

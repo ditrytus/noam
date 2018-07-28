@@ -1,5 +1,6 @@
+#include "noam-utilities.h"
+
 #include "GrammarToStringVisitor.h"
-#include "../../utilities/StringUtilities.h"
 
 using namespace noam;
 using namespace std;

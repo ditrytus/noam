@@ -1,9 +1,6 @@
 #include "LLParser.h"
-#include "../utilities/ContainerUtilities.h"
-#include "../visitors/GetElementsOfTypeVisitor.h"
-#include "../visitors/VisitorUtilities.h"
-#include "../grammars/visitors/GrammarAcceptor.h"
-#include "../grammars/visitors/Operations.h"
+
+#include "noam-utilities.h"
 
 using namespace std;
 using namespace noam;

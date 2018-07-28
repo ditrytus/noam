@@ -1,5 +1,6 @@
 #include "Operations.h"
-#include "../utilities/StringUtilities.h"
+
+#include "noam-utilities.h"
 
 template<>
 std::string noam::toString(const Token& element) {

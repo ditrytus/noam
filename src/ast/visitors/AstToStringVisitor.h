@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sstream>
+
 #include "noam-ast.h"
 #include "noam-visitors.h"
 

@@ -1,9 +1,5 @@
 #include "AstBuilder.h"
-#include "TokenNode.h"
 #include "AstBuildException.h"
-#include "../grammars/visitors/Operations.h"
-#include "../utilities/StringUtilities.h"
-#include <iostream>
 
 using namespace noam;
 using namespace std;

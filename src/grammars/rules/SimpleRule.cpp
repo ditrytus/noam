@@ -1,4 +1,5 @@
 #include <sstream>
+
 #include "SimpleRule.h"
 #include "IdentityRuleException.h"
 
