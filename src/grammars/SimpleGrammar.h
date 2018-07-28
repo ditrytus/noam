@@ -1,7 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "rules/SimpleRule.h"
+
+#include "noam-rules.h"
+
 #include "Grammar.h"
 
 namespace noam {
@@ -22,9 +24,5 @@ namespace noam {
         std::vector<SimpleRule> rules;
 
     };
-
-}
-
-namespace noam::trees {
 
 }

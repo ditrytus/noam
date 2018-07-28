@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "ParsingException.h"
 
+#include "ParsingException.h"
 
 namespace noam {
 

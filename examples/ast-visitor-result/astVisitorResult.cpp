@@ -1,28 +1,14 @@
 #include <string>
 #include <iostream>
-#include "grammars/Grammar.h"
-#include "grammars/SimpleGrammar.h"
-#include <parsers/ll/LLParser.h>
-#include <parsers/Parsing.h>
-#include <visitors/GetElementsOfTypeVisitor.h>
-#include <visitors/VisitorUtilities.h>
-#include <parsers/exceptions/ParsingExceptionFormat.h>
-#include "grammars/visitors/GrammarAcceptor.h"
-#include "grammars/visitors/Operations.h"
-#include "ast/visitors/Operations.h"
-#include "lexers/Operations.h"
-
-#include "utilities/StringUtilities.h"
 #include <functional>
-#include <ast/visitors/AstVisitorBase.h>
+
+#include "noam.h"
 
 using namespace noam;
-
 using namespace noam::literals;
 using namespace noam::utils;
-using namespace noam::trees;
-using namespace std;
 
+using namespace std;
 
 class RuleNodeCounter :
         public AstVisitorBase,

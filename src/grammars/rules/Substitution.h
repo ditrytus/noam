@@ -3,10 +3,9 @@
 #include <vector>
 #include <set>
 #include <memory>
-#include "../symbols/Symbol.h"
-#include "../symbols/NonTerminal.h"
-#include "../symbols/Terminal.h"
-#include "../../visitors/VisitorUtilities.h"
+
+#include "noam-symbols.h"
+#include "noam-visitors.h"
 
 namespace noam {
 

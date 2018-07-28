@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "TraversalBase.h"
 
 namespace noam {

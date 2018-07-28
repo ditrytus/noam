@@ -1,10 +1,11 @@
 #pragma once
 
 #include <set>
-#include "../grammars/symbols/Terminal.h"
+
+#include "noam-symbols.h"
+
 #include "Token.h"
 #include "LexerException.h"
-
 
 namespace noam {
 

@@ -1,8 +1,8 @@
 #pragma once
 
+#include "noam-rules.h"
 
 #include "AstNode.h"
-#include "../grammars/rules/SimpleRule.h"
 
 namespace noam {
 

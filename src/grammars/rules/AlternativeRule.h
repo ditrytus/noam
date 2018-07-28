@@ -1,7 +1,7 @@
 #pragma once
 
-
 #include <vector>
+
 #include "Rule.h"
 #include "Substitution.h"
 #include "SimpleRule.h"

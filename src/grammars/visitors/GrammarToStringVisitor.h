@@ -1,10 +1,9 @@
 #pragma once
 
 #include <sstream>
-#include "../Grammar.h"
-#include "../SimpleGrammar.h"
-#include "../../visitors/ResultVisitor.h"
 
+#include "noam-grammars.h"
+#include "noam-visitors.h"
 
 namespace noam {
 

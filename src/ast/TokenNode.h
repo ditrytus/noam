@@ -1,9 +1,9 @@
 #pragma once
 
+#include "noam-lexers.h"
 
 #include "AstNode.h"
 #include "RuleNode.h"
-#include "../lexers/Token.h"
 
 namespace noam {
 

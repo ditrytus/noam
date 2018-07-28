@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "Symbol.h"
 
+#include "Symbol.h"
 
 namespace noam {
 

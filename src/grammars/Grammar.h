@@ -1,9 +1,9 @@
 #pragma once
 
-
 #include <vector>
 #include <memory>
-#include "rules/AlternativeRule.h"
+
+#include "noam-rules.h"
 
 namespace noam {
 

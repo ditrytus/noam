@@ -1,10 +1,7 @@
 #pragma once
 
-
-#include "../../visitors/VisitorUtilities.h"
-#include "../AstNode.h"
-#include "../TokenNode.h"
-#include "../RuleNode.h"
+#include "noam-ast.h"
+#include "noam-utilities.h"
 
 namespace noam {
 

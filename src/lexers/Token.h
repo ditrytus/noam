@@ -2,12 +2,13 @@
 
 #include <string>
 #include <utility>
-#include "../grammars/symbols/Terminal.h"
+
+#include "noam-symbols.h"
 
 namespace noam {
 
     struct Token {
-        Token(const Terminal &symbol, std::string exactValue) : symbol(symbol), exactValue(std::move(exactValue)) {}
+        Token(Terminal symbol, std::string exactValue) : symbol(std::move(symbol)), exactValue(std::move(exactValue)) {}
 
         Terminal symbol;
         std::string exactValue;

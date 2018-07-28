@@ -1,8 +1,9 @@
 #pragma once
 
 #include <set>
-#include "../../visitors/VisitorUtilities.h"
-#include "../../visitors/GetElementsOfTypeVisitor.h"
+
+#include "noam-visitors.h"
+
 #include "GrammarAcceptor.h"
 #include "GrammarToStringVisitor.h"
 #include "GrammarTraversal.h"

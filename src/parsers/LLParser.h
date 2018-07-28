@@ -6,11 +6,11 @@
 #include <stack>
 #include <iostream>
 
-#include "../../ast/AstBuilder.h"
-#include "../../grammars/SimpleGrammar.h"
-#include "../../grammars/symbols/Terminal.h"
-#include "../../lexers/Token.h"
-#include "../exceptions/UnexpectedTokenException.h"
+#include "noam-ast.h"
+#include "noam-grammars.h"
+#include "noam-symbols.h"
+#include "noam-lexers.h"
+#include "noam-parsers-exceptions.h"
 
 namespace noam {
 

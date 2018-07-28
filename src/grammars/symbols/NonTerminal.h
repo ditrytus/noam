@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Symbol.h"
 #include "Named.h"
 

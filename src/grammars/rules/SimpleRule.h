@@ -1,6 +1,7 @@
 #pragma once
 
 #include <set>
+
 #include "Rule.h"
 #include "Substitution.h"
 

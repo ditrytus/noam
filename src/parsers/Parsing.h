@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <string>
-#include <grammars/visitors/Operations.h>
+#include "../grammars/visitors/Operations.h"
 #include <functional>
-#include "ast/AstBuildException.h"
+#include "../ast/AstBuildException.h"
 #include "../grammars/rules/SimpleRule.h"
-#include "ll/LLParser.h"
+#include "LLParser.h"
 #include "../lexers/TerminalsLexer.h"
 
 namespace noam {

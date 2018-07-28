@@ -1,7 +1,9 @@
 #pragma once
 
 #include <exception>
-#include "../../lexers/Token.h"
+
+#include "noam-lexers.h"
+
 #include "ParsingException.h"
 
 namespace noam {

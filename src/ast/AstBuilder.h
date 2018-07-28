@@ -1,12 +1,13 @@
 #pragma once
 
+#include <stack>
 
-#include "../lexers/Token.h"
-#include "../grammars/rules/SimpleRule.h"
+#include "noam-lexers.h"
+#include "noam-rules.h"
+
 #include "AstNode.h"
 #include "RuleNode.h"
 #include "TokenNode.h"
-#include <stack>
 
 namespace noam {
 

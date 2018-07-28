@@ -1,7 +1,6 @@
 #pragma once
 
-
-#include "../symbols/NonTerminal.h"
+#include "noam-symbols.h"
 
 namespace noam {
 

@@ -2,7 +2,6 @@
 
 #include <exception>
 
-
 namespace noam {
 
     class IdentityRuleException : std::exception {

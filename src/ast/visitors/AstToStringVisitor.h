@@ -1,10 +1,8 @@
 #pragma once
 
-
-#include "../TokenNode.h"
-#include "../RuleNode.h"
-#include "../../visitors/ResultVisitor.h"
 #include <sstream>
+#include "noam-ast.h"
+#include "noam-visitors.h"
 
 namespace noam {
 
@@ -30,9 +28,6 @@ namespace noam {
 
         void renderEmptyIndent(const AstNode &node);
 
-        void increaseIndent(const RuleNode &node);
-
-        void decreaseIndent();
     };
 
 }

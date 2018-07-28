@@ -1,11 +1,11 @@
 #pragma once
 
 #include <set>
-#include "../../visitors/DepthFirstTraversal.h"
-#include "../../visitors/VisitorUtilities.h"
+
+#include "noam-visitors.h"
+
 #include "AstToStringVisitor.h"
 #include "AstAcceptor.h"
-
 
 namespace noam {
 

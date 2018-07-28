@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-
 namespace noam::utils {
 
     template <typename T>

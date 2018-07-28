@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../SimpleGrammar.h"
-#include "../../visitors/TraversalBase.h"
 #include <memory>
 
+#include "noam-grammars.h"
+#include "noam-visitors.h"
 
 namespace noam {
 

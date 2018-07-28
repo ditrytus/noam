@@ -5,7 +5,6 @@
 #include <functional>
 #include <stack>
 
-
 namespace noam::utils {
 
     template <typename T, typename... Args>

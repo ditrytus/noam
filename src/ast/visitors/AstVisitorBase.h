@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../RuleNode.h"
-#include "../TokenNode.h"
+#include "noam-ast.h"
 
 namespace noam {
 

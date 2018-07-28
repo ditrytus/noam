@@ -2,7 +2,6 @@
 
 #include <memory>
 
-
 namespace noam {
 
     template <typename T>

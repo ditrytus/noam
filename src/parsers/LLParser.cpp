@@ -1,14 +1,13 @@
 #include "LLParser.h"
-#include "../../utilities/ContainerUtilities.h"
-#include "../../visitors/GetElementsOfTypeVisitor.h"
-#include "../../visitors/VisitorUtilities.h"
-#include "../../grammars/visitors/GrammarAcceptor.h"
-#include "../../grammars/visitors/Operations.h"
+#include "../utilities/ContainerUtilities.h"
+#include "../visitors/GetElementsOfTypeVisitor.h"
+#include "../visitors/VisitorUtilities.h"
+#include "../grammars/visitors/GrammarAcceptor.h"
+#include "../grammars/visitors/Operations.h"
 
 using namespace std;
 using namespace noam;
 using namespace noam::utils;
-using namespace noam::trees;
 
 
 LLParser::LLParser(const SimpleGrammar &grammar) : grammar(grammar) {
