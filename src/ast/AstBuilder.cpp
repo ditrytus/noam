@@ -37,9 +37,8 @@ void AstBuilder::addToken(Token token) {
     popRuleStack();
 }
 
-template <typename Node>
-void AstBuilder::addNode(const shared_ptr<Node> &nodePtr) const {
-    ruleStack.top().first->addChild(dynamic_pointer_cast<AstNode>(nodePtr));
+void AstBuilder::addNode(const shared_ptr<AstNode> &nodePtr) const {
+    ruleStack.top().first->addChild(nodePtr);
 }
 
 template<typename Symbol>

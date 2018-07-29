@@ -13,6 +13,8 @@ namespace noam {
 
         const SimpleRule &getRule() const;
 
+        bool isPunctuation() const override;
+
     private:
         SimpleRule rule;
 

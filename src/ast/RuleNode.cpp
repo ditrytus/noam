@@ -11,3 +11,7 @@ RuleNode::RuleNode(const std::shared_ptr<RuleNode>& parent, const SimpleRule &ru
 const SimpleRule &RuleNode::getRule() const {
     return rule;
 }
+
+bool RuleNode::isPunctuation() const {
+    return dynamic_cast<const Punctuation<SimpleRule>*>(&rule) != nullptr;
+}

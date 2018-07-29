@@ -2,6 +2,7 @@
 
 #include "Symbol.h"
 #include "Named.h"
+#include "Punctuation.h"
 
 #include <string>
 #include <sstream>
@@ -53,5 +54,6 @@ namespace noam {
 
     namespace literals {
         Terminal operator "" _T(const char *val, std::size_t);
+        Punctuation<Terminal> operator "" _P(const char *val, std::size_t);
     }
 }

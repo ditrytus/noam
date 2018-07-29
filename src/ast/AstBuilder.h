@@ -27,15 +27,16 @@ namespace noam {
 
         std::shared_ptr<RuleNode> result;
 
-        template <typename Node>
-        void addNode(const std::shared_ptr<Node> &nodePtr) const;
-
         template <typename Symbol>
         void popTopSymbolStack(const Symbol &symbol);
 
         void assertNotCompleted();
 
         void popRuleStack();
+
+    protected:
+        virtual void addNode(const std::shared_ptr<AstNode> &nodePtr) const;
+
     };
 
 }

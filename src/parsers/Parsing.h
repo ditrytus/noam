@@ -4,6 +4,8 @@
 #include <string>
 #include <functional>
 
+#include "noam-punctutation.h"
+
 namespace noam {
 
     template<typename Parser, typename Lexer>
@@ -14,7 +16,7 @@ namespace noam {
             std::vector<Token> tokens;
             lexer.getTokens(input.begin(), input.end(), back_inserter(tokens));
 
-            AstBuilder builder;
+            ExcludePunctuation<AstBuilder> builder;
             parser.derivation(tokens.begin(), tokens.end(), builder);
 
             return builder.getResult();

@@ -137,15 +137,16 @@ int main() {
     printParseN("- - a;\na;\na");
     printParseN("- - - a;\na;\n- aaa;\na");
 
-    auto one = "one"_T, two = "two"_T, three = "three"_T, EMPTY = Terminal::empty();
+    auto one = "one"_T, two = "two"_T, three = "three"_T;
+    auto EMPTY = ""_P;
 
     auto line = "LINE"_N, line_post = "LINE'"_N, S_post = "S'"_N, word = "WORD"_N;
 
     Grammar g123 = {
         R(S >> line + S_post),
-        R(S_post >> EMPTY | "\n"_T + S),
+        R(S_post >> EMPTY | "\n"_P + S),
         R(line >> word + line_post),
-        R(line_post >> EMPTY | " "_T + line),
+        R(line_post >> EMPTY | " "_P + line),
         R(word >> one | two | three)
     };
 
@@ -172,6 +173,7 @@ void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const 
     try {
         auto ast = parse(parser, lexer, input);
         cout << toString(ast) << endl;
+        cout << "NODE COUNT: " << countNodes(ast) << endl;
     } catch (ParsingException& ex) {
         cout << pretty(ex, input) << endl;
     }

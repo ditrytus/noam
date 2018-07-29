@@ -35,6 +35,10 @@ Terminal noam::literals::operator "" _T(const char *val, size_t) {
     return Terminal(val);
 }
 
+Punctuation<Terminal> noam::literals::operator "" _P(const char *val, std::size_t) {
+    return Punctuation<Terminal>(val);
+}
+
 bool noam::operator<(const Terminal &a, const Terminal &b) {
     return a.getName() < b.getName();
 }
