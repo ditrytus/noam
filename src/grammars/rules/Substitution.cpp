@@ -13,7 +13,7 @@ Substitution::Substitution(const Symbol &symbol) {
 }
 
 void Substitution::addSymbol(const Symbol &symbol) {
-    symbols.push_back(symbol.clone());
+    symbols.push_back(symbol.cloneSymbol());
 }
 
 Substitution& Substitution::operator + (const Symbol &other) {

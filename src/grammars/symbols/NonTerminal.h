@@ -10,7 +10,7 @@ namespace noam {
     public:
         NonTerminal(const std::string &name);
 
-        std::unique_ptr<Symbol> clone() const override;
+        std::unique_ptr<Symbol> cloneSymbol() const override;
 
         bool operator < (const Symbol &other) override;
 

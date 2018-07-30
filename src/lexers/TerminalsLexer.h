@@ -1,6 +1,7 @@
 #pragma once
 
 #include <set>
+#include <memory>
 
 #include "noam-symbols.h"
 
@@ -12,7 +13,7 @@ namespace noam {
     class TerminalsLexer {
 
     public:
-        explicit TerminalsLexer(const std::set<Terminal> &terminals);
+        explicit TerminalsLexer(const std::set<std::shared_ptr<Terminal>> &terminals);
 
         template <typename InputIterator, typename OutputIterator>
         void getTokens(InputIterator begin,
@@ -26,7 +27,7 @@ namespace noam {
                 for(auto& terminal : terminals) {
                     std::ostringstream match;
                     std::ostream_iterator<char> match_it {match, ""};
-                    int matchedCount = terminal.match(cursor, end, match_it);
+                    int matchedCount = terminal->match(cursor, end, match_it);
                     position += matchedCount;
                     if (matchedCount > 0) {
                         cursor += matchedCount;
@@ -42,7 +43,7 @@ namespace noam {
         }
 
     private:
-        std::set<Terminal> terminals;
+        std::set<std::shared_ptr<Terminal>> terminals;
 
     };
 

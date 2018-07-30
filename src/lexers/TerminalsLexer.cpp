@@ -3,4 +3,4 @@
 using namespace std;
 using namespace noam;
 
-TerminalsLexer::TerminalsLexer(const set<Terminal> &terminals) : terminals(terminals) {}
+TerminalsLexer::TerminalsLexer(const set<shared_ptr<Terminal>> &terminals) : terminals(terminals) {}

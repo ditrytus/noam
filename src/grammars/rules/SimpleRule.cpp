@@ -17,7 +17,7 @@ const Substitution &SimpleRule::getSubstitution() const {
     return substitution;
 }
 
-unique_ptr<Rule> SimpleRule::clone() const {
+unique_ptr<Rule> SimpleRule::cloneRule() const {
     return unique_ptr<Rule>{new SimpleRule{*this}};
 }
 

@@ -33,7 +33,7 @@ void AstBuilder::addToken(Token token) {
     auto nodePtr = make_shared<TokenNode>(ruleStack.top().first, token);
     addNode(nodePtr);
 
-    popTopSymbolStack(token.symbol);
+    popTopSymbolStack(*token.getSymbol());
     popRuleStack();
 }
 
@@ -41,10 +41,10 @@ void AstBuilder::addNode(const shared_ptr<AstNode> &nodePtr) const {
     ruleStack.top().first->addChild(nodePtr);
 }
 
-template<typename Symbol>
-void AstBuilder::popTopSymbolStack(const Symbol &symbol) {
+template<typename T>
+void AstBuilder::popTopSymbolStack(const T &symbol) {
     auto& symbolStack = ruleStack.top().second;
-    if (symbol != *(symbolStack.top())) {
+    if (symbol != *symbolStack.top()) {
         throw AstBuildException {"Unexpected symbol."};
     }
     symbolStack.pop();

@@ -2,7 +2,6 @@
 
 #include "Symbol.h"
 #include "Named.h"
-#include "Punctuation.h"
 
 #include <string>
 #include <sstream>
@@ -15,7 +14,7 @@ namespace noam {
     public:
         Terminal(const std::string &name);
 
-        std::unique_ptr<Symbol> clone() const override;
+        std::unique_ptr<Symbol> cloneSymbol() const override;
 
         bool operator < (const Symbol &other) override;
 
@@ -54,6 +53,5 @@ namespace noam {
 
     namespace literals {
         Terminal operator "" _T(const char *val, std::size_t);
-        Punctuation<Terminal> operator "" _P(const char *val, std::size_t);
     }
 }

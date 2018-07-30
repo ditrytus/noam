@@ -59,13 +59,13 @@ namespace noam {
                 if (topTerminal) {
                     if (cursor != end) {
                         if (*topTerminal != Terminal::empty()) {
-                            auto currentInputSymbol = (*cursor).symbol;
+                            auto currentInputSymbol = *(*cursor).getSymbol();
                             if (*topTerminal != currentInputSymbol) {
                                 throw UnexpectedTokenException{position, make_shared<Token>(*cursor), topTerminal};
                             }
 
                             astBuilder.addToken(*cursor);
-                            position += (*cursor).exactValue.size();
+                            position += (*cursor).getExactValue().size();
                             ++cursor;
                         } else {
                             astBuilder.addToken(Token::empty());
@@ -83,7 +83,7 @@ namespace noam {
                 if (topNonTerminal) {
                     Token currentToken = cursor != end ? *cursor : Token::empty();
 
-                    auto rule = parsingTable.find(make_pair(*topNonTerminal, currentToken.symbol));
+                    auto rule = parsingTable.find(make_pair(*topNonTerminal, *currentToken.getSymbol()));
                     if (rule == parsingTable.end()) {
                         rule = parsingTable.find(make_pair(*topNonTerminal, Terminal::empty()));
                     }

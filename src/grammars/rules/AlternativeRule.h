@@ -20,7 +20,7 @@ namespace noam {
         const std::vector<Substitution> &getAlternatives() const;
 
     private:
-        std::unique_ptr<Rule> clone() const override;
+        std::unique_ptr<Rule> cloneRule() const override;
 
         std::vector<Substitution> alternatives;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Clonable.h"
+#include <memory>
 
 namespace noam {
 
@@ -9,7 +9,7 @@ namespace noam {
         NonTerminal
     };
 
-    class Symbol: public Clonable<Symbol> {
+    class Symbol {
 
     public:
         explicit Symbol(SymbolType type);
@@ -21,6 +21,8 @@ namespace noam {
         virtual bool operator == (const Symbol& other) const = 0 ;
 
         virtual bool operator != (const Symbol& other) const = 0 ;
+
+        virtual std::unique_ptr<Symbol> cloneSymbol() const = 0;
 
     private:
         SymbolType type;

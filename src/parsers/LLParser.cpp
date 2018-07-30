@@ -31,12 +31,12 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar,
             auto rules = grammar.getRules();
             auto pos = find_if(rules.begin(), rules.end(), [&](SimpleRule rule) {
                 auto symbols = firstSets[rule.getSubstitution()];
-                return (rule.getHead() == nonTerminal && contains(symbols, terminal))
-                       || (contains(symbols, Terminal::empty()) && contains(followSets[nonTerminal], terminal));
+                return (rule.getHead() == *nonTerminal && contains(symbols, *terminal))
+                       || (contains(symbols, Terminal::empty()) && contains(followSets[*nonTerminal], *terminal));
             });
 
             if (pos != rules.end()) {
-                parsingTable[make_pair(nonTerminal, terminal)] = make_unique<SimpleRule>(*pos);
+                parsingTable[make_pair(*nonTerminal, *terminal)] = make_unique<SimpleRule>(*pos);
             }
         }
     }

@@ -6,7 +6,7 @@ using namespace std;
 
 Terminal::Terminal(const string &name) : Symbol(SymbolType::Terminal), Named(name) {}
 
-unique_ptr<Symbol> Terminal::clone() const {
+std::unique_ptr<Symbol> Terminal::cloneSymbol() const {
     return std::unique_ptr<Symbol>(new Terminal(*this));
 }
 
@@ -33,10 +33,6 @@ Terminal Terminal::empty() { return _empty; }
 
 Terminal noam::literals::operator "" _T(const char *val, size_t) {
     return Terminal(val);
-}
-
-Punctuation<Terminal> noam::literals::operator "" _P(const char *val, std::size_t) {
-    return Punctuation<Terminal>(val);
 }
 
 bool noam::operator<(const Terminal &a, const Terminal &b) {

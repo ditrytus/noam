@@ -12,7 +12,7 @@ AlternativeRule &AlternativeRule::operator|(const Substitution &substitution) {
     return *this;
 }
 
-std::unique_ptr<Rule> AlternativeRule::clone() const {
+std::unique_ptr<Rule> AlternativeRule::cloneRule() const {
     return unique_ptr<Rule>{new AlternativeRule{*this}};
 }
 

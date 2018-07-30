@@ -6,7 +6,7 @@ using namespace std;
 
 NonTerminal::NonTerminal(const string &name) : Symbol(SymbolType::NonTerminal), Named(name) {}
 
-unique_ptr<Symbol> NonTerminal::clone() const {
+std::unique_ptr<Symbol> NonTerminal::cloneSymbol() const {
     return std::unique_ptr<Symbol>(new NonTerminal(*this));
 }
 

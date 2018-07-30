@@ -1,3 +1,5 @@
+#include "noam-punctutation.h"
+
 #include "RuleNode.h"
 
 using namespace noam;

@@ -1,3 +1,5 @@
+#include "noam-punctutation.h"
+
 #include "TokenNode.h"
 
 noam::TokenNode::TokenNode(const std::shared_ptr<RuleNode> &parent, noam::Token token)
@@ -9,5 +11,5 @@ const noam::Token &noam::TokenNode::getToken() const {
 }
 
 bool noam::TokenNode::isPunctuation() const {
-    return dynamic_cast<const Punctuation<Terminal>*>(&token.symbol) != nullptr;
+    return dynamic_cast<const Punctuation<Terminal>*>(token.getSymbol().get()) != nullptr;
 }
