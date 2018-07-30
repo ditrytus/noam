@@ -27,7 +27,6 @@ namespace noam {
 
         std::shared_ptr<RuleNode> result;
 
-        template <typename Symbol>
         void popTopSymbolStack(const Symbol &symbol);
 
         void assertNotCompleted();

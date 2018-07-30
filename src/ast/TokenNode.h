@@ -14,8 +14,6 @@ namespace noam {
 
         const Token &getToken() const;
 
-        bool isPunctuation() const override;
-
     private:
         Token token;
 

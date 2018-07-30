@@ -13,8 +13,6 @@ namespace noam {
 
         void addChild(std::shared_ptr<AstNode> child);
 
-        virtual bool isPunctuation() const = 0;
-
         virtual ~AstNode() = default;
 
     private:

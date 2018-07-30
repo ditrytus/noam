@@ -14,17 +14,17 @@ namespace noam {
         {}
 
         template<typename Element>
-        void preAccept(Element element) {
+        void preAccept(const Element& element) {
             acceptor->preVisit(*visitor, element);
         }
 
         template<typename Element>
-        void postAccept(Element element) {
+        void postAccept(const Element& element) {
             acceptor->postVisit(*visitor, element);
         }
 
         template<typename Element>
-        void accept(Element element) {
+        void accept(const Element& element) {
             acceptor->visit(*visitor, element);
         }
 

@@ -5,3 +5,4 @@
 #include "../src/visitors/ResultVisitor.h"
 #include "../src/visitors/GetElementsOfTypeVisitor.h"
 #include "../src/visitors/VisitorUtilities.h"
+#include "../src/visitors/CountElementsVisitor.h"

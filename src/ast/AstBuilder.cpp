@@ -10,7 +10,6 @@ void AstBuilder::addRule(SimpleRule rule) {
     auto nodePtr = make_shared<RuleNode>(ruleStack.empty() ? nullptr : ruleStack.top().first, rule);
 
     if (!ruleStack.empty()) {
-        addNode(nodePtr);
         popTopSymbolStack(rule.getHead());
     }
 
@@ -41,8 +40,7 @@ void AstBuilder::addNode(const shared_ptr<AstNode> &nodePtr) const {
     ruleStack.top().first->addChild(nodePtr);
 }
 
-template<typename T>
-void AstBuilder::popTopSymbolStack(const T &symbol) {
+void AstBuilder::popTopSymbolStack(const Symbol &symbol) {
     auto& symbolStack = ruleStack.top().second;
     if (symbol != *symbolStack.top()) {
         throw AstBuildException {"Unexpected symbol."};
@@ -54,8 +52,12 @@ void AstBuilder::popRuleStack() {
     while (!ruleStack.empty() && ruleStack.top().second.empty()) {
         if (ruleStack.size() == 1) {
             result = ruleStack.top().first;
+            ruleStack.pop();
+        } else if (ruleStack.size() > 1) {
+            auto topRuleNode = ruleStack.top().first;
+            ruleStack.pop();
+            addNode(topRuleNode);
         }
-        ruleStack.pop();
     }
 }
 

@@ -1,9 +1,7 @@
 #pragma once
 
 #include <type_traits>
-
-#include "noam-symbols.h"
-#include "noam-rules.h"
+#include <memory>
 
 namespace noam {
 
@@ -14,9 +12,4 @@ namespace noam {
         template <typename... Args>
         Punctuation(Args... args) : Base(std::forward<Args>(args)...) {};
     };
-
-    template <typename T>
-    bool isPunctuation(const T* obj) {
-        return dynamic_cast<const Punctuation<T>*>(obj) != nullptr;
-    }
 }

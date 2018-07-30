@@ -1,5 +1,7 @@
 #pragma once
 
+#include "noam-symbols.h"
+
 #include "Punctuation.h"
 
 namespace noam {

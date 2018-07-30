@@ -1,7 +1,6 @@
 #pragma once
 
 #include <set>
-#include <visitors/CountElementsVisitor.h>
 
 #include "noam-visitors.h"
 
@@ -21,16 +20,16 @@ namespace noam {
     }
 
     template<typename Visitor, typename... Args>
-    typename Visitor::resultType visitAstResult(const RuleNode& astRoot, Args... args) {
-        return visitResult<Visitor, DepthFirstTraversal<Visitor, AstAcceptor>, AstAcceptor, RuleNode>(astRoot, std::forward<Args>(args)...);
+    typename Visitor::resultType visitAstResult(const AstNode& astRoot, Args... args) {
+        return visitResult<Visitor, DepthFirstTraversal<Visitor, AstAcceptor>, AstAcceptor, AstNode>(astRoot, std::forward<Args>(args)...);
     }
 
     template<typename Visitor, typename... Args>
-    void visitAst(const RuleNode& astRoot, Args... args) {
-        visit<Visitor, DepthFirstTraversal<Visitor, AstAcceptor>, AstAcceptor, RuleNode>(astRoot, std::forward<Args>(args)...);
+    void visitAst(const AstNode& astRoot, Args... args) {
+        visit<Visitor, DepthFirstTraversal<Visitor, AstAcceptor>, AstAcceptor, AstNode>(astRoot, std::forward<Args>(args)...);
     }
 
-    int countNodes(const RuleNode& astRoot) {
+    int countNodes(const AstNode& astRoot) {
         return visitAstResult<CountElementsVisitor>(astRoot);
     }
 }
