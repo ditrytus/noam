@@ -1,4 +1,4 @@
-#include "Punctuation.h"
+#include "PunctuationSymbol.h"
 
 using namespace noam;
 

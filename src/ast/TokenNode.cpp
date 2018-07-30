@@ -11,5 +11,5 @@ const noam::Token &noam::TokenNode::getToken() const {
 }
 
 bool noam::TokenNode::isPunctuation() const {
-    return dynamic_cast<const Punctuation<Terminal>*>(token.getSymbol().get()) != nullptr;
+    return noam::isPunctuation(token.getSymbol().get());
 }

@@ -15,5 +15,5 @@ const SimpleRule &RuleNode::getRule() const {
 }
 
 bool RuleNode::isPunctuation() const {
-    return dynamic_cast<const Punctuation<SimpleRule>*>(&rule) != nullptr;
+    return noam::isPunctuation(&rule);
 }
