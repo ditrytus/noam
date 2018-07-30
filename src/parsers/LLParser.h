@@ -68,11 +68,11 @@ namespace noam {
                             position += (*cursor).getExactValue().size();
                             ++cursor;
                         } else {
-                            astBuilder.addToken(Token::empty());
+                            astBuilder.addToken(Token{topTerminal, ""});
                         }
                         symbolStack.pop();
                     } else if (*topTerminal == Terminal::empty()) {
-                        astBuilder.addToken(Token::empty());
+                        astBuilder.addToken(Token{topTerminal, ""});
                         symbolStack.pop();
                     } else {
                         throw UnexpectedTokenException {position, nullptr, symbolStack.top()};
