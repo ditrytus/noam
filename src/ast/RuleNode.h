@@ -13,6 +13,7 @@ namespace noam {
 
         const SimpleRule &getRule() const;
 
+
     private:
         SimpleRule rule;
 

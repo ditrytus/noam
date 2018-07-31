@@ -11,7 +11,9 @@ using namespace noam::utils;
 using namespace std;
 using namespace std::placeholders;
 
-void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const std::string& input);
+void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const AstBuilder& astBuilder, const std::string& input);
+
+void printAst(const RuleNode &ast);
 
 auto parseGrammar(SimpleGrammar grammar) {
     LLParser parser {grammar};
@@ -19,7 +21,9 @@ auto parseGrammar(SimpleGrammar grammar) {
     auto terms = getSymbolsOfType<Terminal>(grammar);
     TerminalsLexer lexer {terms};
 
-    return bind(printParseError, parser, lexer, _1);
+    AstBuilder astBuilder;
+
+    return bind(printParseError, parser, lexer, astBuilder, _1);
 }
 
 int main() {
@@ -70,7 +74,7 @@ int main() {
     auto F = "F"_N;
 
     Grammar grammar = {
-        R(S >> F | "("_T + S + "+" + F + ")"),
+        R(S >> F | "("_P + S + "+"_P + F + ")"_P),
         R(F >> a)
     };
 
@@ -106,8 +110,9 @@ int main() {
 
     auto terms = getSymbolsOfType<Terminal>(s_grammar);
     TerminalsLexer lexer {terms};
+    AstBuilder astBuilder;
 
-    auto ast = noam::parse(parser, lexer, "(((a+a)+a)+a)");
+    auto ast = noam::parse(parser, lexer, astBuilder, "(((a+a)+a)+a)");
     cout << toString(ast) << endl;
 
     auto rule = S >> X;
@@ -117,7 +122,7 @@ int main() {
     cout << join(getSymbolsOfType<NonTerminal>(grammar), ", ") << endl;
     cout << toString(grammar) << endl;
 
-    auto printParse = std::bind(printParseError, parser, lexer, _1);
+    auto printParse = std::bind(printParseError, parser, lexer, astBuilder, _1);
 
     printParse("(a+a");
     printParse("a+a)");
@@ -168,14 +173,23 @@ int main() {
     printParse123("one\ntwo");
     printParse123("one");
     printParse123("one\none two\none two three\none two three one two three");
+
+    IgnoreWhitespace<TerminalsLexer> lexerWs {terms};
+    auto printParseWs = createParseFunc<LLParser, IgnoreWhitespace<TerminalsLexer>, ExcludePunctuation<AstBuilder>>(s_grammar);
+    auto astWs = printParseWs("(\ta\n+\na )");
+    printAst(astWs);
 }
 
-void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const std::string& input) {
+void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const AstBuilder& astBuilder, const std::string& input) {
     try {
-        auto ast = parse(parser, lexer, input);
-        cout << toString(ast) << endl;
-        cout << "NODE COUNT: " << countNodes(ast) << endl;
+        auto ast = parse(parser, lexer, astBuilder, input);
+        printAst(ast);
     } catch (ParsingException& ex) {
         cout << pretty(ex, input) << endl;
     }
+}
+
+void printAst(const RuleNode &ast) {
+    cout << toString(ast) << endl;
+    cout << "NODE COUNT: " << countNodes(ast) << endl;
 }

@@ -5,21 +5,22 @@
 #include <functional>
 
 #include "noam-punctutation.h"
+#include "noam-parsers.h"
 
 namespace noam {
 
-    template<typename Parser, typename Lexer>
+    template<typename Parser, typename Lexer, typename AstBuilder>
     RuleNode parse(Parser parser,
                    Lexer lexer,
+                   AstBuilder astBuilder,
                    std::string input) {
         try {
             std::vector<Token> tokens;
             lexer.getTokens(input.begin(), input.end(), back_inserter(tokens));
 
-            ExcludePunctuation<AstBuilder> builder;
-            parser.derivation(tokens.begin(), tokens.end(), builder);
+            parser.derivation(tokens.begin(), tokens.end(), astBuilder);
 
-            return builder.getResult();
+            return astBuilder.getResult();
         }
         catch(LexerException& ex) {
             std::throw_with_nested(ParsingException(ex.getPosition()));
@@ -29,7 +30,7 @@ namespace noam {
         }
     }
 
-    template<typename Parser, typename Lexer>
+    template<typename Parser, typename Lexer, typename AstBuilder>
     auto createParseFunc(SimpleGrammar grammar) {
 
         using namespace std::placeholders;
@@ -39,11 +40,13 @@ namespace noam {
         auto terms = getSymbolsOfType<Terminal>(grammar);
         Lexer lexer {terms};
 
-        return bind(parse<Parser, Lexer>, parser, lexer, _1);
+        AstBuilder astBuilder;
+
+        return bind(parse<Parser, Lexer, AstBuilder>, parser, lexer, astBuilder, _1);
     };
 
     auto createDefaultParseFunc(SimpleGrammar grammar) {
-        return createParseFunc<LLParser, TerminalsLexer>(grammar);
+        return createParseFunc<LLParser, TerminalsLexer, ExcludePunctuation<AstBuilder>>(grammar);
     }
 }
 
