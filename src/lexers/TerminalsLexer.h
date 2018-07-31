@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "noam-symbols.h"
+#include "noam-utilities.h"
 
 #include "Token.h"
 #include "LexerException.h"
@@ -43,7 +44,7 @@ namespace noam {
         }
 
     private:
-        std::set<std::shared_ptr<Terminal>> terminals;
+        std::set<std::shared_ptr<Terminal>, SharedPointerObjectsComparer<Terminal>> terminals;
 
     };
 

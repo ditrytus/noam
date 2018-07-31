@@ -18,7 +18,7 @@ bool NonTerminal::operator<(const Symbol &other) {
     if (getType() != other.getType()) {
         return precedence(getType()) < precedence(other.getType());
     }
-    return noam::operator<(*this, dynamic_cast<const NonTerminal&>(other));
+    return this->getName() < dynamic_cast<const NonTerminal&>(other).getName();
 }
 
 bool NonTerminal::operator==(const Symbol &other) const {
@@ -27,8 +27,4 @@ bool NonTerminal::operator==(const Symbol &other) const {
 
 bool NonTerminal::operator!=(const Symbol &other) const {
     return !((*this) == other);
-}
-
-bool noam::operator<(const NonTerminal &a, const NonTerminal &b) {
-    return a.getName() < b.getName();
 }

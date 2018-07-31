@@ -12,5 +12,6 @@ int noam::precedence(SymbolType type) {
     switch (type) {
         case SymbolType::NonTerminal: return 0;
         case SymbolType::Terminal: return 1;
+        case SymbolType::RegexTerminal: return 2;
     }
 }

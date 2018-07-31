@@ -20,8 +20,6 @@ namespace noam {
 
     };
 
-    bool operator < (const NonTerminal& a, const NonTerminal& b);
-
     namespace literals {
         NonTerminal operator "" _N(const char *val, std::size_t);
     }

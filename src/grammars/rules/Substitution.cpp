@@ -74,6 +74,6 @@ auto& symbolsA = a.getSymbols();
 bool noam::operator==(const Substitution &a, const Substitution &b) {
     auto aSymbols = a.getSymbols();
     auto bSymbols = b.getSymbols();
-    auto miss = mismatch(aSymbols.begin(), aSymbols.end(), bSymbols.begin(), bSymbols.end(), SharedPointerObjectsComparer<Symbol>{});
+    auto miss = mismatch(aSymbols.begin(), aSymbols.end(), bSymbols.begin(), bSymbols.end(), SharedPointerObjectsEqualityComparer<Symbol>{});
     return miss.first == aSymbols.end() && miss.second == bSymbols.end();
 }

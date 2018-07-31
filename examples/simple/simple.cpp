@@ -148,11 +148,11 @@ int main() {
     auto line = "LINE"_N, line_post = "LINE'"_N, S_post = "S'"_N, word = "WORD"_N;
 
     Grammar g123 = {
-        R(S >> line + S_post),
-        R(S_post >> EMPTY | "\n"_P + S),
-        R(line >> word + line_post),
-        R(line_post >> EMPTY | " "_P + line),
-        R(word >> one | two | three)
+            R(S >> line + S_post),
+            R(S_post >> EMPTY | "\n"_P + S),
+            R(line >> word + line_post),
+            R(line_post >> EMPTY | " "_P + line),
+            R(word >> one | two | three)
     };
 
     auto printParse123 = parseGrammar(g123);
@@ -174,10 +174,14 @@ int main() {
     printParse123("one");
     printParse123("one\none two\none two three\none two three one two three");
 
-    IgnoreWhitespace<TerminalsLexer> lexerWs {terms};
     auto printParseWs = createParseFunc<LLParser, IgnoreWhitespace<TerminalsLexer>, ExcludePunctuation<AstBuilder>>(s_grammar);
     auto astWs = printParseWs("(\ta\n+\na )");
     printAst(astWs);
+
+    Grammar g_x = {R(S >> "\\d"_Tx + S | "23"_T + S | EMPTY)};
+    auto printParseRegex = createParseFunc<LLParser, TerminalsLexer, ExcludePunctuation<AstBuilder>>(g_x);
+    auto astRx = printParseRegex("12345");
+    printAst(astRx);
 }
 
 void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const AstBuilder& astBuilder, const std::string& input) {

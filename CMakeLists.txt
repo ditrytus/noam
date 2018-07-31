@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_CXX_STANDARD 17)
+set(GCC_ERROR_LIMIT "-ferror-limit=200")
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_ERROR_LIMIT}" )
 
 include_directories(include)
 

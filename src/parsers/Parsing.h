@@ -6,6 +6,7 @@
 
 #include "noam-punctutation.h"
 #include "noam-parsers.h"
+#include "noam-lexers.h"
 
 namespace noam {
 

@@ -4,7 +4,9 @@
 using namespace noam;
 using namespace std;
 
-Terminal::Terminal(const string &name) : Symbol(SymbolType::Terminal), Named(name) {}
+Terminal::Terminal(const string &name) : Terminal(SymbolType::Terminal, name) {}
+
+Terminal::Terminal(SymbolType type, const std::string &name) : Symbol(type), Named(name) {}
 
 std::unique_ptr<Symbol> Terminal::cloneSymbol() const {
     return std::unique_ptr<Symbol>(new Terminal(*this));
@@ -14,7 +16,7 @@ bool Terminal::operator<(const Symbol &other) {
     if (getType() != other.getType()) {
         return precedence(getType()) < precedence(other.getType());
     }
-    return noam::operator<(*this, dynamic_cast<const Terminal&>(other));
+    return this->getName() < dynamic_cast<const Terminal&>(other).getName();
 }
 
 bool Terminal::operator==(const Symbol& rls) const {
@@ -31,10 +33,24 @@ Terminal Terminal::_empty = Terminal{""};
 
 Terminal Terminal::empty() { return _empty; }
 
-Terminal noam::literals::operator "" _T(const char *val, size_t) {
-    return Terminal(val);
+int Terminal::match(std::string::iterator begin,
+                    std::string::iterator end,
+                    std::ostream_iterator<char> matchOutput) const {
+    int result = 0;
+    auto inputCursor = begin;
+    auto tokenCursor = getName().begin();
+
+    while (inputCursor != end && !matchedEntireToken(tokenCursor)) {
+        if (*inputCursor != *tokenCursor) {
+            break;
+        }
+        *(matchOutput++) = *tokenCursor;
+        ++result; ++inputCursor; ++tokenCursor;
+    }
+
+    return matchedEntireToken(tokenCursor) ? result : 0;
 }
 
-bool noam::operator<(const Terminal &a, const Terminal &b) {
-    return a.getName() < b.getName();
+Terminal noam::literals::operator "" _T(const char *val, size_t) {
+    return Terminal(val);
 }
