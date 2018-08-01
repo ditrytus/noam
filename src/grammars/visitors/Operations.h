@@ -13,7 +13,7 @@
 namespace noam {
 
     template <typename T, typename Element>
-    std::set<std::shared_ptr<T>> getSymbolsOfType(const Element& element) {
+    std::set<std::shared_ptr<T>, SharedPointerObjectsComparer<T>> getSymbolsOfType(const Element& element) {
         return visitResult<GetSymbolsOfTypeVisitor<T>, GrammarTraversal<GetSymbolsOfTypeVisitor<T>, DefaultAcceptor>, DefaultAcceptor, Element>(element);
     };
 

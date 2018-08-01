@@ -14,7 +14,7 @@ namespace noam {
     class TerminalsLexer {
 
     public:
-        explicit TerminalsLexer(const std::set<std::shared_ptr<Terminal>> &terminals);
+        explicit TerminalsLexer(const std::set<std::shared_ptr<Terminal>, SharedPointerObjectsComparer<Terminal>> &terminals);
 
         template <typename InputIterator, typename OutputIterator>
         void getTokens(InputIterator begin,

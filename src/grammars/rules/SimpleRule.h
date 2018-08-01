@@ -25,4 +25,5 @@ namespace noam {
 
     bool isLeftRecursive(const SimpleRule& rule);
 
+    bool operator < (const SimpleRule& left, const SimpleRule& right);
 }

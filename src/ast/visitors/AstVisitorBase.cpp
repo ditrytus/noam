@@ -1,4 +1,4 @@
-#include "AstVisitorBase.h"
+#include "astCallbackVisitor.h"
 
 void noam::AstVisitorBase::preVisit(const noam::TokenNode &node) {}
 

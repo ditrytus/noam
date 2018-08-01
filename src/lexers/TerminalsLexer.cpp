@@ -3,6 +3,5 @@
 using namespace std;
 using namespace noam;
 
-TerminalsLexer::TerminalsLexer(const set<shared_ptr<Terminal>> &terms) {
-    copy(terms.begin(), terms.end(), std::inserter(terminals, terminals.begin()));
-}
+//TODO: Introduce SharePtrSet
+TerminalsLexer::TerminalsLexer(const set<shared_ptr<Terminal>, SharedPointerObjectsComparer<Terminal>> &terms) : terminals(terms) {}

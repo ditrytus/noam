@@ -28,3 +28,11 @@ SimpleRule noam::operator>>(NonTerminal nonTerminal, Substitution substitution) 
 bool noam::isLeftRecursive(const SimpleRule &rule) {
     return rule.getHead() == *rule.getSubstitution().getFirst();
 }
+
+bool noam::operator<(const SimpleRule &left, const SimpleRule &right) {
+    if (left.getHead() != right.getHead()) {
+        return left.getHead() < right.getHead();
+    } else {
+        return left.getSubstitution() < right.getSubstitution();
+    }
+}
