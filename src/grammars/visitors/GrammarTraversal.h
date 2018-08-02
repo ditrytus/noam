@@ -56,7 +56,7 @@ namespace noam {
             postAccept(rule);
         }
 
-        void traverse(const Substitution &sub){
+        virtual void traverse(const Substitution &sub) {
             preAccept(sub);
             accept(sub);
             for(auto symbolPtr : sub.getSymbols()) {

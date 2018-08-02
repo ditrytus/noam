@@ -14,3 +14,6 @@
 #include "../src/parsers/State.h"
 #include "../src/parsers/StateFactory.h"
 #include "../src/parsers/StateTraversal.h"
+#include "../src/parsers/PositionRuleOnPosition.h"
+#include "../src/parsers/PositionRuleSymbolOnly.h"
+#include "../src/parsers/StateToStringVisitor.h"

@@ -18,6 +18,7 @@ void GrammarToStringVisitor::postVisit(const AlternativeRule &rule) {
 }
 
 void GrammarToStringVisitor::visit(const SimpleRule &rule) {
+    currentAltSeparator = "";
     ss <<  opt.ruleHeadSeparator;
 }
 

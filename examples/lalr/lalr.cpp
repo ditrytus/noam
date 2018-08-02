@@ -27,7 +27,5 @@ int main() {
     StateFactory stateFactory {grammar};
     auto state = stateFactory.createStateFor(startRule);
 
-    for (const auto& rule : state.getRuleSet()) {
-        cout << "pos: " << rule.getPosition() << " rule: " << toString(rule.getRule()) << endl;
-    }
+    cout << toString(state) << endl;
 }

@@ -27,10 +27,10 @@ namespace noam {
             postAccept(state);
         }
 
-        void traverse(const PositionRule& posRule) {
+        virtual void traverse(const PositionRule& posRule) {
             preAccept(posRule);
+            traverse(posRule.getRule());
             accept(posRule);
-            traverse(posRule.getSymbol());
             postAccept(posRule);
         }
     };

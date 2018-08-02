@@ -30,25 +30,25 @@ namespace noam {
 
         GrammarToStringVisitor(const GrammarToStringOptions &options);
 
-        void visit(const AlternativeRule &rule);
+        virtual void visit(const AlternativeRule &rule);
 
-        void preVisit(const AlternativeRule &rule);
+        virtual void preVisit(const AlternativeRule &rule);
 
-        void postVisit(const AlternativeRule &rule);
+        virtual void postVisit(const AlternativeRule &rule);
 
-        void visit(const SimpleRule &rule);
+        virtual void visit(const SimpleRule &rule);
 
-        void postVisit(const SimpleRule &rule);
+        virtual void postVisit(const SimpleRule &rule);
 
-        void preVisit(const Substitution &sub);
+        virtual void preVisit(const Substitution &sub);
 
-        void visit(const NonTerminal &symbol);
+        virtual void visit(const NonTerminal &symbol);
 
-        void visit(const Terminal &symbol);
+        virtual void visit(const Terminal &symbol);
 
         std::string getResult() const override;
 
-    private:
+    protected:
 
         GrammarToStringOptions opt;
         std::stringstream ss;
