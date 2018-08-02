@@ -16,6 +16,10 @@ const std::vector<SimpleRule>& SimpleGrammar::getRules() const {
 }
 
 const NonTerminal &SimpleGrammar::getStartSymbol() const {
-    return rules.front().getHead();
+    return getStartRule().getHead();
+}
+
+const SimpleRule &SimpleGrammar::getStartRule() const {
+    return rules.front();
 }
 

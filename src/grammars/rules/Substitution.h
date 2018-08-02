@@ -28,6 +28,8 @@ namespace noam {
 
         Substitution subSubstitution(int count) const;
 
+        const std::shared_ptr<Symbol>& getAt(int position) const;
+
     private:
         Substitution(std::vector<std::shared_ptr<Symbol>> symbols);
 

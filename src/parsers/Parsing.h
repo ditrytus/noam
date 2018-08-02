@@ -19,7 +19,7 @@ namespace noam {
             std::vector<Token> tokens;
             lexer.getTokens(input.begin(), input.end(), back_inserter(tokens));
 
-            parser.derivation(tokens.begin(), tokens.end(), astBuilder);
+            parser.parse(tokens.begin(), tokens.end(), astBuilder);
 
             return astBuilder.getResult();
         }

@@ -36,3 +36,11 @@ bool noam::operator<(const SimpleRule &left, const SimpleRule &right) {
         return left.getSubstitution() < right.getSubstitution();
     }
 }
+
+bool noam::operator==(const SimpleRule &left, const SimpleRule &right) {
+    return left.getHead() == right.getHead() && left.getSubstitution() == right.getSubstitution();
+}
+
+bool noam::operator!=(const SimpleRule &left, const SimpleRule &right) {
+    return !(left == right);
+}

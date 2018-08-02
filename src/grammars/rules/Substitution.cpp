@@ -26,7 +26,7 @@ const vector<shared_ptr<Symbol>> &Substitution::getSymbols() const {
 }
 
 shared_ptr<Symbol> Substitution::getFirst() const {
-    return *symbols.begin();
+    return getAt(0);
 }
 
 Substitution &Substitution::operator+(const string & other) {
@@ -47,6 +47,10 @@ Substitution Substitution::subSubstitution(int index) const {
     }
     copy(newBegin, symbols.end(), back_inserter(newSymbols));
     return Substitution(newSymbols);
+}
+
+const shared_ptr<Symbol>& Substitution::getAt(int position) const {
+    return symbols[position];
 }
 
 Substitution noam::operator + (const Symbol &a, const Symbol &b) {

@@ -9,7 +9,7 @@
 namespace noam {
 
     template <typename T>
-    class GetSymbolsOfTypeVisitor : public ResultVisitor<std::set<std::shared_ptr<T>, SharedPointerObjectsComparer<T>>> {
+    class GetSymbolsOfTypeVisitor : public ResultVisitor<SharedPtrSet<T>> {
 
     public:
 
@@ -17,10 +17,6 @@ namespace noam {
             if (auto tElement = std::dynamic_pointer_cast<T>(static_cast<std::shared_ptr<Symbol>>(element.cloneSymbol()))) {
                 result.insert(tElement);
             }
-//            if (auto tElement = dynamic_cast<const T*>(&element)) {
-//                std::shared_ptr<T> sharedSymbol = element.cloneSymbol();
-//                result.insert(sharedSymbol);
-//            }
         }
 
         void preVisit(const std::shared_ptr<Symbol>& element) {
@@ -29,11 +25,11 @@ namespace noam {
             }
         }
 
-        std::set<std::shared_ptr<T>, SharedPointerObjectsComparer<T>> getResult() const override {
+        SharedPtrSet<T> getResult() const override {
             return result;
         }
 
     private:
-        std::set<std::shared_ptr<T>, SharedPointerObjectsComparer<T>> result;
+        SharedPtrSet<T> result;
     };
 }

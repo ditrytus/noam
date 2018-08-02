@@ -19,6 +19,8 @@ namespace noam {
 
         const NonTerminal &getStartSymbol() const;
 
+        const SimpleRule& getStartRule() const;
+
         virtual ~SimpleGrammar() = default;
     private:
         std::vector<SimpleRule> rules;

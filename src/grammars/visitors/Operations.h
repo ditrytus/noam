@@ -3,7 +3,7 @@
 #include <set>
 #include <memory>
 
-#include "noam-visitors.h"
+#include "noam-utilities.h"
 
 #include "GrammarAcceptor.h"
 #include "GrammarToStringVisitor.h"
@@ -13,7 +13,7 @@
 namespace noam {
 
     template <typename T, typename Element>
-    std::set<std::shared_ptr<T>, SharedPointerObjectsComparer<T>> getSymbolsOfType(const Element& element) {
+    SharedPtrSet<T> getSymbolsOfType(const Element& element) {
         return visitResult<GetSymbolsOfTypeVisitor<T>, GrammarTraversal<GetSymbolsOfTypeVisitor<T>, DefaultAcceptor>, DefaultAcceptor, Element>(element);
     };
 

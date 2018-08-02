@@ -4,7 +4,7 @@
 #include <functional>
 
 #include "AstCallbacks.h"
-#include "astCallbackVisitor.h"
+#include "AstVisitorBase.h"
 
 namespace noam {
 
