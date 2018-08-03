@@ -1,14 +1,18 @@
 #include "ParserStateGraph.h"
+#include <utility>
 
-noam::ParserStateGraph::ParserStateGraph(const noam::SharedPtrSet<noam::ParserState> &states,
-                             noam::SharedPtrPairMap<noam::ParserState, noam::Symbol, std::__1::shared_ptr<noam::ParserState>> transitions)
-        : states(states), transitions(transitions) {}
+using namespace noam;
+using namespace std;
 
-const noam::SharedPtrSet<noam::ParserState> &noam::ParserStateGraph::getStates() const {
+ParserStateGraph::ParserStateGraph(const SharedPtrSet<ParserState> &states,
+                             SharedPtrPairMap<ParserState, Symbol, shared_ptr<ParserState>> transitions)
+        : states(states), transitions(move(transitions)) {}
+
+const SharedPtrSet<ParserState> &ParserStateGraph::getStates() const {
     return states;
 }
 
-const noam::SharedPtrPairMap<noam::ParserState, noam::Symbol, std::__1::shared_ptr<noam::ParserState>> &
-noam::ParserStateGraph::getTransitions() const {
+const SharedPtrPairMap<ParserState, Symbol, __1::shared_ptr<ParserState>> &
+ParserStateGraph::getTransitions() const {
     return transitions;
 }
