@@ -8,6 +8,6 @@
 #include "noam-parsers-exceptions.h"
 #include "noam-rules.h"
 #include "noam-lexers.h"
-#include "noam-parsers.h"
 #include "noam-visitors.h"
 #include "noam-utilities.h"
+#include "noam-parsers.h"

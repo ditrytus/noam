@@ -21,24 +21,13 @@ namespace noam {
     };
 
     template <>
-    std::string toString(const State& element) {
-        return visitResult<StateToStringVisitor, PositionRuleOnPosition<StateTraversal<StateToStringVisitor, GrammarAcceptor>>, GrammarAcceptor, State>(element);
-    }
-
-//    template <>
-//    std::string toString(const State& element, const StateToStringOptions& options) {
-//        return visitResult<StateToStringVisitor, PositionRuleSymbolOnly<StateTraversal<StateToStringVisitor, GrammarAcceptor>>, GrammarAcceptor, State>(element, options);
-//    }
+    std::string toString(const std::shared_ptr<noam::State>& element);
 
     template <>
-    std::string toString(const PositionRule& element) {
-        return visitResult<StateToStringVisitor, PositionRuleOnPosition<StateTraversal<StateToStringVisitor, GrammarAcceptor>>, GrammarAcceptor, PositionRule>(element);
-    }
+    std::string toString(const State& element);
 
-//    template <>
-//    std::string toString(const PositionRule& element, const StateToStringOptions& options) {
-//        return visitResult<StateToStringVisitor, PositionRuleSymbolOnly<StateTraversal<StateToStringVisitor, GrammarAcceptor>>, GrammarAcceptor, PositionRule>(element, options);
-//    }
+    template <>
+    std::string toString(const PositionRule& element);
 }
 
 

@@ -15,7 +15,9 @@ namespace noam {
 
         const SimpleRule &getRule() const;
 
-        const std::shared_ptr<Symbol> &getSymbol() const;
+        const std::shared_ptr<Symbol> getSymbol() const;
+
+        PositionRule inc() const;
 
     private:
         int position;

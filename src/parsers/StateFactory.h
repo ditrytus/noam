@@ -2,8 +2,9 @@
 
 #include <memory>
 
+#include "noam-grammars.h"
+
 #include "State.h"
-#include "../grammars/SimpleGrammar.h"
 
 namespace noam {
 
@@ -12,11 +13,14 @@ namespace noam {
     public:
         StateFactory(const SimpleGrammar &grammar);
 
-        State createStateFor(const SimpleRule& simpleRule);
+        std::unique_ptr<State> createStateFor(const SimpleRule& simpleRule);
+
+        std::unique_ptr<State> createFromStateWithSymbol(const State& state, std::shared_ptr<Symbol> symbol);
+
+        std::unique_ptr<State> createForPosRuleSet(std::set<PositionRule> posRuleSet) const;
 
     private:
         const SimpleGrammar& grammar;
-
     };
 
 }

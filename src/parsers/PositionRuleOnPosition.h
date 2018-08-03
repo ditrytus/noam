@@ -31,19 +31,23 @@ namespace noam {
         void traverse(const Substitution &sub) override {
             preAccept(sub);
             accept(sub);
-            symbolIndex = 0;
+            int symbolIndex = 0;
             for(auto symbolPtr : sub.getSymbols()) {
-                if (currentPosRule && currentPosRule->getPosition() == symbolIndex) {
-                    accept(*currentPosRule);
-                }
+                condAcceptCurentPosRule(symbolIndex);
                 traverse(symbolPtr);
                 symbolIndex++;
             }
+            condAcceptCurentPosRule(symbolIndex);
             postAccept(sub);
         }
 
+        void condAcceptCurentPosRule(int symbolIndex) {
+            if (currentPosRule && currentPosRule->getPosition() == symbolIndex) {
+                accept(*currentPosRule);
+            }
+        }
+
     private:
-        int symbolIndex;
         std::unique_ptr<const PositionRule> currentPosRule;
     };
 

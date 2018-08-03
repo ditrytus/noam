@@ -25,7 +25,25 @@ int main() {
 
     const auto &startRule = grammar.getStartRule();
     StateFactory stateFactory {grammar};
-    auto state = stateFactory.createStateFor(startRule);
 
-    cout << toString(state) << endl;
+    SharedPtrSet<State> states;
+    SharedPtrSet<State> unprocessedStates;
+    shared_ptr<State> startStatePtr = stateFactory.createStateFor(startRule);
+    states.insert(startStatePtr);
+    unprocessedStates.insert(startStatePtr);
+
+    while(!unprocessedStates.empty()) {
+        SharedPtrSet<State> statesToProcess = unprocessedStates;
+        for (const auto &statePtr : statesToProcess) {
+            for (const auto& symbolPtr : getSymbolsOfType<Symbol>(*statePtr)) {
+
+                shared_ptr<State> newStatePtr = stateFactory.createFromStateWithSymbol(*statePtr, symbolPtr);
+                states.insert(newStatePtr);
+                unprocessedStates.insert(newStatePtr);
+            }
+            unprocessedStates.erase(statePtr);
+        }
+    }
+
+    cout << join(states, "\n") << endl;
 }
