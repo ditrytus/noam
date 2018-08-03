@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../grammars/SimpleGrammar.h"
+#include "noam-grammars.h"
+
+#include "StateGraph.h"
 
 namespace noam {
 
@@ -8,6 +10,12 @@ namespace noam {
 
     public:
         LALRParser(const SimpleGrammar& grammar);
+
+        static StateGraph createStateGraph(const SimpleGrammar &grammar);
+
+    private:
+
+        StateGraph stateGraph;
     };
 
 }

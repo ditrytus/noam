@@ -26,5 +26,6 @@ namespace noam {
     };
 
     bool operator < (const PositionRule& a, const PositionRule& b);
+    bool operator == (const PositionRule& a, const PositionRule& b);
 
 }

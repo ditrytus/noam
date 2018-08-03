@@ -13,8 +13,6 @@ namespace noam {
 
         void addRule(const PositionRule& rule);
 
-        bool operator == (const State& a);
-
         const std::set<PositionRule> &getRuleSet() const;
 
         std::set<PositionRule> operator + (std::shared_ptr<Symbol> symbol) const;
@@ -25,5 +23,6 @@ namespace noam {
     };
 
     bool operator < (const State& a, const State& b);
+    bool operator == (const State& a, const State& b);
 
 }

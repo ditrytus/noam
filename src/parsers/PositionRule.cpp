@@ -40,3 +40,7 @@ bool noam::operator<(const PositionRule &a, const PositionRule &b) {
     }
     return a.getPosition() < b.getPosition();
 }
+
+bool noam::operator==(const PositionRule &a, const PositionRule &b) {
+    return a.getPosition() == b.getPosition() && a.getRule() == b.getRule();
+}

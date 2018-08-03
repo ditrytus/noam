@@ -10,10 +10,6 @@ void State::addRule(const PositionRule &rule) {
     ruleSet.insert(rule);
 }
 
-bool State::operator==(const State &a) {
-    return false;
-}
-
 const set<PositionRule> &State::getRuleSet() const {
     return ruleSet;
 }
@@ -35,4 +31,8 @@ std::set<PositionRule> State::operator+(std::shared_ptr<Symbol> symbol) const {
 
 bool noam::operator<(const State &a, const State &b) {
     return a.getRuleSet() < b.getRuleSet();
+}
+
+bool noam::operator==(const State &a, const State &b) {
+    return a.getRuleSet() == b.getRuleSet();
 }
