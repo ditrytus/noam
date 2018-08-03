@@ -2,7 +2,7 @@
 
 #include "noam-grammars.h"
 
-#include "StateGraph.h"
+#include "ParserStateGraph.h"
 
 namespace noam {
 
@@ -11,11 +11,11 @@ namespace noam {
     public:
         LALRParser(const SimpleGrammar& grammar);
 
-        static StateGraph createStateGraph(const SimpleGrammar &grammar);
+        static ParserStateGraph createStateGraph(const SimpleGrammar &grammar);
 
     private:
 
-        StateGraph stateGraph;
+        ParserStateGraph stateGraph;
     };
 
 }

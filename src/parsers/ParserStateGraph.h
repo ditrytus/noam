@@ -7,20 +7,19 @@
 
 namespace noam {
 
-    class StateGraph {
+    class ParserStateGraph {
 
     public:
-        StateGraph(const SharedPtrSet<ParserState> &states,
+        ParserStateGraph(const SharedPtrSet<ParserState> &states,
                    SharedPtrPairMap<ParserState, Symbol, std::shared_ptr<ParserState>> transitions);
+
+        const SharedPtrSet<noam::ParserState> &getStates() const;
+
+        const SharedPtrPairMap<noam::ParserState, noam::Symbol, std::shared_ptr<noam::ParserState>> &getTransitions() const;
 
     private:
         SharedPtrSet<ParserState> states;
-    public:
-        const SharedPtrSet<noam::ParserState> &getStates() const;
 
-        const SharedPtrPairMap<noam::ParserState, noam::Symbol, std::__1::shared_ptr<noam::ParserState>> &getTransitions() const;
-
-    private:
         SharedPtrPairMap<ParserState, Symbol, std::shared_ptr<ParserState>> transitions;
 
     };

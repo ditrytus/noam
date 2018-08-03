@@ -5,7 +5,7 @@
 #include "LALRParser.h"
 #include "ParserStateFactory.h"
 #include "Operations.h"
-#include "StateGraph.h"
+#include "ParserStateGraph.h"
 
 using namespace noam;
 using namespace std;
@@ -14,7 +14,7 @@ LALRParser::LALRParser(const SimpleGrammar &grammar)
         : stateGraph(createStateGraph(grammar))
 {}
 
-StateGraph LALRParser::createStateGraph(const SimpleGrammar &grammar) {
+ParserStateGraph LALRParser::createStateGraph(const SimpleGrammar &grammar) {
     const auto &startRule = grammar.getStartRule();
     ParserStateFactory stateFactory {grammar};
 
@@ -39,5 +39,5 @@ StateGraph LALRParser::createStateGraph(const SimpleGrammar &grammar) {
         }
     }
 
-    return StateGraph {states, transitions};
+    return ParserStateGraph {states, transitions};
 }
