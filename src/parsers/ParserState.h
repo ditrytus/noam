@@ -6,10 +6,10 @@
 
 namespace noam {
 
-    class State {
+    class ParserState {
 
     public:
-        State(const std::set<PositionRule> &ruleSet);
+        ParserState(const std::set<PositionRule> &ruleSet);
 
         void addRule(const PositionRule& rule);
 
@@ -22,7 +22,7 @@ namespace noam {
 
     };
 
-    bool operator < (const State& a, const State& b);
-    bool operator == (const State& a, const State& b);
+    bool operator < (const ParserState& a, const ParserState& b);
+    bool operator == (const ParserState& a, const ParserState& b);
 
 }

@@ -18,19 +18,19 @@ StateGraph LALRParser::createStateGraph(const SimpleGrammar &grammar) {
     const auto &startRule = grammar.getStartRule();
     StateFactory stateFactory {grammar};
 
-    SharedPtrSet<State> states;
-    SharedPtrPairMap<State, Symbol, shared_ptr<State>> transitions;
-    SharedPtrSet<State> unprocessedStates;
-    shared_ptr<State> startStatePtr = stateFactory.createStateFor(startRule);
+    SharedPtrSet<ParserState> states;
+    SharedPtrPairMap<ParserState, Symbol, shared_ptr<ParserState>> transitions;
+    SharedPtrSet<ParserState> unprocessedStates;
+    shared_ptr<ParserState> startStatePtr = stateFactory.createStateFor(startRule);
 
     states.insert(startStatePtr);
     unprocessedStates.insert(startStatePtr);
 
     while(!unprocessedStates.empty()) {
-        SharedPtrSet<State> statesToProcess = unprocessedStates;
+        SharedPtrSet<ParserState> statesToProcess = unprocessedStates;
         for (const auto &statePtr : statesToProcess) {
             for (const auto& symbolPtr : getSymbolsOfType<Symbol>(*statePtr)) {
-                shared_ptr<State> newStatePtr = stateFactory.createFromStateWithSymbol(*statePtr, symbolPtr);
+                shared_ptr<ParserState> newStatePtr = stateFactory.createFromStateWithSymbol(*statePtr, symbolPtr);
                 states.insert(newStatePtr);
                 transitions[make_pair(statePtr, symbolPtr)] = newStatePtr;
                 unprocessedStates.insert(newStatePtr);

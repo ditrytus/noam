@@ -4,7 +4,7 @@
 
 #include "noam-grammars.h"
 
-#include "State.h"
+#include "ParserState.h"
 
 namespace noam {
 
@@ -13,11 +13,11 @@ namespace noam {
     public:
         StateFactory(const SimpleGrammar &grammar);
 
-        std::unique_ptr<State> createStateFor(const SimpleRule& simpleRule);
+        std::unique_ptr<ParserState> createStateFor(const SimpleRule& simpleRule);
 
-        std::unique_ptr<State> createFromStateWithSymbol(const State& state, std::shared_ptr<Symbol> symbol);
+        std::unique_ptr<ParserState> createFromStateWithSymbol(const ParserState& state, std::shared_ptr<Symbol> symbol);
 
-        std::unique_ptr<State> createForPosRuleSet(std::set<PositionRule> posRuleSet) const;
+        std::unique_ptr<ParserState> createForPosRuleSet(std::set<PositionRule> posRuleSet) const;
 
     private:
         const SimpleGrammar& grammar;

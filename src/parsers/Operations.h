@@ -2,7 +2,7 @@
 
 #include "noam-grammars-visitors.h"
 
-#include "State.h"
+#include "ParserState.h"
 #include "StateTraversal.h"
 #include "PositionRuleSymbolOnly.h"
 #include "PositionRuleOnPosition.h"
@@ -11,8 +11,8 @@
 namespace noam {
 
     template <typename T>
-    SharedPtrSet<T> getSymbolsOfType(const State& element) {
-        return visitResult<GetSymbolsOfTypeVisitor<T>, PositionRuleSymbolOnly<StateTraversal<GetSymbolsOfTypeVisitor<T>, DefaultAcceptor>>, DefaultAcceptor, State>(element);
+    SharedPtrSet<T> getSymbolsOfType(const ParserState& element) {
+        return visitResult<GetSymbolsOfTypeVisitor<T>, PositionRuleSymbolOnly<StateTraversal<GetSymbolsOfTypeVisitor<T>, DefaultAcceptor>>, DefaultAcceptor, ParserState>(element);
     };
 
     template <typename T>
@@ -21,10 +21,10 @@ namespace noam {
     };
 
     template <>
-    std::string toString(const std::shared_ptr<noam::State>& element);
+    std::string toString(const std::shared_ptr<noam::ParserState>& element);
 
     template <>
-    std::string toString(const State& element);
+    std::string toString(const ParserState& element);
 
     template <>
     std::string toString(const PositionRule& element);

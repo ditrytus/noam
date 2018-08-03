@@ -1,22 +1,22 @@
 
 
-#include "State.h"
+#include "ParserState.h"
 #include <utility>
 
 using namespace noam;
 using namespace std;
 
-void State::addRule(const PositionRule &rule) {
+void ParserState::addRule(const PositionRule &rule) {
     ruleSet.insert(rule);
 }
 
-const set<PositionRule> &State::getRuleSet() const {
+const set<PositionRule> &ParserState::getRuleSet() const {
     return ruleSet;
 }
 
-State::State(const set<PositionRule>& ruleSet) : ruleSet(ruleSet) {}
+ParserState::ParserState(const set<PositionRule>& ruleSet) : ruleSet(ruleSet) {}
 
-std::set<PositionRule> State::operator+(std::shared_ptr<Symbol> symbol) const {
+std::set<PositionRule> ParserState::operator+(std::shared_ptr<Symbol> symbol) const {
     std::set<PositionRule> rulesToIncrement;
     copy_if(ruleSet.begin(), ruleSet.end(), inserter(rulesToIncrement, rulesToIncrement.end()), [&](const PositionRule& rule){
         const auto &ruleSymbol = rule.getSymbol();
@@ -29,10 +29,10 @@ std::set<PositionRule> State::operator+(std::shared_ptr<Symbol> symbol) const {
     return result;
 }
 
-bool noam::operator<(const State &a, const State &b) {
+bool noam::operator<(const ParserState &a, const ParserState &b) {
     return a.getRuleSet() < b.getRuleSet();
 }
 
-bool noam::operator==(const State &a, const State &b) {
+bool noam::operator==(const ParserState &a, const ParserState &b) {
     return a.getRuleSet() == b.getRuleSet();
 }

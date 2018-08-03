@@ -1,14 +1,14 @@
 #include "StateGraph.h"
 
-noam::StateGraph::StateGraph(const noam::SharedPtrSet<noam::State> &states,
-                             noam::SharedPtrPairMap<noam::State, noam::Symbol, std::__1::shared_ptr<noam::State>> transitions)
+noam::StateGraph::StateGraph(const noam::SharedPtrSet<noam::ParserState> &states,
+                             noam::SharedPtrPairMap<noam::ParserState, noam::Symbol, std::__1::shared_ptr<noam::ParserState>> transitions)
         : states(states), transitions(transitions) {}
 
-const noam::SharedPtrSet<noam::State> &noam::StateGraph::getStates() const {
+const noam::SharedPtrSet<noam::ParserState> &noam::StateGraph::getStates() const {
     return states;
 }
 
-const noam::SharedPtrPairMap<noam::State, noam::Symbol, std::__1::shared_ptr<noam::State>> &
+const noam::SharedPtrPairMap<noam::ParserState, noam::Symbol, std::__1::shared_ptr<noam::ParserState>> &
 noam::StateGraph::getTransitions() const {
     return transitions;
 }

@@ -2,7 +2,7 @@
 
 #include "noam-grammars-visitors.h"
 
-#include "State.h"
+#include "ParserState.h"
 
 namespace noam {
 
@@ -18,7 +18,7 @@ namespace noam {
         using GrammarTraversal<Visitor, Acceptor>::postAccept;
         using GrammarTraversal<Visitor, Acceptor>::traverse;
 
-        void traverse(const State& state) {
+        void traverse(const ParserState& state) {
             preAccept(state);
             for(const auto& posRule : state.getRuleSet()) {
                 traverse(posRule);
