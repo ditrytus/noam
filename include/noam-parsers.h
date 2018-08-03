@@ -11,7 +11,7 @@
 #include "../src/parsers/LALRParser.h"
 #include "../src/parsers/PositionRule.h"
 #include "../src/parsers/ParserState.h"
-#include "../src/parsers/StateFactory.h"
+#include "../src/parsers/ParserStateFactory.h"
 #include "../src/parsers/StateTraversal.h"
 #include "../src/parsers/PositionRuleOnPosition.h"
 #include "../src/parsers/PositionRuleSymbolOnly.h"

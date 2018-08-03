@@ -3,7 +3,7 @@
 #include "noam-utilities.h"
 
 #include "LALRParser.h"
-#include "StateFactory.h"
+#include "ParserStateFactory.h"
 #include "Operations.h"
 #include "StateGraph.h"
 
@@ -16,7 +16,7 @@ LALRParser::LALRParser(const SimpleGrammar &grammar)
 
 StateGraph LALRParser::createStateGraph(const SimpleGrammar &grammar) {
     const auto &startRule = grammar.getStartRule();
-    StateFactory stateFactory {grammar};
+    ParserStateFactory stateFactory {grammar};
 
     SharedPtrSet<ParserState> states;
     SharedPtrPairMap<ParserState, Symbol, shared_ptr<ParserState>> transitions;

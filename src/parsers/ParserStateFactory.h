@@ -8,10 +8,10 @@
 
 namespace noam {
 
-    class StateFactory {
+    class ParserStateFactory {
 
     public:
-        StateFactory(const SimpleGrammar &grammar);
+        ParserStateFactory(const SimpleGrammar &grammar);
 
         std::unique_ptr<ParserState> createStateFor(const SimpleRule& simpleRule);
 

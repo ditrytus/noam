@@ -1,18 +1,18 @@
-#include "StateFactory.h"
+#include "ParserStateFactory.h"
 #include "Operations.h"
 
 using namespace noam;
 using namespace std;
 
-StateFactory::StateFactory(const SimpleGrammar &grammar) : grammar(grammar) {}
+ParserStateFactory::ParserStateFactory(const SimpleGrammar &grammar) : grammar(grammar) {}
 
-std::unique_ptr<ParserState> StateFactory::createStateFor(const SimpleRule &simpleRule) {
+std::unique_ptr<ParserState> ParserStateFactory::createStateFor(const SimpleRule &simpleRule) {
     std::set<PositionRule> posRuleSet = {PositionRule{simpleRule, 0}};
     return createForPosRuleSet(posRuleSet);
 
 }
 
-std::unique_ptr<ParserState> StateFactory::createForPosRuleSet(set<PositionRule> posRuleSet) const {
+std::unique_ptr<ParserState> ParserStateFactory::createForPosRuleSet(set<PositionRule> posRuleSet) const {
     size_t sizeBefore = 1;
     size_t sizeAfter = 0;
 
@@ -37,6 +37,6 @@ std::unique_ptr<ParserState> StateFactory::createForPosRuleSet(set<PositionRule>
     return make_unique<ParserState>(posRuleSet);
 }
 
-std::unique_ptr<ParserState> StateFactory::createFromStateWithSymbol(const ParserState &state, std::shared_ptr<Symbol> symbol) {
+std::unique_ptr<ParserState> ParserStateFactory::createFromStateWithSymbol(const ParserState &state, std::shared_ptr<Symbol> symbol) {
     return createForPosRuleSet(state + symbol);
 }
