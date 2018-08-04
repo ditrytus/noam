@@ -4,6 +4,8 @@
 
 namespace noam {
 
+    class TransitionException : public std::exception {};
+
     class ParserStateMachine {
 
     public:

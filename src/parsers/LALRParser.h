@@ -11,11 +11,11 @@ namespace noam {
     public:
         LALRParser(const SimpleGrammar& grammar);
 
-        static ParserStateGraph createStateGraph(const SimpleGrammar &grammar);
+        static std::unique_ptr<ParserStateGraph> createStateGraph(const SimpleGrammar &grammar);
 
     private:
 
-        ParserStateGraph stateGraph;
+        std::unique_ptr<ParserStateGraph> stateGraph;
     };
 
 }

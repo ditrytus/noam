@@ -7,6 +7,7 @@
 #include "PositionRuleSymbolOnly.h"
 #include "PositionRuleOnPosition.h"
 #include "StateToStringVisitor.h"
+#include "CreateExtendedGrammarVisitor.h"
 
 namespace noam {
 
@@ -28,6 +29,8 @@ namespace noam {
 
     template <>
     std::string toString(const PositionRule& element);
+
+    SimpleGrammar extendGrammar(const std::shared_ptr<ParserStateGraph> &graph);
 }
 
 

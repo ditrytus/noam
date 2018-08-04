@@ -23,13 +23,13 @@ int main() {
         V >> "*"_T + E
     };
 
-    auto stateGraph = LALRParser::createStateGraph(grammar);
+    shared_ptr<ParserStateGraph> stateGraph = LALRParser::createStateGraph(grammar);
 
     cout << "STATES:" << endl;
-    cout << join(stateGraph.getStates(), "\n") << endl;
+    cout << join(stateGraph->getStates(), "\n") << endl;
 
-    cout << "TRANSITIONS: " << stateGraph.getTransitions().size() << endl;
-    for(const auto& transition : stateGraph.getTransitions()) {
+    cout << "TRANSITIONS: " << stateGraph->getTransitions().size() << endl;
+    for(const auto& transition : stateGraph->getTransitions()) {
         cout << "FROM: " << endl;
         cout << toString(transition.first.first);
         cout << "BY: " << endl;
@@ -38,4 +38,7 @@ int main() {
         cout << toString(transition.second) << endl;
     }
 
+    cout << "EXTENDED GRAMMAR:" << endl;
+    auto extendedGrammar = extendGrammar(stateGraph);
+    cout << toString(extendedGrammar);
 }

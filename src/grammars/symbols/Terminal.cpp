@@ -12,7 +12,7 @@ std::unique_ptr<Symbol> Terminal::cloneSymbol() const {
     return std::unique_ptr<Symbol>(new Terminal(*this));
 }
 
-bool Terminal::operator<(const Symbol &other) {
+bool Terminal::operator<(const Symbol &other) const {
     if (getType() != other.getType()) {
         return precedence(getType()) < precedence(other.getType());
     }

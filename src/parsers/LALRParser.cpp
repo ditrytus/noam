@@ -14,7 +14,7 @@ LALRParser::LALRParser(const SimpleGrammar &grammar)
         : stateGraph(createStateGraph(grammar))
 {}
 
-ParserStateGraph LALRParser::createStateGraph(const SimpleGrammar &grammar) {
+unique_ptr<ParserStateGraph> LALRParser::createStateGraph(const SimpleGrammar &grammar) {
     const auto &startRule = grammar.getStartRule();
     ParserStateFactory stateFactory {grammar};
 
@@ -39,5 +39,5 @@ ParserStateGraph LALRParser::createStateGraph(const SimpleGrammar &grammar) {
         }
     }
 
-    return ParserStateGraph {states, transitions};
+    return make_unique<ParserStateGraph>(states, transitions);
 }

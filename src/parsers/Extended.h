@@ -17,8 +17,8 @@ namespace noam {
             return std::unique_ptr<Symbol>(new Extended<Base>(*this));
         }
 
-        bool operator < (const Symbol &other) override {
-            auto exOther = dynamic_cast<Extended<Base>*>(&other);
+        bool operator < (const Symbol &other) const override {
+            auto exOther = dynamic_cast<const Extended<Base>*>(&other);
             if (exOther) {
                 if (*from != *exOther->from) {
                     return *from < *exOther->from;
@@ -33,7 +33,7 @@ namespace noam {
         };
 
         bool operator == (const Symbol &other) const override {
-            auto exOther = dynamic_cast<Extended<Base>*>(&other);
+            auto exOther = dynamic_cast<const Extended<Base>*>(&other);
             return exOther
                    && Base::operator < (other)
                    && *from == *exOther->from

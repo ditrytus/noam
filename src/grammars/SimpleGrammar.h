@@ -11,6 +11,8 @@ namespace noam {
     class SimpleGrammar {
 
     public:
+        SimpleGrammar(std::vector<SimpleRule> rules);
+
         SimpleGrammar(std::initializer_list<SimpleRule> init_rules);
 
         SimpleGrammar(const Grammar &grammar);
@@ -22,6 +24,7 @@ namespace noam {
         const SimpleRule& getStartRule() const;
 
         virtual ~SimpleGrammar() = default;
+
     private:
         std::vector<SimpleRule> rules;
 

@@ -20,7 +20,7 @@ namespace noam {
 
         std::unique_ptr<Symbol> cloneSymbol() const override;
 
-        bool operator<(const Symbol &other) override;
+        bool operator<(const Symbol &other) const override;
 
     private:
         std::regex regex;

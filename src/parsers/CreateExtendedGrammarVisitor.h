@@ -6,22 +6,49 @@
 #include "Extended.h"
 #include "ParserStateGraph.h"
 #include "ParserStateMachine.h"
+#include "../grammars/SimpleGrammar.h"
 
 namespace noam {
 
-    class CreateExtendedGrammarVisitor {
+    class CreateExtendedGrammarVisitor : public ResultVisitor<SimpleGrammar> {
 
     public:
-        CreateExtendedGrammarVisitor(std::shared_ptr<ParserStateGraph> graph) : graph(std::move(graph)) {}
+        CreateExtendedGrammarVisitor(std::shared_ptr<ParserStateGraph> graph)
+                : graph(std::move(graph))
+                , followCurrentRule(false)
+                , extendSubstitution(false)
+        {}
 
-        void preAccept(const ParserState& state);
+        void preVisit(const ParserState& state);
 
-        void preAccept(const PositionRule& posRule);
+        void preVisit(const PositionRule& posRule);
+
+        void postVisit(const PositionRule& posRule);
+
+        void preVisit(const SimpleRule& posRule);
+
+        void preVisit(const Substitution& posRule);
+
+        void preVisit(const Terminal& posRule);
+
+        void preVisit(const NonTerminal& posRule);
+
+        SimpleGrammar getResult() const override;
 
     private:
-        std::vector<SimpleRule> exRules;
-        std::shared_ptr<ParserState> currentState;
         std::shared_ptr<ParserStateGraph> graph;
+
+        std::vector<SimpleRule> exRules;
+
+        bool followCurrentRule;
+        bool extendSubstitution;
+        std::unique_ptr<ParserStateMachine> currentMachine;
+        std::shared_ptr<NonTerminal> extendedHead;
+        std::vector<std::shared_ptr<Symbol>> subSymbols;
+        std::shared_ptr<ParserState> currentState;
+
+        template <typename T>
+        void extendSymbol(const T &symbol);
     };
 
 }

@@ -1,8 +1,11 @@
 #include "SimpleGrammar.h"
+#include <utility>
 
 using namespace noam;
 
 SimpleGrammar::SimpleGrammar(std::initializer_list<SimpleRule> init_rules) : rules(init_rules) {}
+
+SimpleGrammar::SimpleGrammar(std::vector<SimpleRule> rules) : rules(std::move(rules)) {}
 
 SimpleGrammar::SimpleGrammar(const Grammar &grammar) {
     for(auto altRule : grammar.getRules()) {

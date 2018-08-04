@@ -14,6 +14,8 @@ namespace noam {
     public:
         Substitution(const Symbol &symbol);
 
+        Substitution(std::vector<std::shared_ptr<Symbol>> symbols);
+
         Substitution& operator + (const Symbol& other);
 
         Substitution& operator + (const std::string& other);
@@ -29,9 +31,7 @@ namespace noam {
         Substitution subSubstitution(int count) const;
 
         const std::shared_ptr<Symbol>& getAt(int position) const;
-
     private:
-        Substitution(std::vector<std::shared_ptr<Symbol>> symbols);
 
         void addSymbol(const Symbol &symbol);
 

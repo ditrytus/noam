@@ -17,7 +17,7 @@ namespace noam {
 
         SymbolType getType() const;
 
-        virtual bool operator < (const Symbol& other) = 0;
+        virtual bool operator < (const Symbol& other) const = 0;
 
         virtual bool operator == (const Symbol& other) const = 0 ;
 

@@ -14,7 +14,7 @@ NonTerminal noam::literals::operator "" _N(const char *val, size_t) {
     return NonTerminal(val);
 }
 
-bool NonTerminal::operator<(const Symbol &other) {
+bool NonTerminal::operator<(const Symbol &other) const {
     if (getType() != other.getType()) {
         return precedence(getType()) < precedence(other.getType());
     }

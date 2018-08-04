@@ -49,7 +49,7 @@ void insertSymbolsToFirstSet(std::set<Terminal> &firstSet,
                              FirstSetsShared<NonTerminal> &nonTerFirstSets,
                              FirstSets<Substitution> &subFirstSets,
                              const Substitution& sub,
-                             shared_ptr<T> firstSymbol);
+                             const shared_ptr<T>& firstSymbol);
 
 template<typename T>
 void updateFirstSet(std::set<Terminal> &firstSet,
@@ -76,7 +76,7 @@ void __unused insertSymbolsToFirstSet(
         FirstSetsShared<NonTerminal>&,
         FirstSets<Substitution>&,
         const Substitution&,
-        shared_ptr<Terminal> firstSymbol) {
+        const shared_ptr<Terminal>& firstSymbol) {
     firstSet.insert(*firstSymbol);
 }
 
@@ -86,7 +86,7 @@ void __unused insertSymbolsToFirstSet(
         FirstSetsShared<NonTerminal>& nonTerFirstSets,
         FirstSets<Substitution> &subFirstSets,
         const Substitution& sub,
-        std::shared_ptr<NonTerminal> firstSymbol) {
+        const std::shared_ptr<NonTerminal>& firstSymbol) {
     auto& nonTerFirstSet = nonTerFirstSets[firstSymbol];
     if (contains(nonTerFirstSet, Terminal::empty())) {
 

@@ -21,7 +21,7 @@ int noam::RegexTerminal::match(std::string::iterator begin,
     return static_cast<int>(match.length());
 }
 
-bool noam::RegexTerminal::operator<(const noam::Symbol &other) {
+bool noam::RegexTerminal::operator<(const noam::Symbol &other) const {
     return Terminal::operator<(other);
 }
 

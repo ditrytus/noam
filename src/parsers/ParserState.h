@@ -17,12 +17,17 @@ namespace noam {
 
         std::set<PositionRule> operator + (std::shared_ptr<Symbol> symbol) const;
 
+        static std::unique_ptr<ParserState> endState();
+
     private:
+        ParserState() = default;
+
         std::set<PositionRule> ruleSet;
 
     };
 
     bool operator < (const ParserState& a, const ParserState& b);
     bool operator == (const ParserState& a, const ParserState& b);
+    bool operator != (const ParserState& a, const ParserState& b);
 
 }
