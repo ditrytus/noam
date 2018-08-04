@@ -26,7 +26,7 @@ std::unique_ptr<ParserState> ParserStateFactory::createForPosRuleSet(set<Positio
                 copy_if(grammarRules.begin(), grammarRules.end(),
                         inserter(posRuleSet, posRuleSet.end()),
                         [&](const SimpleRule& sRule) {
-                            return sRule.getHead() == *symbolPtr;
+                            return *sRule.getHead() == *symbolPtr;
                         });
             }
         }

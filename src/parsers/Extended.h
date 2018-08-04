@@ -14,7 +14,7 @@ namespace noam {
                 , Base(std::forward<Args>(args)...) {};
 
         std::unique_ptr<Symbol> cloneSymbol() const override {
-            return std::unique_ptr<Symbol>(new Extension<Base>(*this));
+            return std::unique_ptr<Symbol>(new Extended<Base>(*this));
         }
 
         bool operator < (const Symbol &other) override {

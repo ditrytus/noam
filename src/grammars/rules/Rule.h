@@ -7,14 +7,14 @@ namespace noam {
     class Rule{
 
     public:
-        Rule(const NonTerminal &head);
+        Rule(std::shared_ptr<NonTerminal> head);
 
-        const NonTerminal &getHead() const;
+        std::shared_ptr<NonTerminal> getHead() const;
 
         virtual std::unique_ptr<Rule> cloneRule() const = 0;
 
     private:
-        NonTerminal head;
+        std::shared_ptr<NonTerminal> head;
 
     };
 

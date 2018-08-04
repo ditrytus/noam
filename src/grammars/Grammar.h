@@ -14,7 +14,7 @@ namespace noam {
 
         const std::vector<AlternativeRule> &getRules() const;
 
-        const NonTerminal &getStartSymbol() const;
+        std::shared_ptr<NonTerminal> getStartSymbol() const;
 
         virtual ~Grammar() = default;
 

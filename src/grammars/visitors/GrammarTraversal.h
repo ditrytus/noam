@@ -30,7 +30,7 @@ namespace noam {
 
         void traverse(const AlternativeRule &rule) {
             preAccept(rule);
-            traverse(rule.getHead());
+            traverse(*rule.getHead());
             accept(rule);
             for(const auto& sub : rule.getAlternatives()) {
                 traverse(sub);
@@ -50,7 +50,7 @@ namespace noam {
 
         void traverse(const SimpleRule &rule) {
             preAccept(rule);
-            traverse(rule.getHead());
+            traverse(*rule.getHead());
             accept(rule);
             traverse(rule.getSubstitution());
             postAccept(rule);

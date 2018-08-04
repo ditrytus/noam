@@ -15,7 +15,7 @@ const std::vector<SimpleRule>& SimpleGrammar::getRules() const {
     return rules;
 }
 
-const NonTerminal &SimpleGrammar::getStartSymbol() const {
+std::shared_ptr<NonTerminal> SimpleGrammar::getStartSymbol() const {
     return getStartRule().getHead();
 }
 

@@ -1,7 +1,7 @@
 #include "CreateExtendedGrammarVisitor.h"
 
 void noam::CreateExtendedGrammarVisitor::preAccept(const noam::ParserState &state) {
-    currentState = std::make_shared(state);
+    currentState = std::make_shared<noam::ParserState>(state);
 }
 
 void noam::CreateExtendedGrammarVisitor::preAccept(const noam::PositionRule &posRule) {

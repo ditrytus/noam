@@ -1,7 +1,11 @@
 #include "Rule.h"
+#include <utility>
 
-const noam::NonTerminal &noam::Rule::getHead() const {
+using namespace noam;
+using namespace std;
+
+shared_ptr<NonTerminal> Rule::getHead() const {
     return head;
 }
 
-noam::Rule::Rule(const noam::NonTerminal &head) : head(head) {}
+Rule::Rule(shared_ptr<NonTerminal> head) : head(move(head)) {}

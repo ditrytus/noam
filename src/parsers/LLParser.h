@@ -18,7 +18,10 @@ namespace noam {
     using FirstSets = std::map<T, std::set<Terminal>>;
 
     template <typename T>
-    using FollowSets = FirstSets<T>;
+    using FirstSetsShared = std::map<std::shared_ptr<T>, std::set<Terminal>, SharedPtrObjectsComparer<T>>;
+
+    template <typename T>
+    using FollowSets = FirstSetsShared<T>;
 
     using ParsingTable = std::map<std::pair<NonTerminal, Terminal>, std::shared_ptr<SimpleRule>>;
 
@@ -27,7 +30,7 @@ namespace noam {
     public:
         explicit LLParser(const SimpleGrammar &grammar);
 
-        static std::pair<FirstSets<Substitution>, FirstSets<NonTerminal>> generateFirstSets(const SimpleGrammar &grammar);
+        static std::pair<FirstSets<Substitution>, FirstSetsShared<NonTerminal>> generateFirstSets(const SimpleGrammar &grammar);
 
         static FollowSets<NonTerminal> generateFollowSets(const SimpleGrammar& grammar, FirstSets<Substitution>& subFirstSets);
 
@@ -35,7 +38,7 @@ namespace noam {
                                                  FirstSets<Substitution>& subFs,
                                                  FollowSets<NonTerminal>& followSets);
 
-        const FirstSets<NonTerminal> &getNonTerminalFirstSets() const;
+        const FirstSetsShared<NonTerminal> &getNonTerminalFirstSets() const;
 
         const FirstSets<Substitution> &getSubstitutionsFirstSets() const;
 
@@ -51,7 +54,7 @@ namespace noam {
         ParsingTable parsingTable;
 
         FirstSets<Substitution> substitutionsFirstSets;
-        FirstSets<NonTerminal> nonTerminalFirstSets;
+        FirstSetsShared<NonTerminal> nonTerminalFirstSets;
 
     };
 

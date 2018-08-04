@@ -10,7 +10,7 @@ void AstBuilder::addRule(SimpleRule rule) {
     auto nodePtr = make_shared<RuleNode>(ruleStack.empty() ? nullptr : ruleStack.top().first, rule);
 
     if (!ruleStack.empty()) {
-        popTopSymbolStack(rule.getHead());
+        popTopSymbolStack(*rule.getHead());
     }
 
     auto subSymbols = rule.getSubstitution().getSymbols();

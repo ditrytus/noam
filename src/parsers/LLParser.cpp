@@ -31,8 +31,8 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar,
             auto rules = grammar.getRules();
             auto pos = find_if(rules.begin(), rules.end(), [&](SimpleRule rule) {
                 auto symbols = firstSets[rule.getSubstitution()];
-                return (rule.getHead() == *nonTerminal && contains(symbols, *terminal))
-                       || (contains(symbols, Terminal::empty()) && contains(followSets[*nonTerminal], *terminal));
+                return (*rule.getHead() == *nonTerminal && contains(symbols, *terminal))
+                       || (contains(symbols, Terminal::empty()) && contains(followSets[nonTerminal], *terminal));
             });
 
             if (pos != rules.end()) {
@@ -46,20 +46,20 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar,
 
 template<typename T>
 void insertSymbolsToFirstSet(std::set<Terminal> &firstSet,
-                             FirstSets<NonTerminal> &nonTerFirstSets,
+                             FirstSetsShared<NonTerminal> &nonTerFirstSets,
                              FirstSets<Substitution> &subFirstSets,
                              const Substitution& sub,
-                             T *firstSymbol);
+                             shared_ptr<T> firstSymbol);
 
 template<typename T>
 void updateFirstSet(std::set<Terminal> &firstSet,
-                    FirstSets<NonTerminal>& nonTerFirstSets,
+                    FirstSetsShared<NonTerminal>& nonTerFirstSets,
                     FirstSets<Substitution> &subFirstSets,
                     const SimpleRule &rule) {
     auto& sub = rule.getSubstitution();
     auto firstSymbol = sub.getFirst();
 
-    auto firstSymbolT = dynamic_cast<T*>(firstSymbol.get());
+    auto firstSymbolT = dynamic_pointer_cast<T>(firstSymbol);
 
     if (firstSymbolT != nullptr) {
         insertSymbolsToFirstSet<T>(firstSet,
@@ -73,21 +73,21 @@ void updateFirstSet(std::set<Terminal> &firstSet,
 template <>
 void __unused insertSymbolsToFirstSet(
         std::set<Terminal> &firstSet,
-        FirstSets<NonTerminal>&,
+        FirstSetsShared<NonTerminal>&,
         FirstSets<Substitution>&,
         const Substitution&,
-        Terminal* firstSymbol) {
+        shared_ptr<Terminal> firstSymbol) {
     firstSet.insert(*firstSymbol);
 }
 
 template <>
 void __unused insertSymbolsToFirstSet(
         std::set<Terminal> &firstSet,
-        FirstSets<NonTerminal>& nonTerFirstSets,
+        FirstSetsShared<NonTerminal>& nonTerFirstSets,
         FirstSets<Substitution> &subFirstSets,
         const Substitution& sub,
-        NonTerminal* firstSymbol) {
-    auto& nonTerFirstSet = nonTerFirstSets[*firstSymbol];
+        std::shared_ptr<NonTerminal> firstSymbol) {
+    auto& nonTerFirstSet = nonTerFirstSets[firstSymbol];
     if (contains(nonTerFirstSet, Terminal::empty())) {
 
         set<Terminal> emptySet = {Terminal::empty()};
@@ -109,9 +109,9 @@ void __unused insertSymbolsToFirstSet(
     }
 }
 
-std::pair<FirstSets<Substitution>, FirstSets<NonTerminal>> LLParser::generateFirstSets(const SimpleGrammar &grammar) {
+std::pair<FirstSets<Substitution>, FirstSetsShared<NonTerminal>> LLParser::generateFirstSets(const SimpleGrammar &grammar) {
     FirstSets<Substitution> subFirstSets;
-    FirstSets<NonTerminal> nonTerFirstSets;
+    FirstSetsShared<NonTerminal> nonTerFirstSets;
 
     bool setsChanged = true;
 
@@ -143,7 +143,7 @@ const FirstSets<noam::Substitution> &LLParser::getSubstitutionsFirstSets() const
     return substitutionsFirstSets;
 }
 
-const FirstSets<noam::NonTerminal> &LLParser::getNonTerminalFirstSets() const {
+const FirstSetsShared<NonTerminal> &LLParser::getNonTerminalFirstSets() const {
     return nonTerminalFirstSets;
 }
 
@@ -164,12 +164,12 @@ LLParser::generateFollowSets(const SimpleGrammar &grammar,
             for (auto const& subSymbol : rule.getSubstitution().getSymbols()) {
                 ++subSymbolIndex;
 
-                auto nonTerSubSymbol = dynamic_cast<NonTerminal*>(subSymbol.get());
+                auto nonTerSubSymbol = dynamic_pointer_cast<NonTerminal>(subSymbol);
                 if (nonTerSubSymbol == nullptr) {
                     continue;
                 }
 
-                auto nonTerSubFollowSet = followSets[*nonTerSubSymbol];
+                auto nonTerSubFollowSet = followSets[nonTerSubSymbol];
                 auto headFollowSet = followSets[rule.getHead()];
 
                 auto countBefore = nonTerSubFollowSet.size();
@@ -202,7 +202,7 @@ void LLParser::parse(std::vector<Token>::iterator begin, std::vector<Token>::ite
     using namespace std;
 
     stack<shared_ptr<Symbol>> symbolStack;
-    symbolStack.push(shared_ptr<Symbol>{new NonTerminal{grammar.getStartSymbol()}});
+    symbolStack.push(shared_ptr<Symbol>{new NonTerminal{*grammar.getStartSymbol()}});
 
     int position = 0;
     auto cursor = begin;

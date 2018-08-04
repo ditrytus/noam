@@ -17,7 +17,7 @@ namespace noam {
 
         const std::vector<SimpleRule> &getRules() const;
 
-        const NonTerminal &getStartSymbol() const;
+        std::shared_ptr<NonTerminal> getStartSymbol() const;
 
         const SimpleRule& getStartRule() const;
 

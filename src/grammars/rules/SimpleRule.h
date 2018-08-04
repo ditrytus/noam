@@ -10,7 +10,7 @@ namespace noam {
     class SimpleRule : public Rule {
 
     public:
-        SimpleRule(const NonTerminal &head, const Substitution &substitution);
+        SimpleRule(std::shared_ptr<NonTerminal> head, const Substitution &substitution);
 
         const Substitution &getSubstitution() const;
 
@@ -21,7 +21,7 @@ namespace noam {
 
     };
 
-    SimpleRule operator >> (NonTerminal nonTerminal, Substitution substitution);
+    SimpleRule operator >> (const NonTerminal& nonTerminal, const Substitution& substitution);
 
     bool isLeftRecursive(const SimpleRule& rule);
 

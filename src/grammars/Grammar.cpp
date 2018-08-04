@@ -8,6 +8,6 @@ const std::vector<AlternativeRule> &Grammar::getRules() const {
     return rules;
 }
 
-const NonTerminal &Grammar::getStartSymbol() const {
+std::shared_ptr<NonTerminal> Grammar::getStartSymbol() const {
     return rules.front().getHead();
 }
