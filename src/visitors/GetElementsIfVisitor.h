@@ -1,26 +1,29 @@
 #pragma once
 
-#include <set>
-#include <type_traits>
-#include <memory>
+#include <functional>
 
+#include "GetElementsOfTypeVisitor.h"
 #include "ResultVisitor.h"
 
 namespace noam {
 
     template <typename T>
-    class GetElementsOfTypeVisitor : public ResultVisitor<const std::set<T> &> {
+    class GetElementsIfVisitor : public ResultVisitor<const std::set<T> &> {
 
     public:
 
         typedef std::set<T> resultType;
+
+        GetElementsIfVisitor(const std::function<bool(const T &)> &predicate) : predicate(predicate) {}
 
         const std::set<T> &getResult() const { return result; }
 
         template <typename U>
         void preVisit(const U& element) {
             if(const auto * tElement = dynamic_cast<const T*>(&element) ) {
-                result.insert(*tElement);
+                if (predicate(*tElement)) {
+                    result.insert(*tElement);
+                }
             }
         }
 
@@ -32,6 +35,7 @@ namespace noam {
 
     protected:
         std::set<T> result;
+        std::function<bool(const T&)> predicate;
 
     };
 

@@ -1,5 +1,4 @@
 #include "ParserStateGraph.h"
-#include <utility>
 
 using namespace noam;
 using namespace std;
@@ -12,7 +11,7 @@ const SharedPtrSet<ParserState> &ParserStateGraph::getStates() const {
     return states;
 }
 
-const SharedPtrPairMap<ParserState, Symbol, __1::shared_ptr<ParserState>> &
+const SharedPtrPairMap<ParserState, Symbol, shared_ptr<ParserState>> &
 ParserStateGraph::getTransitions() const {
     return transitions;
 }

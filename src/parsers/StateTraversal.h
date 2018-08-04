@@ -3,6 +3,7 @@
 #include "noam-grammars-visitors.h"
 
 #include "ParserState.h"
+#include "ParserStateGraph.h"
 
 namespace noam {
 
@@ -17,6 +18,15 @@ namespace noam {
         using GrammarTraversal<Visitor, Acceptor>::preAccept;
         using GrammarTraversal<Visitor, Acceptor>::postAccept;
         using GrammarTraversal<Visitor, Acceptor>::traverse;
+
+        void traverse(const ParserStateGraph& graph) {
+            preAccept(graph);
+            for(const auto& state : graph.getStates()) {
+                traverse(*state);
+                accept(graph);
+            }
+            postAccept(graph);
+        }
 
         void traverse(const ParserState& state) {
             preAccept(state);
