@@ -41,9 +41,11 @@ namespace noam {
 
         void visit(const Terminal &symbol) override;
 
-
     private:
         StateToStringOptions options;
+
+        template<typename T>
+        void visitExtension(const T& symbol);
     };
 
 }

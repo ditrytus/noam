@@ -11,8 +11,6 @@ namespace noam {
 
         std::shared_ptr<NonTerminal> getHead() const;
 
-        virtual std::unique_ptr<Rule> cloneRule() const = 0;
-
     private:
         std::shared_ptr<NonTerminal> head;
 

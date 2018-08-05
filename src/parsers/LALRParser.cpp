@@ -6,6 +6,7 @@
 #include "ParserStateFactory.h"
 #include "Operations.h"
 #include "ParserStateGraph.h"
+#include "ReductionMergeRuleComparer.h"
 
 using namespace noam;
 using namespace std;
@@ -86,4 +87,21 @@ LALRParser::generateFollowSets(const SimpleGrammar &grammar, FirstSets<NonTermin
         }
     }
     return followSets;
+}
+
+ReductionTable LALRParser::generateReductionTable(const SimpleGrammar &exGrammar, FollowSets<NonTerminal> &followSets) {
+    map<SimpleRule, SharedPtrSet<Terminal>, ReductionMergeRuleComparer> mergeMap;
+    for(const auto &rule : exGrammar.getRules()) {
+        auto followSet = followSets[rule.getHead()];
+        mergeMap[rule].insert(followSet.begin(), followSet.end());
+    }
+
+    ReductionTable reductionTable;
+    for(const auto& mergedItem : mergeMap) {
+        for(const auto& symbol : mergedItem.second) {
+            reductionTable[make_pair(getTo(mergedItem.first), symbol)] = dropExtension(mergedItem.first);
+        }
+    }
+
+    return reductionTable;
 }

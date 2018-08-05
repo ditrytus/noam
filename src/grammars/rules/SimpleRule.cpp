@@ -17,10 +17,6 @@ const Substitution &SimpleRule::getSubstitution() const {
     return substitution;
 }
 
-unique_ptr<Rule> SimpleRule::cloneRule() const {
-    return unique_ptr<Rule>{new SimpleRule{*this}};
-}
-
 SimpleRule noam::operator>>(const NonTerminal& nonTerminal, const Substitution& substitution) {
     return SimpleRule(make_shared<NonTerminal>(nonTerminal), substitution);
 }

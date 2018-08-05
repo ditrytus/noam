@@ -51,7 +51,7 @@ int main() {
     cout << endl << "FIRST SETS:" << endl;
     auto firstSets = LLParser::generateFirstSets(extendedGrammar);
     for(auto& firstSet : firstSets.second) {
-        cout << toString(firstSet.first)
+        cout << toStringEx(firstSet.first)
              << " : "
              << noam::utils::join(firstSet.second, ", ")
              << endl;
@@ -73,5 +73,37 @@ int main() {
              << " : "
              << noam::utils::join(followSet.second, ", ")
              << endl;
+    }
+
+//    map<SimpleRule, SharedPtrSet<Terminal>, ReductionMergeRuleComparer> mergeMap;
+//    for(const auto &rule : extendedGrammar.getRules()) {
+//        auto followSet = followSets[rule.getHead()];
+//        mergeMap[rule].insert(followSet.begin(), followSet.end());
+//    }
+
+//    cout << endl << "MERGE TABLE:" << endl;
+//    for(auto& mergedItem : mergeMap) {
+//        cout << noam::hash(*getTo(mergedItem.first)) % 97
+//             << "\t| "
+//             << toString(*dropExtension(mergedItem.first), GrammarToStringOptions::oneLine())
+//             << "\t| "
+//             << noam::utils::join(mergedItem.second, ", ")
+//             << endl;
+//    }
+//
+//    ReductionTable reductionTable;
+//    for(const auto& mergedItem : mergeMap) {
+//        for(const auto& symbol : mergedItem.second) {
+//            reductionTable[make_pair(getTo(mergedItem.first), symbol)] = dropExtension(mergedItem.first);
+//        }
+//    }
+
+    cout << endl << "REDUCTION TABLE:" << endl;
+    for(auto& reduction : LALRParser::generateReductionTable(extendedGrammar, followSets)) {
+        cout << noam::hash(*reduction.first.first) % 97
+             << " "
+             << toString(*reduction.first.second)
+             << " = "
+             << toString(*reduction.second);
     }
 }

@@ -15,8 +15,6 @@ namespace noam {
         const Substitution &getSubstitution() const;
 
     private:
-        std::unique_ptr<Rule> cloneRule() const override;
-
         Substitution substitution;
 
     };
@@ -31,16 +29,3 @@ namespace noam {
 
     bool operator != (const SimpleRule& left, const SimpleRule& right);
 }
-
-//namespace std {
-//
-//    template <>
-//    struct hash<noam::SimpleRule>
-//    {
-//        size_t operator()(const noam::SimpleRule & x) const
-//        {
-//            return hash<noam::NonTerminal>{}(*x.getHead()) ^ hash<noam::Substitution>{}(x.getSubstitution());
-//        }
-//    };
-//
-//}

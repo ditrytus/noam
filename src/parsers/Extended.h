@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-
+#include <utility>
 #include "ParserState.h"
 
 namespace noam {
@@ -12,11 +12,15 @@ namespace noam {
     public:
         template <typename... Args>
         Extended(std::shared_ptr<ParserState> from, std::shared_ptr<ParserState> to, Args... args)
-                : from(from), to(to)
+                : from(std::move(from)), to(std::move(to))
                 , Base(std::forward<Args>(args)...) {};
 
         std::unique_ptr<Symbol> cloneSymbol() const override {
             return std::unique_ptr<Symbol>(new Extended<Base>(*this));
+        }
+
+        std::unique_ptr<Symbol> dropExtension() const override {
+            return std::unique_ptr<Symbol>(new Base(*this));
         }
 
         bool operator < (const Symbol &other) const override {
@@ -56,4 +60,9 @@ namespace noam {
         std::shared_ptr<ParserState> to;
     };
 
+    std::unique_ptr<SimpleRule> dropExtension(const SimpleRule& rule);
+
+//    std::shared_ptr<ParserState> getFrom(const SimpleRule& rule);
+
+    std::shared_ptr<ParserState> getTo(const SimpleRule& rule);
 }

@@ -17,3 +17,4 @@
 #include "../src/parsers/PositionRuleSymbolOnly.h"
 #include "../src/parsers/StateToStringVisitor.h"
 #include "../src/parsers/Operations.h"
+#include "../src/parsers/ReductionMergeRuleComparer.h"

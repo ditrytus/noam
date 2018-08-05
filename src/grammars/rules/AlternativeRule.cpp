@@ -12,10 +12,6 @@ AlternativeRule &AlternativeRule::operator|(const Substitution &substitution) {
     return *this;
 }
 
-std::unique_ptr<Rule> AlternativeRule::cloneRule() const {
-    return unique_ptr<Rule>{new AlternativeRule{*this}};
-}
-
 vector<SimpleRule> AlternativeRule::simplify() {
     vector<SimpleRule> result;
     for(auto alt : alternatives) {

@@ -26,6 +26,8 @@ namespace noam {
 
         virtual std::unique_ptr<Symbol> cloneSymbol() const = 0;
 
+        virtual std::unique_ptr<Symbol> dropExtension() const;
+
     private:
         SymbolType type;
 

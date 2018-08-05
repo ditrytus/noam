@@ -8,6 +8,10 @@ SymbolType Symbol::getType() const {
     return type;
 }
 
+std::unique_ptr<Symbol> Symbol::dropExtension() const {
+    return cloneSymbol();
+}
+
 int noam::precedence(SymbolType type) {
     switch (type) {
         case SymbolType::NonTerminal: return 0;

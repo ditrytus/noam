@@ -37,18 +37,16 @@ void StateToStringVisitor::preVisit(const Substitution &sub) {
 }
 
 void StateToStringVisitor::visit(const NonTerminal &symbol) {
-    auto extensionPtr = dynamic_cast<const Extended<NonTerminal>*>(&symbol);
-    if (extensionPtr) {
-        ss << "(" << hash(*extensionPtr->getFrom()) % 97 << ",";
-    }
-    GrammarToStringVisitor::visit(symbol);
-    if (extensionPtr) {
-        ss << "," << hash(*extensionPtr->getTo()) % 97 << ")";
-    }
+    visitExtension<NonTerminal>(symbol);
 }
 
 void StateToStringVisitor::visit(const Terminal &symbol) {
-    auto extensionPtr = dynamic_cast<const Extended<Terminal>*>(&symbol);
+    visitExtension<Terminal>(symbol);
+}
+
+template<typename T>
+void StateToStringVisitor::visitExtension(const T &symbol) {
+    auto extensionPtr = dynamic_cast<const Extended<T>*>(&symbol);
     if (extensionPtr) {
         ss << "(" << hash(*extensionPtr->getFrom()) % 97 << ",";
     }

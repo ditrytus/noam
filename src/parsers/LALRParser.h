@@ -7,6 +7,8 @@
 
 namespace noam {
 
+    using ReductionTable = std::map<SharedPtrPair<ParserState, Terminal>, std::shared_ptr<SimpleRule>, SharedPtrPairComparer<ParserState, Terminal>>;
+
     class LALRParser {
 
     public:
@@ -16,6 +18,9 @@ namespace noam {
 
         static FollowSets<NonTerminal> generateFollowSets(const SimpleGrammar& grammar,
                                                           FirstSets<NonTerminal>& subFirstSets);
+
+        static ReductionTable generateReductionTable(const SimpleGrammar& exGrammar,
+                                                      FollowSets<NonTerminal>& followSets);
 
     private:
 
