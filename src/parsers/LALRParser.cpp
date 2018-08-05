@@ -41,3 +41,49 @@ unique_ptr<ParserStateGraph> LALRParser::createStateGraph(const SimpleGrammar &g
 
     return make_unique<ParserStateGraph>(states, transitions);
 }
+
+FollowSets<NonTerminal>
+LALRParser::generateFollowSets(const SimpleGrammar &grammar, FirstSets<NonTerminal> &firstSets) {
+    FollowSets<NonTerminal> followSets;
+    followSets[grammar.getStartSymbol()].insert(dynamic_pointer_cast<Terminal>(make_shared<EndOfInput>()));
+    SharedPtrSet<Terminal> emptySet = {Terminal::empty()};
+    bool wereChanged = true;
+    while (wereChanged) {
+        wereChanged = false;
+        for(const auto& rule : grammar.getRules()) {
+            auto subSymbols = rule.getSubstitution().getSymbols();
+            for (int i=1; i < subSymbols.size(); ++i) {
+                auto sym = subSymbols[i-1];
+                if (auto nonTer = dynamic_pointer_cast<NonTerminal>(sym)) {
+                    size_t beforeCount = followSets[nonTer].size();
+                    auto followSym = subSymbols[i];
+                    if (auto followTer = dynamic_pointer_cast<Terminal>(followSym)) {
+                        followSets[nonTer].insert(followTer);
+                    } else if (auto followNonTer = dynamic_pointer_cast<NonTerminal>(followSym)) {
+                        auto followFirstSet = firstSets[followNonTer];
+                        SharedPtrSet<Terminal> withoutEmpty;
+                        set_difference(followFirstSet.begin(), followFirstSet.end(),
+                                       emptySet.begin(), emptySet.end(),
+                                       inserter(withoutEmpty, withoutEmpty.end()),
+                                       SharedPtrObjectsComparer<Terminal>{});
+                        followSets[nonTer].insert(withoutEmpty.begin(), withoutEmpty.end());
+                        if (utils::contains(followFirstSet, Terminal::empty())) {
+                            auto followHead = followSets[rule.getHead()];
+                            followSets[nonTer].insert(followHead.begin(), followHead.end());
+                        }
+                    }
+                    size_t afterCount = followSets[nonTer].size();
+                    wereChanged = wereChanged || beforeCount != afterCount;
+                }
+            }
+            if (auto nonTerLast = dynamic_pointer_cast<NonTerminal>(rule.getSubstitution().getLast())) {
+                size_t beforeCount = followSets[nonTerLast].size();
+                auto followHead = followSets[rule.getHead()];
+                followSets[nonTerLast].insert(followHead.begin(), followHead.end());
+                size_t afterCount = followSets[nonTerLast].size();
+                wereChanged = wereChanged || beforeCount != afterCount;
+            }
+        }
+    }
+    return followSets;
+}

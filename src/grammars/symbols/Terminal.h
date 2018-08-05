@@ -28,12 +28,12 @@ namespace noam {
 
         bool matchedEntireToken(const std::string::const_iterator &tokenCursor) const;
 
-        static Terminal empty();
+        static std::shared_ptr<Terminal> empty();
 
     protected:
         Terminal(SymbolType type, const std::string &name);
     private:
-        static Terminal _empty;
+        static std::shared_ptr<Terminal> _empty;
     };
 
     namespace literals {

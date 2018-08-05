@@ -29,9 +29,9 @@ bool Terminal::operator!=(const Symbol &other) const {
 
 bool Terminal::matchedEntireToken(const std::string::const_iterator &tokenCursor) const { return tokenCursor >= getName().end(); }
 
-Terminal Terminal::_empty = Terminal{""};
+std::shared_ptr<Terminal> Terminal::_empty = make_shared<Terminal>("");
 
-Terminal Terminal::empty() { return _empty; }
+std::shared_ptr<Terminal> Terminal::empty() { return _empty; }
 
 int Terminal::match(std::string::iterator begin,
                     std::string::iterator end,

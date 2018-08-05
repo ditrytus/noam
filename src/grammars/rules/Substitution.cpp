@@ -49,8 +49,12 @@ Substitution Substitution::subSubstitution(int index) const {
     return Substitution(newSymbols);
 }
 
-const shared_ptr<Symbol>& Substitution::getAt(int position) const {
+const shared_ptr<Symbol>& Substitution::getAt(size_t position) const {
     return symbols[position];
+}
+
+std::shared_ptr<Symbol> Substitution::getLast() const {
+    return getAt(size()-1);
 }
 
 Substitution noam::operator + (const Symbol &a, const Symbol &b) {

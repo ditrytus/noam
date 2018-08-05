@@ -41,4 +41,40 @@ int main() {
     cout << "EXTENDED GRAMMAR:" << endl;
     auto extendedGrammar = extendGrammar(stateGraph);
     cout << toString(extendedGrammar);
+
+    cout << endl << "FIRST SETS:" << endl;
+    auto firstSets = LLParser::generateFirstSets(extendedGrammar);
+    for(auto& firstSet : firstSets.second) {
+        cout << toString(firstSet.first)
+             << " : "
+             << noam::utils::join(firstSet.second, ", ")
+             << endl;
+    }
+
+    cout << endl << "FOLLOW SETS:" << endl;
+    auto followSets = LALRParser::generateFollowSets(extendedGrammar, firstSets.second);
+    for(auto& followSet : followSets) {
+        cout << toString(followSet.first)
+             << " : "
+             << noam::utils::join(followSet.second, ", ")
+             << endl;
+    }
+
+    cout << endl << "FIRST SETS:" << endl;
+    auto firstSets2 = LLParser::generateFirstSets(grammar);
+    for(auto& firstSet : firstSets2.second) {
+        cout << toString(firstSet.first)
+             << " : "
+             << noam::utils::join(firstSet.second, ", ")
+             << endl;
+    }
+
+    cout << endl << "FOLLOW SETS:" << endl;
+    auto followSets2 = LALRParser::generateFollowSets(grammar, firstSets2.second);
+    for(auto& followSet2 : followSets2) {
+        cout << toString(followSet2.first)
+             << " : "
+             << noam::utils::join(followSet2.second, ", ")
+             << endl;
+    }
 }

@@ -3,7 +3,7 @@
 using namespace noam;
 using namespace std;
 
-Token Token::_empty = Token{make_shared<Terminal>(Terminal::empty()), ""};
+Token Token::_empty = Token{make_shared<Terminal>(*Terminal::empty()), ""};
 
 const Token &Token::empty() {
     return _empty;

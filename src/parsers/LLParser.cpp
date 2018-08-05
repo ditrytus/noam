@@ -30,9 +30,9 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar,
 
             auto rules = grammar.getRules();
             auto pos = find_if(rules.begin(), rules.end(), [&](SimpleRule rule) {
-                auto symbols = firstSets[rule.getSubstitution()];
-                return (*rule.getHead() == *nonTerminal && contains(symbols, *terminal))
-                       || (contains(symbols, Terminal::empty()) && contains(followSets[nonTerminal], *terminal));
+                auto symbols = firstSets[make_shared<Substitution>(rule.getSubstitution())];
+                return (*rule.getHead() == *nonTerminal && contains(symbols, terminal))
+                       || (contains(symbols, Terminal::empty()) && contains(followSets[nonTerminal], terminal));
             });
 
             if (pos != rules.end()) {
@@ -45,15 +45,15 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar,
 }
 
 template<typename T>
-void insertSymbolsToFirstSet(std::set<Terminal> &firstSet,
-                             FirstSetsShared<NonTerminal> &nonTerFirstSets,
+void insertSymbolsToFirstSet(SharedPtrSet<Terminal> &firstSet,
+                             FirstSets<NonTerminal> &nonTerFirstSets,
                              FirstSets<Substitution> &subFirstSets,
                              const Substitution& sub,
                              const shared_ptr<T>& firstSymbol);
 
 template<typename T>
-void updateFirstSet(std::set<Terminal> &firstSet,
-                    FirstSetsShared<NonTerminal>& nonTerFirstSets,
+void updateFirstSet(SharedPtrSet<Terminal> &firstSet,
+                    FirstSets<NonTerminal>& nonTerFirstSets,
                     FirstSets<Substitution> &subFirstSets,
                     const SimpleRule &rule) {
     auto& sub = rule.getSubstitution();
@@ -72,31 +72,30 @@ void updateFirstSet(std::set<Terminal> &firstSet,
 
 template <>
 void __unused insertSymbolsToFirstSet(
-        std::set<Terminal> &firstSet,
-        FirstSetsShared<NonTerminal>&,
+        SharedPtrSet<Terminal> &firstSet,
+        FirstSets<NonTerminal>&,
         FirstSets<Substitution>&,
         const Substitution&,
         const shared_ptr<Terminal>& firstSymbol) {
-    firstSet.insert(*firstSymbol);
+    firstSet.insert(firstSymbol);
 }
 
 template <>
 void __unused insertSymbolsToFirstSet(
-        std::set<Terminal> &firstSet,
-        FirstSetsShared<NonTerminal>& nonTerFirstSets,
+        SharedPtrSet<Terminal> &firstSet,
+        FirstSets<NonTerminal>& nonTerFirstSets,
         FirstSets<Substitution> &subFirstSets,
         const Substitution& sub,
         const std::shared_ptr<NonTerminal>& firstSymbol) {
     auto& nonTerFirstSet = nonTerFirstSets[firstSymbol];
     if (contains(nonTerFirstSet, Terminal::empty())) {
-
-        set<Terminal> emptySet = {Terminal::empty()};
-        set<Terminal> withoutEmptySet;
+        SharedPtrSet<Terminal> emptySet = {Terminal::empty()};
+        SharedPtrSet<Terminal> withoutEmptySet;
         set_difference(nonTerFirstSet.begin(), nonTerFirstSet.end(),
                        emptySet.begin(), emptySet.end(),
                        inserter(withoutEmptySet, withoutEmptySet.begin()));
         if (sub.size() > 1) {
-            auto& tailFirstSet = subFirstSets[sub.subSubstitution(1)];
+            auto& tailFirstSet = subFirstSets[make_shared<Substitution>(sub.subSubstitution(1))];
             set_union(withoutEmptySet.begin(), withoutEmptySet.end(),
                       tailFirstSet.begin(), tailFirstSet.end(),
                       inserter(firstSet, firstSet.end()));
@@ -109,16 +108,16 @@ void __unused insertSymbolsToFirstSet(
     }
 }
 
-std::pair<FirstSets<Substitution>, FirstSetsShared<NonTerminal>> LLParser::generateFirstSets(const SimpleGrammar &grammar) {
+std::pair<FirstSets<Substitution>, FirstSets<NonTerminal>> LLParser::generateFirstSets(const SimpleGrammar &grammar) {
     FirstSets<Substitution> subFirstSets;
-    FirstSetsShared<NonTerminal> nonTerFirstSets;
+    FirstSets<NonTerminal> nonTerFirstSets;
 
     bool setsChanged = true;
 
     while(setsChanged) {
         setsChanged = false;
         for (auto const& rule : grammar.getRules()) {
-            auto& firstSet = subFirstSets[rule.getSubstitution()];
+            auto& firstSet = subFirstSets[make_shared<Substitution>(rule.getSubstitution())];
 
             updateFirstSet<Terminal>(firstSet, nonTerFirstSets, subFirstSets, rule);
             updateFirstSet<NonTerminal>(firstSet, nonTerFirstSets, subFirstSets, rule);
@@ -143,7 +142,7 @@ const FirstSets<noam::Substitution> &LLParser::getSubstitutionsFirstSets() const
     return substitutionsFirstSets;
 }
 
-const FirstSetsShared<NonTerminal> &LLParser::getNonTerminalFirstSets() const {
+const FirstSets<NonTerminal> &LLParser::getNonTerminalFirstSets() const {
     return nonTerminalFirstSets;
 }
 
@@ -176,7 +175,7 @@ LLParser::generateFollowSets(const SimpleGrammar &grammar,
 
                 if (subSymbolIndex < rule.getSubstitution().size()) {
                     auto afterSymbolTail = rule.getSubstitution().subSubstitution(subSymbolIndex);
-                    auto tailFirstSet = subFirstSets[afterSymbolTail];
+                    auto tailFirstSet = subFirstSets[make_shared<Substitution>(afterSymbolTail)];
                     insert_all(nonTerSubFollowSet, tailFirstSet);
 
                     if (contains(tailFirstSet, Terminal::empty())) {
@@ -211,7 +210,7 @@ void LLParser::parse(std::vector<Token>::iterator begin, std::vector<Token>::ite
         auto topTerminal = dynamic_pointer_cast<Terminal>(topSymbol);
         if (topTerminal) {
             if (cursor != end) {
-                if (*topTerminal != Terminal::empty()) {
+                if (*topTerminal != *Terminal::empty()) {
                     auto currentInputSymbol = *(*cursor).getSymbol();
                     if (*topTerminal != currentInputSymbol) {
                         throw UnexpectedTokenException{position, make_shared<Token>(*cursor), topTerminal};
@@ -224,7 +223,7 @@ void LLParser::parse(std::vector<Token>::iterator begin, std::vector<Token>::ite
                     astBuilder.addToken(Token{topTerminal, ""});
                 }
                 symbolStack.pop();
-            } else if (*topTerminal == Terminal::empty()) {
+            } else if (*topTerminal == *Terminal::empty()) {
                 astBuilder.addToken(Token{topTerminal, ""});
                 symbolStack.pop();
             } else {
@@ -238,7 +237,7 @@ void LLParser::parse(std::vector<Token>::iterator begin, std::vector<Token>::ite
 
             auto rule = parsingTable.find(make_pair(*topNonTerminal, *currentToken.getSymbol()));
             if (rule == parsingTable.end()) {
-                rule = parsingTable.find(make_pair(*topNonTerminal, Terminal::empty()));
+                rule = parsingTable.find(make_pair(*topNonTerminal, *Terminal::empty()));
             }
             if (rule == parsingTable.end()) {
                 throw UnexpectedTokenException{position, make_shared<Token>(currentToken), nullptr};

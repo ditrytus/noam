@@ -7,7 +7,8 @@ namespace noam {
     enum class SymbolType {
         Terminal,
         NonTerminal,
-        RegexTerminal
+        RegexTerminal,
+        EndOfInput
     };
 
     class Symbol {

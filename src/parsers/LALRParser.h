@@ -3,6 +3,7 @@
 #include "noam-grammars.h"
 
 #include "ParserStateGraph.h"
+#include "FirstFollowSets.h"
 
 namespace noam {
 
@@ -12,6 +13,9 @@ namespace noam {
         LALRParser(const SimpleGrammar& grammar);
 
         static std::unique_ptr<ParserStateGraph> createStateGraph(const SimpleGrammar &grammar);
+
+        static FollowSets<NonTerminal> generateFollowSets(const SimpleGrammar& grammar,
+                                                          FirstSets<NonTerminal>& subFirstSets);
 
     private:
 

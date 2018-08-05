@@ -24,13 +24,15 @@ namespace noam {
 
         std::shared_ptr<Symbol> getFirst() const;
 
+        std::shared_ptr<Symbol> getLast() const;
+
         unsigned long size() const;
 
         virtual ~Substitution() = default;
 
         Substitution subSubstitution(int count) const;
 
-        const std::shared_ptr<Symbol>& getAt(int position) const;
+        const std::shared_ptr<Symbol>& getAt(size_t position) const;
     private:
 
         void addSymbol(const Symbol &symbol);

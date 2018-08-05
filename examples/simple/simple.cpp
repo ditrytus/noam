@@ -92,7 +92,7 @@ int main() {
 
     cout << "FIRST SETS:" << endl;
     for(auto& firstSet : parser.getSubstitutionsFirstSets()) {
-        cout << toString(firstSet.first)
+        cout << toString(*firstSet.first)
              << " : "
              << join(firstSet.second, ", ")
              << endl;
