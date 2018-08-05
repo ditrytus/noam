@@ -29,3 +29,16 @@ namespace noam {
     bool operator == (const PositionRule& a, const PositionRule& b);
 
 }
+
+//namespace std {
+//
+//    template <>
+//    struct hash<noam::PositionRule>
+//    {
+//        size_t operator()(const noam::PositionRule & x) const
+//        {
+//            return hash<int>{}(x.getPosition()) ^ hash<noam::SimpleRule>{}(x.getRule());
+//        }
+//    };
+//
+//}

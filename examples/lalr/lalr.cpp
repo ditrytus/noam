@@ -38,9 +38,15 @@ int main() {
         cout << toString(transition.second) << endl;
     }
 
+    cout << "STATES:" << endl;
+    for (const auto& state : stateGraph->getStates()) {
+        cout << noam::hash(*state) % 97 << endl;
+        cout << toString(*state) << endl;
+    }
+
     cout << "EXTENDED GRAMMAR:" << endl;
-    auto extendedGrammar = extendGrammar(stateGraph);
-    cout << toString(extendedGrammar);
+    auto extendedGrammar = extendGrammar(stateGraph, grammar.getStartRule());
+    cout << toStringEx(extendedGrammar);
 
     cout << endl << "FIRST SETS:" << endl;
     auto firstSets = LLParser::generateFirstSets(extendedGrammar);
@@ -51,30 +57,21 @@ int main() {
              << endl;
     }
 
-    cout << endl << "FOLLOW SETS:" << endl;
-    auto followSets = LALRParser::generateFollowSets(extendedGrammar, firstSets.second);
-    for(auto& followSet : followSets) {
-        cout << toString(followSet.first)
+    cout << endl << "FOLLOW SETS (LL):" << endl;
+    auto followSetsLL = LLParser::generateFollowSets(extendedGrammar, firstSets.first);
+    for(auto& followSet : followSetsLL) {
+        cout << toStringEx(followSet.first)
              << " : "
              << noam::utils::join(followSet.second, ", ")
              << endl;
     }
 
-    cout << endl << "FIRST SETS:" << endl;
-    auto firstSets2 = LLParser::generateFirstSets(grammar);
-    for(auto& firstSet : firstSets2.second) {
-        cout << toString(firstSet.first)
+    cout << endl << "FOLLOW SETS (LALR):" << endl;
+    auto followSets = LALRParser::generateFollowSets(extendedGrammar, firstSets.second);
+    for(auto& followSet : followSets) {
+        cout << toStringEx(followSet.first)
              << " : "
-             << noam::utils::join(firstSet.second, ", ")
-             << endl;
-    }
-
-    cout << endl << "FOLLOW SETS:" << endl;
-    auto followSets2 = LALRParser::generateFollowSets(grammar, firstSets2.second);
-    for(auto& followSet2 : followSets2) {
-        cout << toString(followSet2.first)
-             << " : "
-             << noam::utils::join(followSet2.second, ", ")
+             << noam::utils::join(followSet.second, ", ")
              << endl;
     }
 }

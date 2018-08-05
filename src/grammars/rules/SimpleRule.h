@@ -31,3 +31,16 @@ namespace noam {
 
     bool operator != (const SimpleRule& left, const SimpleRule& right);
 }
+
+//namespace std {
+//
+//    template <>
+//    struct hash<noam::SimpleRule>
+//    {
+//        size_t operator()(const noam::SimpleRule & x) const
+//        {
+//            return hash<noam::NonTerminal>{}(*x.getHead()) ^ hash<noam::Substitution>{}(x.getSubstitution());
+//        }
+//    };
+//
+//}

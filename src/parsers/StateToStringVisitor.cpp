@@ -1,43 +1,61 @@
 #include "StateToStringVisitor.h"
+#include "Extended.h"
+#include "Operations.h"
 
-noam::StateToStringVisitor::StateToStringVisitor(const noam::StateToStringOptions &options)
+using namespace noam;
+
+StateToStringVisitor::StateToStringVisitor(const StateToStringOptions &options)
         : GrammarToStringVisitor(options) {
 }
 
-void noam::StateToStringVisitor::visit(const noam::PositionRule &posRule) {
+void StateToStringVisitor::visit(const PositionRule &posRule) {
     ss << options.rulePositionIndicator;
 }
 
-void noam::StateToStringVisitor::visit(const noam::AlternativeRule &rule) {
+void StateToStringVisitor::visit(const AlternativeRule &rule) {
     GrammarToStringVisitor::visit(rule);
 }
 
-void noam::StateToStringVisitor::preVisit(const noam::AlternativeRule &rule) {
+void StateToStringVisitor::preVisit(const AlternativeRule &rule) {
     GrammarToStringVisitor::preVisit(rule);
 }
 
-void noam::StateToStringVisitor::postVisit(const noam::AlternativeRule &rule) {
+void StateToStringVisitor::postVisit(const AlternativeRule &rule) {
     GrammarToStringVisitor::postVisit(rule);
 }
 
-void noam::StateToStringVisitor::visit(const noam::SimpleRule &rule) {
+void StateToStringVisitor::visit(const SimpleRule &rule) {
     GrammarToStringVisitor::visit(rule);
 }
 
-void noam::StateToStringVisitor::postVisit(const noam::SimpleRule &rule) {
+void StateToStringVisitor::postVisit(const SimpleRule &rule) {
     GrammarToStringVisitor::postVisit(rule);
 }
 
-void noam::StateToStringVisitor::preVisit(const noam::Substitution &sub) {
+void StateToStringVisitor::preVisit(const Substitution &sub) {
     GrammarToStringVisitor::preVisit(sub);
 }
 
-void noam::StateToStringVisitor::visit(const noam::NonTerminal &symbol) {
+void StateToStringVisitor::visit(const NonTerminal &symbol) {
+    auto extensionPtr = dynamic_cast<const Extended<NonTerminal>*>(&symbol);
+    if (extensionPtr) {
+        ss << "(" << hash(*extensionPtr->getFrom()) % 97 << ",";
+    }
     GrammarToStringVisitor::visit(symbol);
+    if (extensionPtr) {
+        ss << "," << hash(*extensionPtr->getTo()) % 97 << ")";
+    }
 }
 
-void noam::StateToStringVisitor::visit(const noam::Terminal &symbol) {
+void StateToStringVisitor::visit(const Terminal &symbol) {
+    auto extensionPtr = dynamic_cast<const Extended<Terminal>*>(&symbol);
+    if (extensionPtr) {
+        ss << "(" << hash(*extensionPtr->getFrom()) % 97 << ",";
+    }
     GrammarToStringVisitor::visit(symbol);
+    if (extensionPtr) {
+        ss << "," << hash(*extensionPtr->getTo()) % 97 << ")";
+    }
 }
 
-noam::StateToStringOptions::StateToStringOptions() : rulePositionIndicator("•") {}
+StateToStringOptions::StateToStringOptions() : rulePositionIndicator("•") {}

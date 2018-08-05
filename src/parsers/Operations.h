@@ -30,7 +30,14 @@ namespace noam {
     template <>
     std::string toString(const PositionRule& element);
 
-    SimpleGrammar extendGrammar(const std::shared_ptr<ParserStateGraph> &graph);
+    template <typename T>
+    std::string toStringEx(const T &element){
+        return visitResult<StateToStringVisitor, StateTraversal<StateToStringVisitor, GrammarAcceptor>, GrammarAcceptor, T>(element);
+    }
+
+    SimpleGrammar extendGrammar(const std::shared_ptr<ParserStateGraph> &graph, const SimpleRule& startRule);
+
+    size_t hash(const ParserState& state);
 }
 
 

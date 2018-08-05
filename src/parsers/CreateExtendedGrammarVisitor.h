@@ -13,11 +13,8 @@ namespace noam {
     class CreateExtendedGrammarVisitor : public ResultVisitor<SimpleGrammar> {
 
     public:
-        CreateExtendedGrammarVisitor(std::shared_ptr<ParserStateGraph> graph)
-                : graph(std::move(graph))
-                , followCurrentRule(false)
-                , extendSubstitution(false)
-        {}
+        CreateExtendedGrammarVisitor(std::shared_ptr<ParserStateGraph> graph, SimpleRule startRule)
+                : graph(std::move(graph)), startRule(std::move(startRule)) {}
 
         void preVisit(const ParserState& state);
 
@@ -40,8 +37,12 @@ namespace noam {
 
         std::vector<SimpleRule> exRules;
 
-        bool followCurrentRule;
-        bool extendSubstitution;
+        bool followCurrentRule {false};
+        bool extendSubstitution {false};
+        bool isStartRule {false};
+
+        const SimpleRule startRule;
+
         std::unique_ptr<ParserStateMachine> currentMachine;
         std::shared_ptr<NonTerminal> extendedHead;
         std::vector<std::shared_ptr<Symbol>> subSymbols;

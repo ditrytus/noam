@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "ParserState.h"
+
 namespace noam {
 
     template <typename Base>

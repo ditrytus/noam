@@ -14,13 +14,19 @@ void CreateExtendedGrammarVisitor::preVisit(const PositionRule &posRule) {
 void CreateExtendedGrammarVisitor::postVisit(const PositionRule &posRule) {
     if (!followCurrentRule) return;
 
-    exRules.emplace_back(extendedHead, subSymbols);
+    if (isStartRule) {
+        exRules.emplace(exRules.begin(), extendedHead, subSymbols);
+    } else {
+        exRules.emplace_back(extendedHead, subSymbols);
+    }
     extendSubstitution = false;
     followCurrentRule = false;
 }
 
 void CreateExtendedGrammarVisitor::preVisit(const SimpleRule &posRule) {
     if (!followCurrentRule) return;
+
+    isStartRule = posRule == startRule;
 
     shared_ptr<ParserState> toState;
     auto ruleHead = posRule.getHead();

@@ -31,3 +31,21 @@ namespace noam {
     bool operator != (const ParserState& a, const ParserState& b);
 
 }
+
+//namespace std {
+//
+//    template <>
+//    struct hash<noam::ParserState>
+//    {
+//        size_t operator()(const noam::ParserState & x) const
+//        {
+//            size_t result = 0;
+//            hash<noam::PositionRule> hashPosRule;
+//            for(const auto& posRule : x.getRuleSet()) {
+//                result ^= hashPosRule(result);
+//            }
+//            return result;
+//        }
+//    };
+//
+//}
