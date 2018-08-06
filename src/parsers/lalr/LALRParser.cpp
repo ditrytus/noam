@@ -26,23 +26,22 @@ unique_ptr<ParserStateGraph> LALRParser::createStateGraph(const SimpleGrammar &g
 
     SharedPtrSet<ParserState> states;
     SharedPtrPairMap<ParserState, Symbol, shared_ptr<ParserState>> transitions;
-    SharedPtrSet<ParserState> unprocessedStates;
     shared_ptr<ParserState> startStatePtr = stateFactory.createStateFor(startRule);
 
     states.insert(startStatePtr);
-    unprocessedStates.insert(startStatePtr);
-
-    while(!unprocessedStates.empty()) {
-        SharedPtrSet<ParserState> statesToProcess = unprocessedStates;
+    size_t beforeCount = 1;
+    size_t afterCount = 0;
+    while(beforeCount != afterCount) {
+        beforeCount = states.size();
+        SharedPtrSet<ParserState> statesToProcess = states;
         for (const auto &statePtr : statesToProcess) {
             for (const auto& symbolPtr : getSymbolsOfType<Symbol>(*statePtr)) {
                 shared_ptr<ParserState> newStatePtr = stateFactory.createFromStateWithSymbol(*statePtr, symbolPtr);
-                states.insert(newStatePtr);
                 transitions[make_pair(statePtr, symbolPtr)] = newStatePtr;
-                unprocessedStates.insert(newStatePtr);
+                states.insert(newStatePtr);
             }
-            unprocessedStates.erase(statePtr);
         }
+        afterCount = states.size();
     }
 
     return make_unique<ParserStateGraph>(states, transitions, startStatePtr);
@@ -142,8 +141,7 @@ void LALRParser::parse(std::vector<Token>::iterator begin,
                 }
             }
         } else {
-            throw UnexpectedTokenException{position, make_shared<Token>(*cursor), nullptr};
+            throw UnexpectedTokenException{position, nullptr, nullptr};
         }
     }
-
 }

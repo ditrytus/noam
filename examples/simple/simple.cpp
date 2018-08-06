@@ -16,12 +16,12 @@ void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const 
 void printAst(const RuleNode &ast);
 
 auto parseGrammar(SimpleGrammar grammar) {
-    LLParser parser {grammar};
+    LALRParser parser {grammar};
 
     auto terms = getSymbolsOfType<Terminal>(grammar);
     TerminalsLexer lexer {terms};
 
-    TopDownLeftRightAstBuilder astBuilder;
+    BottomUpRightToLeftAstBuilder astBuilder;
 
     return bind(printParseError, parser, lexer, astBuilder, _1);
 }

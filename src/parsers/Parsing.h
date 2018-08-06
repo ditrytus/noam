@@ -47,8 +47,8 @@ namespace noam {
         return bind(parse<Parser, Lexer, AstBuilder>, parser, lexer, astBuilder, _1);
     };
 
-    auto createDefaultParseFunc(SimpleGrammar grammar) {
-        return createParseFunc<LLParser, TerminalsLexer, ExcludePunctuation<TopDownLeftRightAstBuilder>>(grammar);
+    auto createDefaultParseFunc(const SimpleGrammar &grammar) {
+        return createParseFunc<LALRParser, TerminalsLexer, ExcludePunctuation<BottomUpRightToLeftAstBuilder>>(grammar);
     }
 }
 

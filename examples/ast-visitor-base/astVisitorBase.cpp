@@ -26,26 +26,28 @@ public:
     }
 
     void preVisit(const RuleNode &node) override {
-        cout << "PRE: " << toString(node.getRule(), GrammarToStringOptions::oneLine()) << endl;
+        cout << "PRE: " << toString(node.getRule());
     }
 
     void visit(const RuleNode &node) override {
-        cout << "VISIT: " << toString(node.getRule(), GrammarToStringOptions::oneLine()) << endl;
+        cout << "VISIT: " << toString(node.getRule());
     }
 
     void postVisit(const RuleNode &node) override {
-        cout << "POST: " << toString(node.getRule(), GrammarToStringOptions::oneLine()) << endl;
+        cout << "POST: " << toString(node.getRule());
     }
 
 };
 
 int main() {
+    auto START = "START"_N;
     auto S = "S"_N;
     auto a = "a"_T, b = "b"_T;
-    auto EMPTY = Terminal::empty();
+    auto EMPTY = *Terminal::empty();
 
     Grammar grammar = {
-        R(S >> EMPTY | a + S + b)
+        R(START >> S),
+        R(S >> a + b | a + S + b)
     };
     auto parse = createDefaultParseFunc(grammar);
 

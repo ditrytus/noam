@@ -11,19 +11,20 @@ using namespace noam::utils;
 using namespace std;
 
 int main() {
+    auto START = "START"_N;
     auto S = "S"_N, AB = "AB"_N, BA = "BA"_N;
     auto a = "a"_T, b = "b"_T;
-    auto EMPTY = Terminal::empty();
 
     Grammar grammar = {
-        R(S >> a + BA | b + AB),
-        R(AB >> a + b + AB | EMPTY),
-        R(BA >> b + a + BA | EMPTY)
+        R(START >> S),
+        R(S >> AB | BA),
+        R(AB >> a + b | a + b + AB),
+        R(BA >> b + a | b + a + BA)
     };
 
     auto parse = createDefaultParseFunc(grammar);
 
-    auto ast = parse("ababa");
+    auto ast = parse("ababab");
 
     cout << toString(ast) << endl;
 
@@ -33,7 +34,7 @@ int main() {
             .PostVisit([&](const TokenNode& node){
                 cout << "POST VISIT token: " << toString(node.getToken()) << endl;
             })
-            .For(S >> a + BA)
+            .For(AB >> a + b + AB)
             .Visit([&](const RuleNode& node){
                 cout << "VISIT rule: " << toString(node.getRule());
             });
