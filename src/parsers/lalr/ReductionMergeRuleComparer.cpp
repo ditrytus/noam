@@ -1,4 +1,4 @@
-#include "Extended.h"
+#include "visitors/extension/Extended.h"
 #include "ReductionMergeRuleComparer.h"
 
 bool noam::ReductionMergeRuleComparer::operator()(const noam::SimpleRule &a, const noam::SimpleRule &b) const {

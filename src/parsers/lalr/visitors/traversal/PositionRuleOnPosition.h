@@ -3,7 +3,7 @@
 #include <utility>
 #include <memory>
 
-#include "PositionRule.h"
+#include "noam-parsers-lalr-states.h"
 
 namespace noam {
 

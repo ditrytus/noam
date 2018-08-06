@@ -3,13 +3,10 @@
 
 #include "noam-utilities.h"
 #include "noam-parsers-ll.h"
+#include "noam-parsers-lalr-visitors.h"
 
 #include "LALRParser.h"
-#include "ParserStateFactory.h"
-#include "Operations.h"
-#include "ParserStateGraph.h"
 #include "ReductionMergeRuleComparer.h"
-#include "ll/LLParser.h"
 
 using namespace noam;
 using namespace std;

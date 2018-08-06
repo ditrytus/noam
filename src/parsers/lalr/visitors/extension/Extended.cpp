@@ -21,10 +21,3 @@ std::shared_ptr<ParserState> noam::getTo(const SimpleRule &rule) {
     }
     throw invalid_argument("rule's substitution's last symbol is not extended");
 }
-
-//std::shared_ptr<ParserState> noam::getFrom(const SimpleRule &rule) {
-//    if (auto exHead = dynamic_pointer_cast<Extended<NonTerminal>>(rule.getHead())) {
-//        return exHead->getFrom();
-//    }
-//    throw invalid_argument("rule's substitution's last symbol is not extended");
-//}

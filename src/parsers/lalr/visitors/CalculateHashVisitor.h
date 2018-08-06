@@ -3,8 +3,7 @@
 #include "noam-visitors.h"
 #include "noam-grammars.h"
 
-#include "PositionRule.h"
-#include "ParserState.h"
+#include "noam-parsers-lalr-states.h"
 
 namespace noam {
 

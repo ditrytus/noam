@@ -1,12 +1,11 @@
 #pragma once
 
 #include <utility>
-#include "../grammars/rules/SimpleRule.h"
-#include "ParserState.h"
+
+#include "noam-parsers-lalr-states.h"
+#include "noam-grammars.h"
+
 #include "Extended.h"
-#include "ParserStateGraph.h"
-#include "ParserStateMachine.h"
-#include "../grammars/SimpleGrammar.h"
 
 namespace noam {
 

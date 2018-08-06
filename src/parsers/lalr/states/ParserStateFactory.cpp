@@ -1,5 +1,5 @@
 #include "ParserStateFactory.h"
-#include "Operations.h"
+#include "../visitors/Operations.h"
 
 using namespace noam;
 using namespace std;

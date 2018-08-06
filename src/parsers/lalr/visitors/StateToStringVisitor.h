@@ -1,7 +1,7 @@
 #pragma once
 
 #include "noam-grammars-visitors.h"
-#include "PositionRule.h"
+#include "noam-parsers-lalr-states.h"
 
 namespace noam {
 

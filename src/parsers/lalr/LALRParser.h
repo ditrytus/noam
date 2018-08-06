@@ -4,8 +4,8 @@
 #include "noam-lexers.h"
 #include "noam-ast.h"
 
-#include "ParserStateGraph.h"
-#include "FirstFollowSets.h"
+#include "noam-parsers-lalr-states.h"
+#include "noam-parsers-firstfollow.h"
 
 namespace noam {
 

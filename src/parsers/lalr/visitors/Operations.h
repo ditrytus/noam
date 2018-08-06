@@ -2,12 +2,11 @@
 
 #include "noam-grammars-visitors.h"
 
-#include "ParserState.h"
-#include "StateTraversal.h"
-#include "PositionRuleSymbolOnly.h"
-#include "PositionRuleOnPosition.h"
+#include "noam-parsers-lalr-states.h"
+#include "noam-parsers-lalr-visitors-traversal.h"
+#include "noam-parsers-lalr-visitors-extension.h"
+
 #include "StateToStringVisitor.h"
-#include "CreateExtendedGrammarVisitor.h"
 
 namespace noam {
 

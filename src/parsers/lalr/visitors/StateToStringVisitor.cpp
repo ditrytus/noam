@@ -1,5 +1,5 @@
 #include "StateToStringVisitor.h"
-#include "Extended.h"
+#include "extension/Extended.h"
 #include "Operations.h"
 
 using namespace noam;

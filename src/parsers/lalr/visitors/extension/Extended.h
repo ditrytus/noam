@@ -2,7 +2,8 @@
 
 #include <memory>
 #include <utility>
-#include "ParserState.h"
+
+#include "noam-parsers-lalr-states.h"
 
 namespace noam {
 
@@ -61,8 +62,6 @@ namespace noam {
     };
 
     std::unique_ptr<SimpleRule> dropExtension(const SimpleRule& rule);
-
-//    std::shared_ptr<ParserState> getFrom(const SimpleRule& rule);
 
     std::shared_ptr<ParserState> getTo(const SimpleRule& rule);
 }

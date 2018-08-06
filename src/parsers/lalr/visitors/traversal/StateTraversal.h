@@ -1,9 +1,7 @@
 #pragma once
 
 #include "noam-grammars-visitors.h"
-
-#include "ParserState.h"
-#include "ParserStateGraph.h"
+#include "noam-parsers-lalr-states.h"
 
 namespace noam {
 
