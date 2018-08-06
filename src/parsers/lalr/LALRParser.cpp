@@ -9,15 +9,24 @@
 #include "ReductionMergeRuleComparer.h"
 
 using namespace noam;
+using namespace noam::literals;
 using namespace std;
 
-LALRParser::LALRParser(const SimpleGrammar &grammar)
-        : stateGraph(createStateGraph(grammar))
-        , grammar(grammar) {
+LALRParser::LALRParser(const SimpleGrammar &grm) : grammar(LALRParser::addStartRule(grm)) {
+    stateGraph = createStateGraph(grammar);
+
     auto firstSets = LLParser::generateFirstSets(grammar);
     auto followSets = LALRParser::generateFollowSets(grammar, firstSets.second);
     auto extendedGrammar = extendGrammar(stateGraph, grammar.getStartRule());
+
     reductionTable = LALRParser::generateReductionTable(extendedGrammar, followSets);
+}
+
+SimpleGrammar LALRParser::addStartRule(const SimpleGrammar &grm) {
+    auto originalRules = grm.getRules();
+    vector<SimpleRule> newRules = {"__START__"_N >> *grm.getStartRule().getHead()};
+    copy(originalRules.begin(), originalRules.end(), back_inserter(newRules));
+    return SimpleGrammar{newRules};
 }
 
 unique_ptr<ParserStateGraph> LALRParser::createStateGraph(const SimpleGrammar &grammar) {

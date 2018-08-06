@@ -40,18 +40,17 @@ public:
 };
 
 int main() {
-    auto START = "START"_N;
     auto S = "S"_N;
     auto a = "a"_T, b = "b"_T;
-    auto EMPTY = *Terminal::empty();
 
     Grammar grammar = {
-        R(START >> S),
         R(S >> a + b | a + S + b)
     };
     auto parse = createDefaultParseFunc(grammar);
 
     auto ast = parse("aaabbb");
+
+    cout << toString(ast) << endl;
 
     visitAst<SimpleAstVisitor>(ast);
 }

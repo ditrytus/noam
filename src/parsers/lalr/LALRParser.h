@@ -27,11 +27,13 @@ namespace noam {
         static ReductionTable generateReductionTable(const SimpleGrammar& exGrammar,
                                                       FollowSets<NonTerminal>& followSets);
 
+        static SimpleGrammar addStartRule(const SimpleGrammar &grm);
+
         void parse(std::vector<Token>::iterator begin,
                    std::vector<Token>::iterator end,
                    AstBuilder &astBuilder);
-
     private:
+
         SimpleGrammar grammar;
 
         std::shared_ptr<ParserStateGraph> stateGraph;

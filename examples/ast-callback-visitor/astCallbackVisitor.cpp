@@ -11,12 +11,10 @@ using namespace noam::utils;
 using namespace std;
 
 int main() {
-    auto START = "START"_N;
     auto S = "S"_N, AB = "AB"_N, BA = "BA"_N;
     auto a = "a"_T, b = "b"_T;
 
     Grammar grammar = {
-        R(START >> S),
         R(S >> AB | BA),
         R(AB >> a + b | a + b + AB),
         R(BA >> b + a | b + a + BA)
