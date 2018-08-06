@@ -10,9 +10,8 @@
 #include "noam-grammars.h"
 #include "noam-symbols.h"
 #include "noam-lexers.h"
+#include "noam-parsers-firstfollow.h"
 #include "noam-parsers-exceptions.h"
-
-#include "FirstFollowSets.h"
 
 namespace noam {
 

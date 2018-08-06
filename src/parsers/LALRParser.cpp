@@ -2,13 +2,14 @@
 #include <iostream>
 
 #include "noam-utilities.h"
+#include "noam-parsers-ll.h"
 
 #include "LALRParser.h"
 #include "ParserStateFactory.h"
 #include "Operations.h"
 #include "ParserStateGraph.h"
 #include "ReductionMergeRuleComparer.h"
-#include "LLParser.h"
+#include "ll/LLParser.h"
 
 using namespace noam;
 using namespace std;
