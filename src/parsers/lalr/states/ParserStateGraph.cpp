@@ -1,5 +1,4 @@
 #include "ParserStateGraph.h"
-#include <utility>
 
 using namespace noam;
 using namespace std;

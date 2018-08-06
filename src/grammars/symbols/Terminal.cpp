@@ -1,5 +1,4 @@
 #include "Terminal.h"
-#include "NonTerminal.h"
 
 using namespace noam;
 using namespace std;

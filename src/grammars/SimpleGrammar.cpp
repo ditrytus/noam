@@ -1,5 +1,4 @@
 #include "SimpleGrammar.h"
-#include <utility>
 
 using namespace noam;
 
