@@ -11,7 +11,7 @@ using namespace noam::utils;
 using namespace std;
 using namespace std::placeholders;
 
-void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const AstBuilder& astBuilder, const std::string& input);
+void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const TopDownLeftRightAstBuilder& astBuilder, const std::string& input);
 
 void printAst(const RuleNode &ast);
 
@@ -21,7 +21,7 @@ auto parseGrammar(SimpleGrammar grammar) {
     auto terms = getSymbolsOfType<Terminal>(grammar);
     TerminalsLexer lexer {terms};
 
-    AstBuilder astBuilder;
+    TopDownLeftRightAstBuilder astBuilder;
 
     return bind(printParseError, parser, lexer, astBuilder, _1);
 }
@@ -110,7 +110,7 @@ int main() {
 
     auto terms = getSymbolsOfType<Terminal>(s_grammar);
     TerminalsLexer lexer {terms};
-    AstBuilder astBuilder;
+    TopDownLeftRightAstBuilder astBuilder;
 
     auto ast = noam::parse(parser, lexer, astBuilder, "(((a+a)+a)+a)");
     cout << toString(ast) << endl;
@@ -174,17 +174,17 @@ int main() {
     printParse123("one");
     printParse123("one\none two\none two three\none two three one two three");
 
-    auto printParseWs = createParseFunc<LLParser, IgnoreWhitespace<TerminalsLexer>, ExcludePunctuation<AstBuilder>>(s_grammar);
+    auto printParseWs = createParseFunc<LLParser, IgnoreWhitespace<TerminalsLexer>, ExcludePunctuation<TopDownLeftRightAstBuilder>>(s_grammar);
     auto astWs = printParseWs("(\ta\n+\na )");
     printAst(astWs);
 
     Grammar g_x = {R(S >> "\\d"_Tx + S | "23"_T + S | EMPTY)};
-    auto printParseRegex = createParseFunc<LLParser, TerminalsLexer, ExcludePunctuation<AstBuilder>>(g_x);
+    auto printParseRegex = createParseFunc<LLParser, TerminalsLexer, ExcludePunctuation<TopDownLeftRightAstBuilder>>(g_x);
     auto astRx = printParseRegex("12345");
     printAst(astRx);
 }
 
-void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const AstBuilder& astBuilder, const std::string& input) {
+void printParseError(const LLParser& parser, const TerminalsLexer& lexer, const TopDownLeftRightAstBuilder& astBuilder, const std::string& input) {
     try {
         auto ast = parse(parser, lexer, astBuilder, input);
         printAst(ast);

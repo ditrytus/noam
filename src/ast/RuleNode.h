@@ -9,9 +9,11 @@ namespace noam {
     class RuleNode : public AstNode {
 
     public:
-        RuleNode(const std::shared_ptr<RuleNode> &parent, const SimpleRule &rule);
+        RuleNode(const SimpleRule &rule);
 
         const SimpleRule &getRule() const;
+
+        std::shared_ptr<Symbol> getHead() override;
 
 
     private:

@@ -47,7 +47,7 @@ namespace noam {
     };
 
     auto createDefaultParseFunc(SimpleGrammar grammar) {
-        return createParseFunc<LLParser, TerminalsLexer, ExcludePunctuation<AstBuilder>>(grammar);
+        return createParseFunc<LLParser, TerminalsLexer, ExcludePunctuation<TopDownLeftRightAstBuilder>>(grammar);
     }
 }
 

@@ -16,11 +16,11 @@ int main() {
 
     SimpleGrammar grammar = {
         S >> N,
-        N >> V + "=" + E,
+        N >> V + "="_P + E,
         N >> E,
         E >> V,
         V >> "x"_T,
-        V >> "*"_T + E
+        V >> "*"_P + E
     };
 
     shared_ptr<ParserStateGraph> stateGraph = LALRParser::createStateGraph(grammar);
@@ -107,6 +107,7 @@ int main() {
              << toString(*reduction.second);
     }
 
-    auto parse = createParseFunc<LALRParser, TerminalsLexer, AstBuilder>(grammar);
-    parse("x=*x");
+    auto parse = createParseFunc<LALRParser, TerminalsLexer, ExcludePunctuation<BottomUpRightToLeftAstBuilder>>(grammar);
+    auto tree = parse("x=*x");
+    cout << toString(tree);
 }

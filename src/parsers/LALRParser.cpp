@@ -125,7 +125,7 @@ void LALRParser::parse(std::vector<Token>::iterator begin,
         auto currentSymbol = cursor < end ? (*cursor).getSymbol() : static_pointer_cast<Terminal>(make_shared<EndOfInput>());
         if (auto shiftState = stateGraph->peakTransition(stateStack.top(), currentSymbol)) {
             stateStack.push(shiftState);
-            // cout << "SHIFT: " << toString(*currentSymbol) << endl;
+            astBuilder.addToken(*cursor);
             ++cursor; ++position;
         } else if (auto reductionRule = reductionTable[make_pair(stateStack.top(), currentSymbol)]) {
             if (currentSymbol->getType() == SymbolType::EndOfInput &&
@@ -137,7 +137,7 @@ void LALRParser::parse(std::vector<Token>::iterator begin,
                     stateStack.pop();
                 }
                 if (auto reducedState = stateGraph->peakTransition(stateStack.top(), reductionRule->getHead())) {
-                    // cout << "REDUCE: " << toString(*reductionRule);
+                    astBuilder.addRule(*reductionRule);
                     stateStack.push(reducedState);
                 } else {
                     throw UnexpectedTokenException{position, make_shared<Token>(*cursor), nullptr};

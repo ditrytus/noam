@@ -10,9 +10,11 @@ namespace noam {
     class TokenNode : public AstNode {
 
     public:
-        TokenNode(const std::shared_ptr<RuleNode> &parent, Token token);
+        TokenNode(Token token);
 
         const Token &getToken() const;
+
+        std::shared_ptr<Symbol> getHead() override;
 
     private:
         Token token;

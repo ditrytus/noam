@@ -13,7 +13,7 @@ namespace noam {
 
     protected:
 
-        void addNode(const std::shared_ptr<AstNode> &nodePtr) const override {
+        void addNode(const std::shared_ptr<AstNode> &nodePtr) override {
             if (!isPunctuation(*nodePtr)) {
                 Base::addNode(nodePtr);
             }
