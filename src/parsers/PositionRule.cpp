@@ -6,13 +6,13 @@
 using namespace noam;
 using namespace std;
 
-PositionRule::PositionRule(SimpleRule rule, int position) : position(position), rule(std::move(rule)) {
+PositionRule::PositionRule(SimpleRule rule, size_t position) : position(position), rule(std::move(rule)) {
     if (position > rule.getSubstitution().size()) {
         throw out_of_range{"position"};
     }
 }
 
-int PositionRule::getPosition() const {
+size_t PositionRule::getPosition() const {
     return position;
 }
 

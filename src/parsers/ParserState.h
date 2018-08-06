@@ -19,6 +19,8 @@ namespace noam {
 
         static std::unique_ptr<ParserState> endState();
 
+        bool containsRule(const PositionRule &posRule);
+
     private:
         ParserState() = default;
 
@@ -32,20 +34,3 @@ namespace noam {
 
 }
 
-//namespace std {
-//
-//    template <>
-//    struct hash<noam::ParserState>
-//    {
-//        size_t operator()(const noam::ParserState & x) const
-//        {
-//            size_t result = 0;
-//            hash<noam::PositionRule> hashPosRule;
-//            for(const auto& posRule : x.getRuleSet()) {
-//                result ^= hashPosRule(result);
-//            }
-//            return result;
-//        }
-//    };
-//
-//}

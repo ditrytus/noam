@@ -2,18 +2,21 @@
 
 #include "ParserStateMachine.h"
 
-noam::ParserStateMachine::ParserStateMachine(std::shared_ptr<ParserStateGraph> graph,
-                                             std::shared_ptr<noam::ParserState> currentState)
-        : graph(std::move(graph)), currentState(std::move(currentState)) {}
+using namespace noam;
+using namespace std;
 
-const std::shared_ptr<noam::ParserState> &noam::ParserStateMachine::getCurrentState() const {
+ParserStateMachine::ParserStateMachine(shared_ptr<ParserStateGraph> graph,
+                                             shared_ptr<ParserState> currentState)
+        : graph(move(graph)), currentState(move(currentState)) {}
+
+const shared_ptr<ParserState> &ParserStateMachine::getCurrentState() const {
     return currentState;
 }
 
-void noam::ParserStateMachine::transition(const std::shared_ptr<noam::Symbol> &symbol) {
+void ParserStateMachine::transition(const shared_ptr<Symbol> &symbol) {
     try {
-        currentState = graph->getTransitions().at(SharedPtrPair<ParserState, Symbol>{currentState, symbol});
-    } catch (const std::out_of_range&) {
+        currentState = graph->followSymbol(currentState, symbol);
+    } catch (const out_of_range&) {
         throw TransitionException{};
     }
 }

@@ -7,11 +7,11 @@ namespace noam {
     class PositionRule {
 
     public:
-        PositionRule(SimpleRule rule, int position);
+        PositionRule(SimpleRule rule, size_t position);
 
         PositionRule(SimpleRule rule);
 
-        int getPosition() const;
+        size_t getPosition() const;
 
         const SimpleRule &getRule() const;
 
@@ -20,7 +20,7 @@ namespace noam {
         PositionRule inc() const;
 
     private:
-        int position;
+        size_t position;
 
         SimpleRule rule;
     };
@@ -29,16 +29,3 @@ namespace noam {
     bool operator == (const PositionRule& a, const PositionRule& b);
 
 }
-
-//namespace std {
-//
-//    template <>
-//    struct hash<noam::PositionRule>
-//    {
-//        size_t operator()(const noam::PositionRule & x) const
-//        {
-//            return hash<int>{}(x.getPosition()) ^ hash<noam::SimpleRule>{}(x.getRule());
-//        }
-//    };
-//
-//}

@@ -30,15 +30,15 @@ int main() {
 
     cout << "TRANSITIONS: " << stateGraph->getTransitions().size() << endl;
     for(const auto& transition : stateGraph->getTransitions()) {
-        cout << "FROM: " << endl;
-        cout << toString(transition.first.first);
-        cout << "BY: " << endl;
-        cout << toString(transition.first.second) << endl;
-        cout << "TO: " << endl;
-        cout << toString(transition.second) << endl;
+        cout << noam::hash(*transition.first.first) % 97
+             << "\t"
+             << toString(transition.first.second)
+             << "\t"
+             << noam::hash(*transition.second) % 97
+             << endl;
     }
 
-    cout << "STATES:" << endl;
+    cout << endl << "STATES:" << endl;
     for (const auto& state : stateGraph->getStates()) {
         cout << noam::hash(*state) % 97 << endl;
         cout << toString(*state) << endl;
@@ -106,4 +106,7 @@ int main() {
              << " = "
              << toString(*reduction.second);
     }
+
+    auto parse = createParseFunc<LALRParser, TerminalsLexer, AstBuilder>(grammar);
+    parse("x=*x");
 }

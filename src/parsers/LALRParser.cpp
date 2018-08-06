@@ -1,4 +1,5 @@
 #include <map>
+#include <iostream>
 
 #include "noam-utilities.h"
 
@@ -7,13 +8,19 @@
 #include "Operations.h"
 #include "ParserStateGraph.h"
 #include "ReductionMergeRuleComparer.h"
+#include "LLParser.h"
 
 using namespace noam;
 using namespace std;
 
 LALRParser::LALRParser(const SimpleGrammar &grammar)
         : stateGraph(createStateGraph(grammar))
-{}
+        , grammar(grammar) {
+    auto firstSets = LLParser::generateFirstSets(grammar);
+    auto followSets = LALRParser::generateFollowSets(grammar, firstSets.second);
+    auto extendedGrammar = extendGrammar(stateGraph, grammar.getStartRule());
+    reductionTable = LALRParser::generateReductionTable(extendedGrammar, followSets);
+}
 
 unique_ptr<ParserStateGraph> LALRParser::createStateGraph(const SimpleGrammar &grammar) {
     const auto &startRule = grammar.getStartRule();
@@ -40,7 +47,7 @@ unique_ptr<ParserStateGraph> LALRParser::createStateGraph(const SimpleGrammar &g
         }
     }
 
-    return make_unique<ParserStateGraph>(states, transitions);
+    return make_unique<ParserStateGraph>(states, transitions, startStatePtr);
 }
 
 FollowSets<NonTerminal>
@@ -104,4 +111,41 @@ ReductionTable LALRParser::generateReductionTable(const SimpleGrammar &exGrammar
     }
 
     return reductionTable;
+}
+
+void LALRParser::parse(std::vector<Token>::iterator begin,
+                       std::vector<Token>::iterator end,
+                       AstBuilder &astBuilder) {
+    stack<shared_ptr<ParserState>> stateStack;
+    int position = 0;
+    stateStack.push(stateGraph->getStartState());
+    auto acceptRule = PositionRule{grammar.getStartRule(), grammar.getStartRule().getSubstitution().size()};
+    auto cursor = begin;
+    while(true) {
+        auto currentSymbol = cursor < end ? (*cursor).getSymbol() : static_pointer_cast<Terminal>(make_shared<EndOfInput>());
+        if (auto shiftState = stateGraph->peakTransition(stateStack.top(), currentSymbol)) {
+            stateStack.push(shiftState);
+            // cout << "SHIFT: " << toString(*currentSymbol) << endl;
+            ++cursor; ++position;
+        } else if (auto reductionRule = reductionTable[make_pair(stateStack.top(), currentSymbol)]) {
+            if (currentSymbol->getType() == SymbolType::EndOfInput &&
+                stateStack.top()->containsRule(acceptRule)) {
+                break;
+            } else {
+                size_t popCount = reductionRule->getSubstitution().size();
+                while(popCount-- > 0) {
+                    stateStack.pop();
+                }
+                if (auto reducedState = stateGraph->peakTransition(stateStack.top(), reductionRule->getHead())) {
+                    // cout << "REDUCE: " << toString(*reductionRule);
+                    stateStack.push(reducedState);
+                } else {
+                    throw UnexpectedTokenException{position, make_shared<Token>(*cursor), nullptr};
+                }
+            }
+        } else {
+            throw UnexpectedTokenException{position, make_shared<Token>(*cursor), nullptr};
+        }
+    }
+
 }

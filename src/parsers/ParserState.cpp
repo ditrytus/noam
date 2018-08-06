@@ -1,5 +1,7 @@
 #include <utility>
 
+#include "noam-utilities.h"
+
 #include "ParserState.h"
 
 using namespace noam;
@@ -30,6 +32,10 @@ std::set<PositionRule> ParserState::operator+(std::shared_ptr<Symbol> symbol) co
 
 unique_ptr<ParserState> ParserState::endState() {
     return make_unique<ParserState>(ParserState{});
+}
+
+bool ParserState::containsRule(const PositionRule &posRule) {
+    return utils::contains(ruleSet, posRule);
 }
 
 bool noam::operator<(const ParserState &a, const ParserState &b) {

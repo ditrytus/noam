@@ -20,7 +20,6 @@ namespace noam {
         std::shared_ptr<ParserStateGraph> graph;
 
         std::shared_ptr<ParserState> currentState;
-
     };
 
 }
