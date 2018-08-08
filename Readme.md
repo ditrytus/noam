@@ -29,7 +29,7 @@ Few examples of strings in that language:
 
 **STEP 1**: Define a grammar:
 
-```
+```c++
 auto CONTENT = "C"_N;
 auto BRACKETS = "B"_N;
 
@@ -43,19 +43,19 @@ Grammar grammar = {
 
 **STEP 2**: Obtain a parsing function:
 
-```
+```c++
 auto parse = createDefaultParseFunc(grammar);
 ```
 
 **STEP 3**: Generate AST from input:
 
-```
+```c++
 auto ast = parse("Lorem (ipsum (dolor)) sit (amet)");
 ```
 
 **STEP 4**: Print the AST:
 
-```
+```c++
 cout << toString(ast) << endl;
 ```
 
