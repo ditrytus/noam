@@ -31,6 +31,3 @@ std::string noam::utils::replaceAll(std::string& str, const std::string& from, c
     }
     return str;
 }
-
-template<>
-std::string noam::utils::toString(const std::string &element) {return element;}

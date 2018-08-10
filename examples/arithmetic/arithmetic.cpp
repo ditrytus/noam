@@ -11,10 +11,10 @@ using namespace noam::utils;
 
 using namespace std;
 
-class Evaluate : public ResultVisitor<float> {
+class RomanToArabic : public ResultVisitor<float> {
 
 public:
-    Evaluate() {}
+    RomanToArabic() {}
 
     void postVisit(const RuleNode &node) {
         const auto head = node.getRule().getHead();
@@ -86,7 +86,7 @@ int main() {
 
     auto ast = parse("((1.2 * 2) + 3.8) - (4.4 / -2.2)");
 
-    auto result = visitAstResult<Evaluate>(ast);
+    auto result = visitAstResult<RomanToArabic>(ast);
 
     cout << "RESULT: " << result << endl;
 }
