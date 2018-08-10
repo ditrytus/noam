@@ -4,7 +4,6 @@
 
 namespace noam {
 
-
     class ParsingException
             : public std::exception {
 

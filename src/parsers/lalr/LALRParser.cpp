@@ -150,7 +150,11 @@ void LALRParser::parse(std::vector<Token>::iterator begin,
                 }
             }
         } else {
-            throw UnexpectedTokenException{position, nullptr, nullptr};
+            if (cursor < end) {
+                throw UnexpectedTokenException{position, make_shared<Token>(*cursor), nullptr};
+            } else {
+                throw UnexpectedTokenException{position, nullptr, nullptr};
+            }
         }
     }
 }
