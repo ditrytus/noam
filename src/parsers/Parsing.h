@@ -18,7 +18,8 @@ namespace noam {
                    std::string input) {
         try {
             std::vector<Token> tokens;
-            lexer.getTokens(input.begin(), input.end(), back_inserter(tokens));
+            int pos = 0;
+            lexer.getTokens(input.begin(), input.end(), back_inserter(tokens), pos);
 
             parser.parse(tokens.begin(), tokens.end(), astBuilder);
 

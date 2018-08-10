@@ -19,9 +19,9 @@ namespace noam {
         template <typename InputIterator, typename OutputIterator>
         void getTokens(InputIterator begin,
                        InputIterator end,
-                       OutputIterator output) {
+                       OutputIterator output,
+                       int& position) {
             auto cursor = begin;
-            int position = 0;
             while (cursor < end) {
                 //TODO: add sorting terminals for match
                 bool matched = false;

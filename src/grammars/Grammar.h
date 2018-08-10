@@ -10,6 +10,8 @@ namespace noam {
     class Grammar {
 
     public:
+        Grammar(std::vector<AlternativeRule> rules);
+
         Grammar(std::initializer_list<AlternativeRule> init_rules);
 
         const std::vector<AlternativeRule> &getRules() const;

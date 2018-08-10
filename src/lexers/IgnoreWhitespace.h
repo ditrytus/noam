@@ -15,17 +15,19 @@ namespace noam {
         template <typename InputIterator, typename OutputIterator>
         void getTokens(InputIterator begin,
                        InputIterator end,
-                       OutputIterator output) {
+                       OutputIterator output,
+                       int& position) {
             auto currentBegin = begin;
             InputIterator currentEnd;
             for(auto cursor = begin; cursor < end; ++cursor) {
                 if (std::isspace(*cursor)) {
                     currentEnd = cursor;
-                    Base::getTokens(currentBegin, currentEnd, output);
+                    Base::getTokens(currentBegin, currentEnd, output, position);
                     currentBegin = currentEnd + 1;
+                    position++;
                 }
             }
-            Base::getTokens(currentBegin, end, output);
+            Base::getTokens(currentBegin, end, output, position);
         }
 
     };
