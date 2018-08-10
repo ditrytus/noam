@@ -7,6 +7,9 @@
 
 namespace noam::utils {
 
+    template<typename T>
+    std::string toString(const T& element);
+
     template <typename T, typename... Args>
     std::string join(const T& container, const std::string &separator, Args... args) {
         std::stringstream ss;
@@ -29,6 +32,9 @@ namespace noam::utils {
         }
         return ss.str();
     }
+
+    template<>
+    std::string toString(const std::string& element);
 
     struct TextPosition {
         unsigned long line;
