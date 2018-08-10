@@ -121,5 +121,5 @@ Noam is intended to be a lot simpler and faster to use. You are not required to 
 
 ##### Why "Noam"?
 
-To honor american linguist, philosopher and political activist Noam Chomsky whose theoretical work on computer linguistics and programming languages is a foundation of all modern compilers.
+To honor american linguist, philosopher and political activist [Noam Chomsky](https://en.wikipedia.org/wiki/Noam_Chomsky) whose theoretical work on computer linguistics and programming languages is a foundation of all modern compilers.
 
