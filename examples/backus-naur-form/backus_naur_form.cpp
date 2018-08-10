@@ -101,9 +101,6 @@ int main() {
 
     auto parseBnf = createDefaultParseFunc(bnfGrammar);
 
-    auto terminals = getSymbolsOfType<Terminal>(bnfGrammar);
-    cout << join(terminals, ", ") << endl;
-
     auto jsonBnf = R"(
         <JSON> ::= <OBJ> ;
         <OBJ> ::= "{"<ATTRS>"}" | "{""}";
