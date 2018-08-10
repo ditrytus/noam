@@ -117,7 +117,7 @@ In many cases regular expressions are the right tool to use. Whenever you just w
 
 ##### Why not using YACC or Bison instead?
 
-Noam is intended to be a lot simpler and faster to use. You are not required to integrate any additional tools or steps in your build process and defining a simple grammar is just a few lines long. Additionally since grammars are built in run-time you can generate them dynamically. Because of that it is suited for simple scenarios, if you are aiming into creating your own programming language than YACC and Bison would be a tools to use. 
+Noam is intended to be a lot simpler and faster to use. You are not required to integrate any additional tools or steps in your build process and defining a simple grammar is just a few lines of code. Additionally since grammars are built in run-time you can generate them dynamically. Because of that Noam is suited for simple scenarios, if you are aiming to create your own programming language than YACC and Bison would be a tools for you. 
 
 ##### Why "Noam"?
 
