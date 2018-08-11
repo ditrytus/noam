@@ -1,8 +1,17 @@
 language: cpp
 sudo: required
 
-compiler:
-  - clang
-  - gcc
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-8
+      - g++-8
 
-script: ./build.sh
+compiler: gcc
+
+script:
+  export CC=gcc-8 ;
+  export CXX=g++-8 ;
+  ./build.sh
