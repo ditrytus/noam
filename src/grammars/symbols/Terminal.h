@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <iterator>
 
 #include "Symbol.h"
 #include "Named.h"
