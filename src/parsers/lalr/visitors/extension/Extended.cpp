@@ -9,7 +9,7 @@ unique_ptr<SimpleRule> noam::dropExtension(const SimpleRule &rule) {
         subSymbols.push_back(exSym->dropExtension());
     }
     auto head = dynamic_pointer_cast<NonTerminal>(static_cast<shared_ptr<Symbol>>(rule.getHead()->dropExtension()));
-    return make_unique<SimpleRule>(head, Substitution{subSymbols});
+    return unique_ptr<SimpleRule>(new SimpleRule{head, Substitution{subSymbols}});
 }
 
 std::shared_ptr<ParserState> noam::getTo(const SimpleRule &rule) {

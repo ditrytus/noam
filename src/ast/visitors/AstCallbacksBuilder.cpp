@@ -4,12 +4,12 @@ using namespace noam;
 using namespace std;
 
 SetRuleCallback &AstCallbacksBuilder::For(const SimpleRule &rule) {
-    currentRule = make_unique<SimpleRule>(rule);
+    currentRule = make_shared<SimpleRule>(rule);
     return *this;
 }
 
 SetTokenCallback &AstCallbacksBuilder::For(const Terminal &terminal) {
-    currentTerminal = make_unique<Terminal>(terminal);
+    currentTerminal = make_shared<Terminal>(terminal);
     return *this;
 }
 

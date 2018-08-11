@@ -34,7 +34,7 @@ std::unique_ptr<ParserState> ParserStateFactory::createForPosRuleSet(set<Positio
         sizeAfter = posRuleSet.size();
     }
 
-    return make_unique<ParserState>(posRuleSet);
+    return unique_ptr<ParserState>(new ParserState{posRuleSet});
 }
 
 std::unique_ptr<ParserState> ParserStateFactory::createFromStateWithSymbol(const ParserState &state, std::shared_ptr<Symbol> symbol) {

@@ -54,7 +54,7 @@ unique_ptr<ParserStateGraph> LALRParser::createStateGraph(const SimpleGrammar &g
         afterCount = states.size();
     }
 
-    return make_unique<ParserStateGraph>(states, transitions, startStatePtr);
+    return unique_ptr<ParserStateGraph>(new ParserStateGraph{states, transitions, startStatePtr});
 }
 
 FollowSets<NonTerminal>
