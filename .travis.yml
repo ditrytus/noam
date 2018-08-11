@@ -5,6 +5,4 @@ compiler:
   - clang
   - gcc
 
-install: ./install-dependencies.sh
-
 scrit: ./build.sh
