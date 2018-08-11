@@ -82,15 +82,6 @@ auto& symbolsA = a.getSymbols();
 bool noam::operator==(const Substitution &a, const Substitution &b) {
     auto aSymbols = a.getSymbols();
     auto bSymbols = b.getSymbols();
-    auto aCursor = aSymbols.begin();
-    auto aLast = aSymbols.end();
-    auto bCursor = bSymbols.begin();
-    auto bLast = bSymbols.end();
-
-    SharedPtrObjectsEqualityComparer<Symbol> comp{};
-
-    while (aCursor != aLast && bCursor != bLast && comp(*aCursor, *bCursor)) {
-        ++aCursor, ++bCursor;
-    }
-    return aCursor == aLast && bCursor == bLast;
+    auto miss = mismatch(aSymbols.begin(), aSymbols.end(), bSymbols.begin(), bSymbols.end(), SharedPtrObjectsEqualityComparer<Symbol>{});
+    return miss.first == aSymbols.end() && miss.second == bSymbols.end();
 }
