@@ -107,7 +107,7 @@ Full source code [here](https://github.com/ditrytus/noam/blob/develop/examples/t
 
 ## Documentation
 
-Docs is maintained in this repositories [wiki](https://github.com/ditrytus/noam/wiki).
+Docs are maintained in this repositories [wiki](https://github.com/ditrytus/noam/wiki).
 
 ## FAQ
 
