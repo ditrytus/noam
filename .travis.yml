@@ -5,4 +5,4 @@ compiler:
   - clang
   - gcc
 
-scrit: ./build.sh
+script: ./build.sh
