@@ -11,10 +11,10 @@ using namespace noam::utils;
 
 using namespace std;
 
-class RomanToArabic : public ResultVisitor<vector<string>> {
+class ConvertToRPN : public ResultVisitor<vector<string>> {
 
 public:
-    RomanToArabic() {}
+    ConvertToRPN() {}
 
     void postVisit(const RuleNode &node) {
         const auto head = node.getRule().getHead();
@@ -72,7 +72,10 @@ int main() {
 
     auto ast = parse("((1.2 * 2) + 3.8) - (4.4 / -2.2)");
 
-    auto result = visitAstResult<RomanToArabic>(ast);
+    auto result = visitAstResult<ConvertToRPN>(ast);
 
-    cout << join(result, " ") << endl;
+    for(const auto& str : result) {
+        cout << str << " ";
+    }
+    cout << endl;
 }
