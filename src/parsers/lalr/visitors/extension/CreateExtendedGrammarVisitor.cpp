@@ -45,7 +45,7 @@ void CreateExtendedGrammarVisitor::preVisit(const Substitution &posRule) {
 
     extendSubstitution = true;
     subSymbols.erase(subSymbols.begin(), subSymbols.end());
-    currentMachine = unique_ptr<ParserStateMachine>(new ParserStateMachine{graph, currentState});
+    currentMachine = make_unique<ParserStateMachine>(graph, currentState);
 }
 
 void CreateExtendedGrammarVisitor::preVisit(const Terminal &symbol) {

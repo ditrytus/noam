@@ -31,7 +31,7 @@ std::set<PositionRule> ParserState::operator+(std::shared_ptr<Symbol> symbol) co
 }
 
 unique_ptr<ParserState> ParserState::endState() {
-    return unique_ptr<ParserState>(new ParserState{});
+    return make_unique<ParserState>(ParserState{});
 }
 
 bool ParserState::containsRule(const PositionRule &posRule) {

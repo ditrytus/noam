@@ -1,5 +1,3 @@
-#include <memory>
-
 #include "LLParser.h"
 
 using namespace std;
@@ -36,7 +34,7 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar,
             });
 
             if (pos != rules.end()) {
-                parsingTable[make_pair(*nonTerminal, *terminal)] = make_shared<SimpleRule>(*pos);
+                parsingTable[make_pair(*nonTerminal, *terminal)] = make_unique<SimpleRule>(*pos);
             }
         }
     }
@@ -71,7 +69,7 @@ void updateFirstSet(SharedPtrSet<Terminal> &firstSet,
 }
 
 template <>
-void insertSymbolsToFirstSet(
+void __unused insertSymbolsToFirstSet(
         SharedPtrSet<Terminal> &firstSet,
         FirstSets<NonTerminal>&,
         FirstSets<Substitution>&,
@@ -81,7 +79,7 @@ void insertSymbolsToFirstSet(
 }
 
 template <>
-void insertSymbolsToFirstSet(
+void __unused insertSymbolsToFirstSet(
         SharedPtrSet<Terminal> &firstSet,
         FirstSets<NonTerminal>& nonTerFirstSets,
         FirstSets<Substitution> &subFirstSets,

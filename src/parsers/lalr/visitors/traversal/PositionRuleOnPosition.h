@@ -21,7 +21,7 @@ namespace noam {
 
 
         void traverse(const PositionRule& posRule) override {
-            currentPosRule = std::unique_ptr<PositionRule>(new PositionRule{posRule});
+            currentPosRule = std::make_unique<PositionRule>(posRule);
             preAccept(posRule);
             traverse(posRule.getRule());
             postAccept(posRule);
