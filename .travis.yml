@@ -1,0 +1,10 @@
+language: cpp
+sudo: required
+
+compiler:
+  - clang
+  - gcc
+
+install: ./install-dependencies.sh
+
+scrit: ./build.sh

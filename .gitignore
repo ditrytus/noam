@@ -95,3 +95,7 @@ Temporary Items
 
 
 # End of https://www.gitignore.io/api/clion,macos
+
+# Travis-CI
+
+build
