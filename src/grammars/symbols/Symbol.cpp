@@ -18,5 +18,6 @@ int noam::precedence(SymbolType type) {
         case SymbolType::Terminal: return 1;
         case SymbolType::RegexTerminal: return 2;
         case SymbolType::EndOfInput: return 3;
+        default: -1;
     }
 }
