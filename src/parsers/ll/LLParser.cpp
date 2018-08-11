@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "LLParser.h"
 
 using namespace std;
@@ -69,7 +71,7 @@ void updateFirstSet(SharedPtrSet<Terminal> &firstSet,
 }
 
 template <>
-void __unused insertSymbolsToFirstSet(
+void insertSymbolsToFirstSet(
         SharedPtrSet<Terminal> &firstSet,
         FirstSets<NonTerminal>&,
         FirstSets<Substitution>&,
@@ -79,7 +81,7 @@ void __unused insertSymbolsToFirstSet(
 }
 
 template <>
-void __unused insertSymbolsToFirstSet(
+void insertSymbolsToFirstSet(
         SharedPtrSet<Terminal> &firstSet,
         FirstSets<NonTerminal>& nonTerFirstSets,
         FirstSets<Substitution> &subFirstSets,
