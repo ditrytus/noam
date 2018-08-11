@@ -13,6 +13,12 @@ Library was designed with a simplicity and ease of use in mind. In order to effe
 * Punctuation - symbols that are excluded by default from AST.
 * Infrastructure for running logic against AST using [visitor design pattern](https://en.wikipedia.org/wiki/Visitor_pattern).
 
+## Status
+
+| Branch | g++8 |
+| --- | --- |
+| `develop` | [![Build Status](https://travis-ci.org/ditrytus/noam.svg?branch=develop)](https://travis-ci.org/ditrytus/noam) |
+
 ## Simple example
 
 The following example shows a grammar that defines a text that can be optionally enclosed in a brackets. Brackets can be nested.
