@@ -1,5 +1,6 @@
 #include <map>
 #include <iostream>
+#include <memory>
 
 #include "noam-utilities.h"
 #include "noam-parsers-ll.h"
