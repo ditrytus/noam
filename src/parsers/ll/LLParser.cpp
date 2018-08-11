@@ -36,7 +36,7 @@ ParsingTable LLParser::generateParsingTable(const SimpleGrammar &grammar,
             });
 
             if (pos != rules.end()) {
-                parsingTable[make_pair(*nonTerminal, *terminal)] = make_unique<SimpleRule>(*pos);
+                parsingTable[make_pair(*nonTerminal, *terminal)] = make_shared<SimpleRule>(*pos);
             }
         }
     }
