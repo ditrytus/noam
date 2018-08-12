@@ -17,6 +17,7 @@ Library was designed with a simplicity and ease of use in mind. In order to effe
 
 | Branch | g++8 |
 | --- | --- |
+| `master` | [![Build Status](https://travis-ci.org/ditrytus/noam.svg?branch=master)](https://travis-ci.org/ditrytus/noam) |
 | `develop` | [![Build Status](https://travis-ci.org/ditrytus/noam.svg?branch=develop)](https://travis-ci.org/ditrytus/noam) |
 
 ## Simple example
