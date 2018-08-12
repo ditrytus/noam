@@ -48,7 +48,7 @@ namespace noam {
         return bind(parse<Parser, Lexer, AstBuilder>, parser, lexer, astBuilder, _1);
     };
 
-    auto createDefaultParseFunc(const SimpleGrammar &grammar);
+    std::function<RuleNode(std::string)> createDefaultParseFunc(const SimpleGrammar &grammar);
 }
 
 
