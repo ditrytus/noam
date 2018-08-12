@@ -14,6 +14,11 @@ TEST(TerminalTests, ConstructorSetsName) {
     EXPECT_EQ("NAME", sut.getName());
 }
 
+TEST(TerminalTests, ConstructorSetsTypeToTerminal) {
+    Terminal sut {"NAME"};
+    EXPECT_EQ(SymbolType::Terminal, sut.getType());
+}
+
 TEST(TerminalTests, TLiteralSetsName) {
     Terminal sut = "NAME"_T;
     EXPECT_EQ("NAME", sut.getName());
