@@ -12,8 +12,8 @@ addons:
 compiler: gcc
 
 script:
-  export CC=gcc-8 ;
-  export CXX=g++-8 ;
-  ./build.sh
-  ./test.sh
-  ./run-examples.sh
+  - export CC=gcc-8 ;
+  - export CXX=g++-8 ;
+  - ./build.sh
+  - ./test.sh
+  - ./run-examples.sh
