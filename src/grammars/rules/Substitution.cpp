@@ -66,8 +66,11 @@ Substitution noam::operator + (const Symbol &a, const std::string &b) {
 }
 
 bool noam::operator<(const Substitution &a, const Substitution &b) {
-auto& symbolsA = a.getSymbols();
+    auto& symbolsA = a.getSymbols();
     auto& symbolsB = b.getSymbols();
+    if (symbolsA.size() != symbolsB.size()) {
+        return symbolsA.size() < symbolsB.size();
+    }
     auto minSize = min(symbolsA.size(), symbolsB.size());
     for(int i=0; i<minSize; ++i) {
         if ((*symbolsA[i]) < (*symbolsB[i])) {
@@ -76,7 +79,7 @@ auto& symbolsA = a.getSymbols();
             return false;
         };
     }
-    return symbolsA.size() < symbolsB.size();
+    return false;
 }
 
 bool noam::operator==(const Substitution &a, const Substitution &b) {
