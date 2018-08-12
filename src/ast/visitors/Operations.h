@@ -10,14 +10,10 @@
 namespace noam {
 
     template <>
-    std::string toString(const RuleNode& element) {
-        return visitResult<AstToStringVisitor, DepthFirstTraversal<AstToStringVisitor, AstAcceptor>, AstAcceptor>(element);
-    }
+    std::string toString(const RuleNode& element);
 
     template <>
-    std::string toString(const TokenNode& element) {
-        return visitResult<AstToStringVisitor, DepthFirstTraversal<AstToStringVisitor, AstAcceptor>, AstAcceptor>(element);
-    }
+    std::string toString(const TokenNode& element);
 
     template<typename Visitor, typename... Args>
     typename Visitor::resultType visitAstResult(const AstNode& astRoot, Args... args) {
@@ -29,7 +25,5 @@ namespace noam {
         visit<Visitor, DepthFirstTraversal<Visitor, AstAcceptor>, AstAcceptor, AstNode>(astRoot, std::forward<Args>(args)...);
     }
 
-    int countNodes(const AstNode& astRoot) {
-        return visitAstResult<CountElementsVisitor>(astRoot);
-    }
+    int countNodes(const AstNode& astRoot);
 }

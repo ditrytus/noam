@@ -33,6 +33,7 @@ namespace noam {
 
     protected:
         Terminal(SymbolType type, const std::string &name);
+
     private:
         static std::shared_ptr<Terminal> _empty;
     };
